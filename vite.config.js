@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import htmlPurge from 'vite-plugin-purgecss'
 import StylelintPlugin from 'vite-plugin-stylelint';
+import purge from '@erbelion/vite-plugin-laravel-purgecss'
+
 
 export default defineConfig({
     plugins: [
@@ -9,10 +10,12 @@ export default defineConfig({
             input: ["resources/sass/app.scss", "resources/js/app.js"], // add scss file
             refresh: true,
         }),
-        htmlPurge({ fontFace: true }),
+        purge({
+            templates: ['blade']
+        }),
         StylelintPlugin({
             fix: true,
-            //quite: true,
+            quite: true,
             files: ['resources/sass/**/*.scss']
         }),
     ],
