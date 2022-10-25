@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Http;
+
+class TicketMasterController extends Controller
+{
+    public function index()
+    {
+        $output = $this->getEvents();
+        return view('test', compact('output'));
+    }
+
+    /**
+     * Get events from TicketMaster API with guzzle client.
+     *
+     * @return array
+     */
+    public function getEvents()
+    {
+        $response = Http::get(
+            'https://app.ticketmaster.com/discovery/v2/events.json?' . $this->getQueryString()
+        );
+        return json_decode($response->body(), true);
+    }
+
+    /**
+     * Get query string for request to TicketMaster API.
+     *
+     * @return string
+     */
+    public function getQueryString()
+    {
+        $query = [
+            'apikey' => env('TICKETMASTER_API_KEY'),
+            'city' => '',
+            'startDateTime' => '',
+            'endDateTime' => '',
+            'keyword' => '',
+            'size' => '10',
+        ];
+        return http_build_query($query);
+    }
+}
