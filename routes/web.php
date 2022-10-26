@@ -13,22 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Http\Controllers\TicketMasterController;
-use App\Models\Post;
-
 Route::get('/', function () {
-    $posts = Post::all();
+    $posts = App\Models\Post::all();
     return view('home', compact('posts'));
 });
 
 Route::get('post/{slug}', function ($slug) {
-    $post = Post::where('slug', '=', $slug)->firstOrFail();
+    $post = App\Models\Post::where('slug', '=', $slug)->firstOrFail();
     return view('post', compact('post'));
-});
-
-Route::get('perform', function () {
-    $tt = new TicketMasterController();
-    $tt->index();
 });
 
 Route::group(['prefix' => 'admin'], function () {
