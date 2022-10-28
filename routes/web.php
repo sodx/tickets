@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TicketMasterController;
+use App\Models\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,15 +17,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $posts = App\Models\Post::all();
+    $posts = Post::all();
     return view('home', compact('posts'));
 });
 
 Route::get('post/{slug}', function ($slug) {
-    $post = App\Models\Post::where('slug', '=', $slug)->firstOrFail();
+    $post = Post::where('slug', '=', $slug)->firstOrFail();
     return view('post', compact('post'));
 });
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+
+Route::get('perform', function () {
+    $tt = new TicketMasterController();
+    $tt->index();
 });
