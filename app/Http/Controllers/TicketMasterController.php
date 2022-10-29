@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\GenerateTicketMasterQuery;
 use Illuminate\Support\Facades\Http;
 
 class TicketMasterController extends Controller
@@ -10,6 +11,7 @@ class TicketMasterController extends Controller
     {
 
         $output = $this->getEvents();
+        ray($output);
         return view('test', $output);
     }
 
@@ -23,6 +25,7 @@ class TicketMasterController extends Controller
         $response = Http::get(
             'https://app.ticketmaster.com/discovery/v2/events.json?' . $this->getQueryString()
         );
+
         return json_decode($response->body(), true);
     }
 
@@ -33,14 +36,6 @@ class TicketMasterController extends Controller
      */
     public function getQueryString(): string
     {
-        $query = [
-            'apikey' => env('TICKETMASTER_API_KEY'),
-            'city' => '',
-            'startDateTime' => '',
-            'endDateTime' => '',
-            'keyword' => '',
-            'size' => '10',
-        ];
-        return http_build_query($query);
+        return GenerateTicketMasterQuery::run();
     }
 }
