@@ -11,7 +11,7 @@ class TicketMasterController extends Controller
     {
 
         $output = $this->getEvents();
-        ray($output);
+
         return view('test', $output);
     }
 

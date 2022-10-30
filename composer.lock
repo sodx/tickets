@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "102e701b357405cd7cdcad85fc41fc20",
+    "content-hash": "fe7f3e79a663d64cb504a75067f09600",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -2262,16 +2262,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.5",
+            "version": "2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "84d74485fdb7074f4f9dd6f02ab957b1de513257"
+                "reference": "857afc47ce113454bd629037213378ba3219dd40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/84d74485fdb7074f4f9dd6f02ab957b1de513257",
-                "reference": "84d74485fdb7074f4f9dd6f02ab957b1de513257",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/857afc47ce113454bd629037213378ba3219dd40",
+                "reference": "857afc47ce113454bd629037213378ba3219dd40",
                 "shasum": ""
             },
             "require": {
@@ -2291,7 +2291,7 @@
                 "erusev/parsedown": "^1.0",
                 "ext-json": "*",
                 "github/gfm": "0.29.0",
-                "michelf/php-markdown": "^1.4",
+                "michelf/php-markdown": "^1.4 || ^2.0",
                 "nyholm/psr7": "^1.5",
                 "phpstan/phpstan": "^1.8.2",
                 "phpunit/phpunit": "^9.5.21",
@@ -2364,7 +2364,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-29T10:59:45+00:00"
+            "time": "2022-10-30T16:45:38+00:00"
         },
         {
             "name": "league/config",
@@ -2659,75 +2659,6 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
-        },
-        {
-            "name": "liquid/liquid",
-            "version": "1.4.32",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kalimatas/php-liquid.git",
-                "reference": "f0be8a3e0e0fcee99c0091748dcb21675b3caf46"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kalimatas/php-liquid/zipball/f0be8a3e0e0fcee99c0091748dcb21675b3caf46",
-                "reference": "f0be8a3e0e0fcee99c0091748dcb21675b3caf46",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ^8.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.8",
-                "friendsofphp/php-cs-fixer": "^2.16.4",
-                "infection/infection": ">=0.17.6",
-                "php-coveralls/php-coveralls": "^2.2",
-                "phpunit/phpunit": "^9.2.6"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Liquid\\": "src/Liquid"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guz Alexander",
-                    "email": "kalimatas@gmail.com",
-                    "homepage": "http://guzalexander.com"
-                },
-                {
-                    "name": "Harald Hanek"
-                },
-                {
-                    "name": "Mateo Murphy"
-                },
-                {
-                    "name": "Alexey Kopytko",
-                    "email": "alexey@kopytko.com",
-                    "homepage": "https://www.alexeykopytko.com/"
-                }
-            ],
-            "description": "Liquid template engine for PHP",
-            "homepage": "https://github.com/kalimatas/php-liquid",
-            "keywords": [
-                "liquid",
-                "template"
-            ],
-            "support": {
-                "issues": "https://github.com/kalimatas/php-liquid/issues",
-                "source": "https://github.com/kalimatas/php-liquid/tree/1.4.32"
-            },
-            "time": "2022-08-08T01:55:20+00:00"
         },
         {
             "name": "lorisleiva/laravel-actions",
@@ -3115,67 +3046,6 @@
             "time": "2022-09-02T06:38:22+00:00"
         },
         {
-            "name": "monstrex/voyager-site",
-            "version": "v0.95.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MonstreX/voyager-site.git",
-                "reference": "883276d751c8457dd90042da6215829ad678ca5b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MonstreX/voyager-site/zipball/883276d751c8457dd90042da6215829ad678ca5b",
-                "reference": "883276d751c8457dd90042da6215829ad678ca5b",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "liquid/liquid": "^1.4",
-                "monstrex/voyager-extension": "*",
-                "webwizo/laravel-shortcodes": "^1.0.20"
-            },
-            "require-dev": {
-                "laravel/framework": "~8.0|~9.0",
-                "phpunit/phpunit": "~8.0|~9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "MonstreX\\VoyagerSite\\VoyagerSiteServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "App\\": "app/",
-                    "MonstreX\\VoyagerSite\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yuriy Ovdeyev",
-                    "email": "fido6080net@gmail.com",
-                    "homepage": "http://ss-host.ru"
-                }
-            ],
-            "description": "Voyager Web Site package",
-            "homepage": "https://github.com/monstrex/voyager-site",
-            "keywords": [
-                "laravel",
-                "voyager"
-            ],
-            "support": {
-                "issues": "https://github.com/MonstreX/voyager-site/issues",
-                "source": "https://github.com/MonstreX/voyager-site/tree/v0.95.4"
-            },
-            "time": "2022-08-31T15:34:14+00:00"
-        },
-        {
             "name": "myclabs/php-enum",
             "version": "1.8.4",
             "source": {
@@ -3545,16 +3415,16 @@
         },
         {
             "name": "nunomaduro/termwind",
-            "version": "v1.14.1",
+            "version": "v1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/termwind.git",
-                "reference": "86fc30eace93b9b6d4c844ba6de76db84184e01b"
+                "reference": "9a8218511eb1a0965629ff820dda25985440aefc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/86fc30eace93b9b6d4c844ba6de76db84184e01b",
-                "reference": "86fc30eace93b9b6d4c844ba6de76db84184e01b",
+                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/9a8218511eb1a0965629ff820dda25985440aefc",
+                "reference": "9a8218511eb1a0965629ff820dda25985440aefc",
                 "shasum": ""
             },
             "require": {
@@ -3611,7 +3481,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/termwind/issues",
-                "source": "https://github.com/nunomaduro/termwind/tree/v1.14.1"
+                "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
             },
             "funding": [
                 {
@@ -3627,7 +3497,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-17T15:20:29+00:00"
+            "time": "2022-10-28T22:51:32+00:00"
         },
         {
             "name": "orangehill/iseed",
@@ -8108,76 +7978,6 @@
             "time": "2022-06-03T18:03:27+00:00"
         },
         {
-            "name": "webwizo/laravel-shortcodes",
-            "version": "v1.0.23",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webwizo/laravel-shortcodes.git",
-                "reference": "0f9b13d1838e1089981735a54823029f1f7fc05c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webwizo/laravel-shortcodes/zipball/0f9b13d1838e1089981735a54823029f1f7fc05c",
-                "reference": "0f9b13d1838e1089981735a54823029f1f7fc05c",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "5.6.x|5.7.x|5.8.x|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/support": "5.6.x|5.7.x|5.8.x|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/view": "5.6.x|5.7.x|5.8.x|^6.0|^7.0|^8.0|^9.0",
-                "php": "^7.2|^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "~3.8.0",
-                "phpunit/phpunit": "^7.5|^8.0",
-                "scrutinizer/ocular": "^1.5",
-                "squizlabs/php_codesniffer": "~2.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Webwizo\\Shortcodes\\ShortcodesServiceProvider"
-                    ],
-                    "aliases": {
-                        "Shortcode": "Webwizo\\Shortcodes\\Facades\\Shortcode"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webwizo\\Shortcodes\\": "src"
-                },
-                "classmap": [
-                    "tests/TestCase.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Asif Iqbal",
-                    "email": "webwizo@gmail.com",
-                    "homepage": "http://www.webwizo.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Wordpress like shortcodes for Laravel 5, 6, 7, 8, and 9",
-            "homepage": "https://github.com/webwizo/laravel-shortcodes",
-            "keywords": [
-                "laravel",
-                "shortcodes",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/webwizo/laravel-shortcodes/issues",
-                "source": "https://github.com/webwizo/laravel-shortcodes/tree/v1.0.23"
-            },
-            "time": "2022-02-23T12:06:50+00:00"
-        },
-        {
             "name": "zbateson/mail-mime-parser",
             "version": "2.2.3",
             "source": {
@@ -11870,7 +11670,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.2"
+        "php": "^8.1.11"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
