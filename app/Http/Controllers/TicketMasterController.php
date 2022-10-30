@@ -11,7 +11,6 @@ class TicketMasterController extends Controller
     {
 
         $output = $this->getEvents();
-
         return view('test', $output);
     }
 
@@ -22,6 +21,7 @@ class TicketMasterController extends Controller
      */
     public function getEvents(): array
     {
+
         $response = Http::get(
             'https://app.ticketmaster.com/discovery/v2/events.json?' . $this->getQueryString()
         );

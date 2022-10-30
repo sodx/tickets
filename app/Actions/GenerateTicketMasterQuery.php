@@ -23,7 +23,7 @@ class GenerateTicketMasterQuery
     public function filteredQueryMapping(): array
     {
         $data = $this->getQueryDataFromDB();
-        return array_filter($data, fn($value) => $value !== '');
+        return array_filter($data, fn ($value) => $value !== '');
     }
 
 
@@ -43,7 +43,7 @@ class GenerateTicketMasterQuery
             'locale' => setting('ticketmaster.locale'),
             'startDateTime' => $this->getFormattedDate(setting('ticketmaster.startDateTime')),
             'endDateTime' => $this->getFormattedDate(setting('ticketmaster.endDateTime')),
-            'size' => setting('ticketmaster.size') ?? 100,
+            'size' => setting('ticketmaster.size') ?? 10,
             'page' => setting('ticketmaster.page') ?? 0,
             'sort' => setting('ticketmaster.sort'),
             'onsaleStartDateTime' => $this->getFormattedDate(setting('ticketmaster.onsaleStartDateTime'))
@@ -63,10 +63,10 @@ class GenerateTicketMasterQuery
     /**
      * Get any date string and convert their into 'Y-m-d\TH:i:s\Z' format.
      * If no date string is provided, then return null.
-     * @param string $date
+     * @param string | null $date
      * @return string | null
      */
-    public function getFormattedDate(string $date = ''): string | null
+    public function getFormattedDate(string $date = null): string | null
     {
         return $date ? date('Y-m-d\TH:i:s\Z', strtotime($date)) : null;
     }
