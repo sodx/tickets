@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\GenerateTicketMasterQuery;
+use App\Actions\ParseTicketMasterQueryOutput;
 use Illuminate\Support\Facades\Http;
 
 class TicketMasterController extends Controller
@@ -11,6 +12,7 @@ class TicketMasterController extends Controller
     {
 
         $output = $this->getEvents();
+        parseTicketMasterQueryOutput::run($output);
         return view('test', $output);
     }
 
