@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Event;
+use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 /**
@@ -30,26 +31,6 @@ class ParseTicketMasterQueryOutput
         $this->iterateThroughOutput($output);
     }
 
-    private function setUpdatedEvents(int $updatedEvents): void
-    {
-        $this->updatedEvents = $updatedEvents;
-    }
-
-    private function setSavedEvents(int $savedEvents): void
-    {
-        $this->savedEvents = $savedEvents;
-    }
-
-    private function setEventsForSave(int $eventsForSave): void
-    {
-        $this->eventsForSave = $eventsForSave;
-    }
-
-    private function setProcessedEvents(int $processedEvents): void
-    {
-        $this->processedEvents = $processedEvents;
-    }
-
     /**
      * Iterate through output from TicketMaster API and save events into DB.
      *
@@ -67,19 +48,17 @@ class ParseTicketMasterQueryOutput
         }
     }
 
+
+
     /**
      * Get more events from TicketMaster API.
      * Using pagination to get more events.
      */
     private function getMoreEvents(array $output): array
     {
-        $page = $output['page']['number'] + 1;
-        $size = $output['page']['size'];
-        $url = $output['page']['href'];
-        $url = str_replace('page=0', "page=$page", $url);
-        $url = str_replace('size=20', "size=$size", $url);
-        $output = json_decode(file_get_contents($url), true);
-        return $output;
+        $url = $output['_links']['next']['href'];
+        $response = Http::get('https://app.ticketmaster.com' . $url . '&apikey=' . env('TICKETMASTER_API_KEY'));
+        return json_decode($response, true);
     }
 
     /**
@@ -106,23 +85,23 @@ class ParseTicketMasterQueryOutput
     /**
      * Get the date of last event update.
      *
-     * @param int $eventID
+     * @param string $ticketMasterID
      * @return string
      */
-    public function getLastEventUpdateDate(int $eventID): string
+    public function getLastEventUpdateDate(string $ticketMasterID): string
     {
-        return Event::where('id', $eventID)->first()->updated_at;
+        return Event::where('ticketmaster_id', $ticketMasterID)->first()->updated_at;
     }
 
     /**
      * Check if event was updated during last 24 hours.
      *
-     * @param string $lastUpdateDate
+     * @param string $ticketMasterID
      * @return boolean
      */
-    public function isEventUpdatedDuringLast24Hours(int $eventID): bool
+    public function isEventUpdatedDuringLast24Hours(string $ticketMasterID): bool
     {
-        $lastUpdateDate = $this->getLastEventUpdateDate($eventID);
+        $lastUpdateDate = $this->getLastEventUpdateDate($ticketMasterID);
         $lastUpdateDate = strtotime($lastUpdateDate);
         $now = strtotime(date('Y-m-d H:i:s'));
         $diff = $now - $lastUpdateDate;
@@ -135,10 +114,11 @@ class ParseTicketMasterQueryOutput
      */
     public function processEvent(array $event): void
     {
-        if ($this->isEventExists($event['ticketmaster_id'])
-            || ! $this->isEventUpdatedDuringLast24Hours($event['id'])) {
-            $this->updateEvent($event);
-            $this->setUpdatedEvents($this->updatedEvents + 1);
+        if ($this->isEventExists($event['id'])) {
+            if (!$this->isEventUpdatedDuringLast24Hours($event['id'])) {
+                $this->updateEvent($event);
+                $this->setUpdatedEvents($this->updatedEvents + 1);
+            }
         } else {
             $this->saveEvent($event);
             $this->setSavedEvents($this->savedEvents + 1);
@@ -152,7 +132,7 @@ class ParseTicketMasterQueryOutput
      */
     public function updateEvent(array $event): void
     {
-        $eventModel = Event::where('ticketmaster_id', $event['ticketmaster_id'])->first();
+        $eventModel = Event::where('ticketmaster_id', $event['id'])->first();
         $eventModel->update($event);
     }
 
@@ -164,12 +144,42 @@ class ParseTicketMasterQueryOutput
      */
     public function saveEvent(array $event)
     {
-        $event = Event::updateOrCreate(
-            ['ticketmaster_id' => $event['id']],
-            [
-                'name' => $event['name'],
-            ]
-        );
-        //ray($event);
+        SaveEvent::run($event);
+    }
+
+    /**
+     * @param int $updatedEvents
+     * @return void
+     */
+    private function setUpdatedEvents(int $updatedEvents): void
+    {
+        $this->updatedEvents = $updatedEvents;
+    }
+
+    /**
+     * @param int $savedEvents
+     * @return void
+     */
+    private function setSavedEvents(int $savedEvents): void
+    {
+        $this->savedEvents = $savedEvents;
+    }
+
+    /**
+     * @param int $eventsForSave
+     * @return void
+     */
+    private function setEventsForSave(int $eventsForSave): void
+    {
+        $this->eventsForSave = $eventsForSave;
+    }
+
+    /**
+     * @param int $processedEvents
+     * @return void
+     */
+    private function setProcessedEvents(int $processedEvents): void
+    {
+        $this->processedEvents = $processedEvents;
     }
 }

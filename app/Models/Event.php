@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use Sluggable;
     use HasFactory;
 
     /**
@@ -77,8 +79,8 @@ class Event extends Model
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
-        'start_time' => 'time',
-        'end_time' => 'time',
+        'start_time' => 'datetime:H:i',
+        'end_time' => 'datetime:H:i',
         'status' => 'boolean',
     ];
 
@@ -122,4 +124,13 @@ class Event extends Model
      * @var bool $timestamps
      */
     public $timestamps = true;
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }
