@@ -2,11 +2,12 @@
 
 namespace App\Actions;
 
-use App\Models\Attraction;
 use App\Models\Event;
+use App\Models\Genre;
+use App\Models\Segment;
+use App\Models\Subgenre;
 use App\Models\Venue;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Lorisleiva\Actions\Concerns\AsAction;
 use App\Actions\GenerateSeoMeta;
 
 class SaveEvent extends SaveDataFromTM
@@ -15,7 +16,7 @@ class SaveEvent extends SaveDataFromTM
     {
         $venue = $this->saveVenue($data['_embedded']['venues'][0]);
         $attractions = $this->saveAttractions($data['_embedded']['attractions']);
-        return Event::updateOrCreate(
+        $event = Event::updateOrCreate(
             ['ticketmaster_id' => $data['id']],
             [
                 'name' => $data['name'] ?? '',
@@ -43,6 +44,14 @@ class SaveEvent extends SaveDataFromTM
                 'venue_id' => $venue->venue_id,
             ]
         );
+
+        $event->attractions()->sync($attractions->pluck('attraction_id'));
+        $event->subgenre()->associate($this->saveSubgenre($data['classifications'][0]['subGenre']));
+        $event->genre()->associate($this->saveGenre($data['classifications'][0]['genre']));
+        $event->segment()->associate($this->saveSegment($data['classifications'][0]['segment']));
+        $event->save();
+
+        return $event;
     }
 
     /**
@@ -53,14 +62,30 @@ class SaveEvent extends SaveDataFromTM
         return SaveVenue::run($venue);
     }
 
+
+    public function saveGenre(array $genre): Genre
+    {
+        return SaveGenre::run($genre);
+    }
+
+    public function saveSubgenre(array $subgenre): Subgenre
+    {
+        return SaveSubgenre::run($subgenre);
+    }
+
+    public function saveSegment(array $segment): Segment
+    {
+        return SaveSegment::run($segment);
+    }
+
     /**
      * @param array $attractions
      */
     public function saveAttractions(array $attractions)
     {
-        return array_map(function ($attraction) {
+        return collect(array_map(function ($attraction) {
             return SaveAttraction::run($attraction);
-        }, $attractions);
+        }, $attractions));
     }
 
 }

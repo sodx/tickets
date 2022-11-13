@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('subgenres', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

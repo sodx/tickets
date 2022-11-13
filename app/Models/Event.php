@@ -86,6 +86,14 @@ class Event extends Model
 
 
     /**
+     * Get attractions for the event.
+     */
+    public function attractions()
+    {
+        return $this->belongsToMany(Attraction::class, 'event_attractions', 'event_id', 'attraction_id');
+    }
+
+    /**
      * Get the venue that owns the event.
      */
     public function venue()
