@@ -28,6 +28,7 @@ class CreateVenuesTable extends Migration
             $table->string('address', 256)->nullable();
             $table->string('longtitude', 256)->nullable();
             $table->string('latitude', 256)->nullable();
+            $table->string('image', 256)->nullable();
             $table->timestamps();
             $table->string('slug', 520)->nullable()->unique();
         });

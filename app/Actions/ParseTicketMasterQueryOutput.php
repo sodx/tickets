@@ -114,12 +114,8 @@ class ParseTicketMasterQueryOutput
      */
     public function processEvent(array $event): void
     {
-        if ($this->isEventExists($event['id'])) {
-            if (!$this->isEventUpdatedDuringLast24Hours($event['id'])) {
-                $this->updateEvent($event);
-                $this->setUpdatedEvents($this->updatedEvents + 1);
-            }
-        } else {
+        if (!$this->isEventExists($event['id'])
+            || ($this->isEventExists($event['id']) && !$this->isEventUpdatedDuringLast24Hours($event['id']))) {
             $this->saveEvent($event);
             $this->setSavedEvents($this->savedEvents + 1);
         }
@@ -154,6 +150,17 @@ class ParseTicketMasterQueryOutput
     private function setUpdatedEvents(int $updatedEvents): void
     {
         $this->updatedEvents = $updatedEvents;
+    }
+
+    /**
+     * Save venue to database.
+     *
+     * @param array $venue
+     * @return void
+     */
+    public function saveVenue(array $venue)
+    {
+        SaveVenue::run($venue);
     }
 
     /**

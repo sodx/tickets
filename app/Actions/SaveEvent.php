@@ -2,94 +2,65 @@
 
 namespace App\Actions;
 
+use App\Models\Attraction;
 use App\Models\Event;
+use App\Models\Venue;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Lorisleiva\Actions\Concerns\AsAction;
 use App\Actions\GenerateSeoMeta;
 
-class SaveEvent
+class SaveEvent extends SaveDataFromTM
 {
-    use AsAction;
-
-    public function handle($event): void
+    public function upsertData(array $data): Event
     {
-        $this->upsertEvent($event);
-    }
-
-    public function upsertEvent(array $event)
-    {
-        Event::updateOrCreate(
-            ['ticketmaster_id' => $event['id']],
+        $venue = $this->saveVenue($data['_embedded']['venues'][0]);
+        $attractions = $this->saveAttractions($data['_embedded']['attractions']);
+        return Event::updateOrCreate(
+            ['ticketmaster_id' => $data['id']],
             [
-                'name' => $event['name'] ?? '',
-                'url' => $event['url'] ?? '',
-                'locale' => $event['locale'] ?? '',
-                'start_date' => $event['dates']['start']['localDate'] ?? '',
-                'start_time' => $event['dates']['start']['localTime'] ?? '',
-                'end_date' => $event['dates']['end']['localDate'] ?? null,
-                'end_time' => $event['dates']['end']['localTime'] ?? null,
-                'price_min' => $event['priceRanges'][0]['min'] ?? null,
-                'price_max' => $event['priceRanges'][0]['max'] ?? null,
-                'price_currency' => $event['priceRanges'][0]['currency'] ?? '',
-                'status' => $event['dates']['status']['code'] ?? '',
-                'slug' => SlugService::createSlug(Event::class, 'slug', $event['name']),
-                'thumbnail' => $this->getSmallestImage($event['images']),
-                'poster' => $this->getBiggestImage($event['images']),
-                'seatmap' => $event['seatmap']['staticUrl'] ?? '',
-                'info' => $event['info'] ?? '',
-                'pleaseNote' => $event['pleaseNote'] ?? '',
-                'meta_title' => $this->generateTitle($event),
+                'name' => $data['name'] ?? '',
+                'url' => $data['url'] ?? '',
+                'locale' => $data['locale'] ?? '',
+                'start_date' => $data['dates']['start']['localDate'] ?? '',
+                'start_time' => $data['dates']['start']['localTime'] ?? '',
+                'end_date' => $data['dates']['end']['localDate'] ?? null,
+                'end_time' => $data['dates']['end']['localTime'] ?? null,
+                'price_min' => $data['priceRanges'][0]['min'] ?? null,
+                'price_max' => $data['priceRanges'][0]['max'] ?? null,
+                'price_currency' => $data['priceRanges'][0]['currency'] ?? '',
+                'status' => $data['dates']['status']['code'] ?? '',
+                'slug' => SlugService::createSlug(Event::class, 'slug', $data['name']),
+                'thumbnail' => $this->getSmallestImage($data['images']),
+                'poster' => $this->getBiggestImage($data['images']),
+                'seatmap' => $data['seatmap']['staticUrl'] ?? '',
+                'info' => $data['info'] ?? '',
+                'pleaseNote' => $data['pleaseNote'] ?? '',
+                'meta_title' => $this->generateTitle($data),
                 'meta_keywords' => '',
-                'meta_description' => $this->generateDescription($event),
+                'meta_description' => $this->generateDescription($data),
                 'clicks' => '0',
                 'views' => '0',
+                'venue_id' => $venue->venue_id,
             ]
         );
     }
 
     /**
-     * Get the biggest image from array of images.
-     *
-     * @param array $images
-     * @return string
+     * @param array $venue
      */
-    private function getBiggestImage(array $images): string
+    public function saveVenue(array $venue): Venue
     {
-        $biggestImage = $images[0];
-        foreach ($images as $image) {
-            if ($image['width'] > $biggestImage['width']) {
-                $biggestImage = $image;
-            }
-        }
-        return $biggestImage['url'];
+        return SaveVenue::run($venue);
     }
 
     /**
-     * Get the smallest image from array of images.
-     *
-     * @param array $images
-     * @return string
+     * @param array $attractions
      */
-    private function getSmallestImage(array $images): string
+    public function saveAttractions(array $attractions)
     {
-        $smallestImage = $images[0];
-        foreach ($images as $image) {
-            if ($image['width'] < $smallestImage['width']) {
-                $smallestImage = $image;
-            }
-        }
-        return $smallestImage['url'];
+        return array_map(function ($attraction) {
+            return SaveAttraction::run($attraction);
+        }, $attractions);
     }
 
-
-    public function generateTitle($event): string
-    {
-        return $event['name'];
-    }
-
-
-    public function generateDescription($event): string
-    {
-        return $event['name'];
-    }
 }

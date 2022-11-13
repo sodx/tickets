@@ -14,10 +14,9 @@ class CreateEventAttractionsTable extends Migration
     public function up()
     {
         Schema::create('event_attractions', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedBigInteger('event_id')->index();
             $table->unsignedBigInteger('attraction_id')->index();
-
-            $table->primary(['event_id', 'attraction_id']);
         });
     }
 

@@ -6,7 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Venue extends Model
+class Attraction extends Model
 {
     use HasFactory;
     use Sluggable;
@@ -17,14 +17,14 @@ class Venue extends Model
      *
      * @var string
      */
-    protected $table = 'venues';
+    protected $table = 'attractions';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'venue_id';
+    protected $primaryKey = 'attraction_id';
 
     /**
      * The attributes that are mass assignable.
@@ -35,20 +35,19 @@ class Venue extends Model
         'name',
         'ticketmaster_id',
         'locale',
-        'postcode',
-        'timezone',
-        'city',
-        'country',
-        'country_code',
-        'state',
-        'state_code',
-        'address',
-        'longtitude',
-        'latitude',
+        'type',
+        'youtube_link',
+        'twitter',
+        'itunes',
+        'lastfm',
+        'wiki',
+        'facebook',
+        'homepage',
+        'instagram',
+        'thumbnail',
+        'poster',
         'slug',
-        'image',
     ];
-
 
     /**
      * Get the events for the venue.
