@@ -1,7 +1,16 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #f3f3f3;
 
 // Typography
-$font-family-sans-serif: "Nunito", sans-serif;
-$font-size-base: 0.9rem;
+$font-family-sans-serif: 'Quicksand', sans-serif;
+$font-family-monospace: "Roboto Mono", monospace;
+$headings-font-family: 'Bebas Neue', cursive;
+$display-font-family: 'Bebas Neue', cursive;
+$primary: #4fb75d;
+$link-color: $primary;
+$link-shade-percentage: 40% !default;
+$link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
+$headings-margin-bottom: 1rem;
+$font-size-base: 1rem;
+$body-font-size: 14px;
 $line-height-base: 1.6;

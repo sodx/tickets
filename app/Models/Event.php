@@ -11,6 +11,7 @@ class Event extends Model
     use Sluggable;
     use HasFactory;
 
+
     /**
      * The table associated with the model.
      *
@@ -25,6 +26,7 @@ class Event extends Model
      * @var string
      */
     protected $primaryKey = 'event_id';
+
 
     /**
      * The attributes that are mass assignable.
@@ -98,7 +100,7 @@ class Event extends Model
      */
     public function venue()
     {
-        return $this->belongsTo('App\Models\Venue');
+        return $this->belongsTo('App\Models\Venue', 'venue_id', 'venue_id');
     }
 
 
@@ -127,6 +129,17 @@ class Event extends Model
     {
         return $this->belongsTo('App\Models\Subgenre');
     }
+
+    public function getFormattedDateAttribute()
+    {
+        return $this->start_date->format('Y-m-d');
+    }
+
+    public function getFormattedDateTimeAttribute()
+    {
+        return $this->start_date->format('M d') . ' ' . $this->start_time->format('H:i');
+    }
+
 
     /**
      * @var bool $timestamps

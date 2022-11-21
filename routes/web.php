@@ -17,13 +17,18 @@ use App\Models\Post;
 */
 
 Route::get('/', function () {
-    $posts = Post::all();
-    return view('home', compact('posts'));
+    $events = App\Models\Event::latest()->take(140)->get();
+    return view('home', compact('events'));
 });
 
 Route::get('post/{slug}', function ($slug) {
     $post = Post::where('slug', '=', $slug)->firstOrFail();
     return view('post', compact('post'));
+});
+
+Route::get('event/{slug}', function ($slug) {
+    $event = App\Models\Event::where('slug', '=', $slug)->firstOrFail();
+    return view('event', compact('event'));
 });
 
 Route::group(['prefix' => 'admin'], function () {

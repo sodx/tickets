@@ -58,6 +58,20 @@ class Venue extends Model
         return $this->hasMany('App\Models\Event');
     }
 
+    public function slugifyString($string)
+    {
+        return str_replace(' ', '-', strtolower($string));
+    }
+
+    public function unslugifyString($string)
+    {
+        return str_replace('-', ' ', ucfirst($string));
+    }
+
+    public function slugifyCity()
+    {
+        return $this->slugifyString($this->city);
+    }
 
     /**
      * @var bool $timestamps
