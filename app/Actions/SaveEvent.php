@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Models\Segment;
 use App\Models\Subgenre;
 use App\Models\Venue;
+use App\Models\Tour;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\Actions\GenerateSeoMeta;
 
@@ -49,8 +50,9 @@ class SaveEvent extends SaveDataFromTM
         $event->subgenre()->associate($this->saveSubgenre($data['classifications'][0]['subGenre']));
         $event->genre()->associate($this->saveGenre($data['classifications'][0]['genre']));
         $event->segment()->associate($this->saveSegment($data['classifications'][0]['segment']));
-        $event->save();
+        $event->tour()->associate($this->saveTour($data));
 
+        $event->save();
         return $event;
     }
 
@@ -78,6 +80,21 @@ class SaveEvent extends SaveDataFromTM
         return SaveSegment::run($segment);
     }
 
+    public function saveTour(array $event): Tour | null
+    {
+        $sameEvent = Event::where('name', $event['name'])->first();
+        if ($sameEvent) {
+            $tour = SaveTour::run($event);
+            if (!$sameEvent->tour_id) {
+                $sameEvent->tour()->associate($tour);
+            }
+
+            return $tour;
+        }
+
+        return null;
+    }
+
     /**
      * @param array $attractions
      */
@@ -87,5 +104,4 @@ class SaveEvent extends SaveDataFromTM
             return SaveAttraction::run($attraction);
         }, $attractions));
     }
-
 }

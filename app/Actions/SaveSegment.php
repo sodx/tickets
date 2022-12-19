@@ -22,5 +22,4 @@ class SaveSegment extends SaveDataFromTM
         }
         return $segment;
     }
-
 }

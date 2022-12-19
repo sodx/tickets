@@ -40,5 +40,4 @@ class GenerateSeoMeta
     {
         return $event['name'];
     }
-
 }

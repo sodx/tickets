@@ -1,4 +1,12 @@
-<a class="event-card card" href="/event/{{ $event->slug }}">
+@inject('slugify', 'App\Actions\Slugify')
+<a class="event-card card" href="{{ route('event', [
+    'slug' => $event->slug,
+    'date' => $event->getFormattedDateAttribute(),
+    'location' => $slugify->handle($event->venue->city)])
+    }}">
+    <div class="event-card__favorites">
+        <button class="add_to_favorites {{ $event->isFavorite() ? 'active' : ''  }}" data-id="{{ $event->event_id }}"><span class="material-symbols-outlined">favorite</span></button>
+    </div>
     <figure class="event-card__image-wrapper">
         <img class="event-card__image" src="{{ $event->poster }}" alt="{{ $event->name }}" loading="lazy">
         <span class="event-card__date"><span class="material-symbols-outlined">event</span>{{ $event->getFormattedDateTimeAttribute() }}</span>

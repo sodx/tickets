@@ -1,9 +1,24 @@
 body {
-  //background-color: $gray-200;
-  //font-family: $font-family-sans-serif;
+    //background-color: $gray-200;
+    //font-family: $font-family-sans-serif;
     font-size: $body-font-size;
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+}
+
+::selection {
+    background: $red;
+    color: $white;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        color: $link-hover-color;
+    }
 }
 
 .content-container {
@@ -14,6 +29,14 @@ body {
     gap: 20px;
     display: flex;
     flex-direction: column;
+
+    & > .content-section {
+        margin-bottom: 20px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .material-symbols-outlined {
@@ -28,4 +51,66 @@ body {
     margin: 0 auto;
     max-width: 1280px;
     width: 100%;
+}
+
+.shadow-item {
+    box-shadow: 0 0 0.5rem rgba($black, 0.1);
+}
+
+.card-item {
+    background: $white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+
+    @extend .shadow-item;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: 0;
+    background: $primary;
+    color: $white;
+
+    &:hover {
+        background: $link-hover-color;
+        color: $white;
+    }
+
+    &-ghost {
+        background: transparent;
+        color: $primary;
+
+        &:hover {
+            background: transparent;
+            color: $primary;
+            border: 1px solid $primary;
+        }
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    span {
+        background: $red;
+        color: $white;
+    }
+}
+
+.add_to_favorites {
+    border: 0;
+    background: transparent;
+
 }

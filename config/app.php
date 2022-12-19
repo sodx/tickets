@@ -185,6 +185,8 @@ return [
         /*
          * Package Service Providers...
          */
+        alchemyguy\YoutubeLaravelApi\YoutubeLaravelApiServiceProvider::class,
+        Alaouy\Youtube\YoutubeServiceProvider::class,
 
         /*
          * Application Service Providers...

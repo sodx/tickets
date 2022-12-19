@@ -41,6 +41,7 @@ class CreateEventsTable extends Migration
             $table->integer('genre_id')->nullable();
             $table->integer('subgenre_id')->nullable();
             $table->integer('venue_id')->nullable();
+            $table->integer('tour_id')->nullable();
             $table->timestamps();
             $table->string('slug', 520)->nullable()->unique();
         });

@@ -9,5 +9,6 @@
 @section('content')
     <div class="content-container">
         @include('partials.events-container', $events)
+        @include('partials.tours-container', $tours)
     </div>
 @endsection

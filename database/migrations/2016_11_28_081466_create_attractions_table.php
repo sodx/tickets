@@ -13,7 +13,7 @@ class CreateAttractionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('attractions', function (Blueprint $table) {
+        Schema::create('attractions2', function (Blueprint $table) {
             $table->increments('attraction_id');
             $table->string('name', 256)->nullable();
             $table->string('ticketmaster_id', 256)->nullable();
@@ -29,6 +29,7 @@ class CreateAttractionsTable extends Migration
             $table->string('instagram', 128)->nullable();
             $table->string('thumbnail', 128)->nullable();
             $table->string('poster', 128)->nullable();
+            $table->string('video_ids', 520)->nullable();
             $table->timestamps();
             $table->string('slug', 520)->nullable()->unique();
         });

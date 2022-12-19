@@ -27,6 +27,8 @@ class SaveAttraction extends SaveDataFromTM
                     'instagram' => $data['externalLinks']['instagram'][0]['url'] ?? '',
                     'thumbnail' => $this->getSmallestImage($data['images']) ?? '',
                     'poster' => $this->getBiggestImage($data['images']) ?? '',
+                    'video_ids' => isset($data['externalLinks']['youtube']) ?
+                        $this->getVideoIds($data['externalLinks']['youtube'][0]['url']) : '',
                     'slug' => SlugService::createSlug(Attraction::class, 'slug', $data['name']) ?? '',
                 ]
             );
@@ -34,5 +36,17 @@ class SaveAttraction extends SaveDataFromTM
             $attraction = Attraction::where('ticketmaster_id', $data['id'])->first();
         }
         return $attraction;
+    }
+
+
+    /**
+     * Method to receive most viewed youtube videos by providen playlist url using youtube API.
+     */
+    public function getVideoIds($youtubeUrl)
+    {
+        if (empty($youtubeUrl)) {
+            return '';
+        }
+        return GetYoutubeVideosByURL::run($youtubeUrl);
     }
 }

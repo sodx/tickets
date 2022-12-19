@@ -1,0 +1,62 @@
+.event-sidebar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    position: relative;
+    height: 100%;
+
+
+    .material-symbols-outlined {
+        font-size: 22px;
+    }
+
+    &__date {
+        background: $red;
+        padding: 1rem !important;
+        margin-bottom: 1rem;
+
+        span {
+            color: white;
+        }
+
+        &-day {
+            font-family: $display-font-family;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        &-time {
+            width: 100%;
+            padding: 0 30px;
+        }
+    }
+
+    &__venue {
+        a {
+            color: $black;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 85%;
+        }
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0 1rem;
+    }
+
+    &__link {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        padding: 10px;
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,57 @@
+.ui-autocomplete {
+    background: $white;
+    border: 1px solid $gray-300;
+    border-radius: 0 0 $border-radius  $border-radius;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: $header-height !important;
+    z-index: 1000;
+    padding: 1rem;
+    // override default styles
+    &.ui-menu {
+        .ui-menu-item {
+            list-style-type: none;
+            margin-bottom: 10px;
+
+            .heading {
+                font-family: $display-font-family;
+                font-size: 16px;
+                font-weight: 700;
+            }
+
+            .image {
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
+                border-radius: 20px;
+                margin-right: 10px;
+            }
+
+            a {
+                color: $gray-700;
+                display: block;
+                padding: 0.5rem 0;
+                text-decoration: none;
+                &:hover {
+                    background: $gray-100;
+                }
+            }
+        }
+    }
+}
+
+.search-wrapper {
+    .form-control {
+        border: 0;
+        box-shadow: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        width: 300px;
+
+        &:focus,
+        &:focus-visible {
+            box-shadow: none;
+            outline: none;
+        }
+    }
+}

@@ -22,5 +22,4 @@ class SaveSubgenre extends SaveDataFromTM
         }
         return $subgenre;
     }
-
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
@@ -56,6 +57,7 @@ class Event extends Model
         'segment_id',
         'genre_id',
         'subgenre_id',
+        'tour_id',
         'meta_title',
         'meta_keywords',
         'meta_description',
@@ -121,6 +123,14 @@ class Event extends Model
         return $this->belongsTo('App\Models\Genre');
     }
 
+    /**
+     * Get the genre that owns the event.
+     */
+    public function tour()
+    {
+        return $this->belongsTo('App\Models\Tour');
+    }
+
 
     /**
      * Get the subgenre that owns the event.
@@ -137,7 +147,32 @@ class Event extends Model
 
     public function getFormattedDateTimeAttribute()
     {
-        return $this->start_date->format('M d') . ' ' . $this->start_time->format('H:i');
+        return $this->start_date->format('M d Y') . ' ' . $this->start_time->format('H:i');
+    }
+
+    public function slugifyEventName()
+    {
+        return Str::slug($this->name);
+    }
+
+    public function state()
+    {
+        return $this->venue->state;
+    }
+
+    public function city()
+    {
+        return $this->venue->city ?? null;
+    }
+
+    public function isFavorite()
+    {
+        $favorites = request()->cookie('favorites');
+        if ($favorites) {
+            $favorites = json_decode($favorites, true);
+            return in_array($this->event_id, $favorites);
+        }
+        return false;
     }
 
 

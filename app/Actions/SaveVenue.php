@@ -36,5 +36,4 @@ class SaveVenue extends SaveDataFromTM
         }
         return $venue;
     }
-
 }

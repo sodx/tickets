@@ -1,0 +1,15 @@
+.attractions-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.attractions-videos-slider {
+    height: 450px;
+
+    &__img {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+    }
+}
