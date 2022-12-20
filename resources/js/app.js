@@ -6,8 +6,7 @@ import './components/parallax';
 import './components/search';
 import './components/videoSlider';
 
-
-
+const body = document.querySelector('body');
 
 
 

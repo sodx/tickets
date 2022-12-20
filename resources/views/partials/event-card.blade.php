@@ -17,6 +17,8 @@
     <div class="event-card__footer">
         <small class="text-muted event-card__location"><span class="material-symbols-outlined">location_on</span>{{ $event->venue->name }}</small>
         <small class="text-muted"><span class="material-symbols-outlined">map</span>{{ $event->venue->city }}, {{ $event->venue->state_code  }}</small>
-        <small class="text-muted"><span class="material-symbols-outlined">payments</span>From {{ $event->price_min }} {{ $event->price_currency }}</small>
+        @if($event->price_min)
+            <small class="text-muted"><span class="material-symbols-outlined">payments</span>From {{ $event->price_min }} {{ $event->price_currency }}</small>
+        @endif
     </div>
 </a>

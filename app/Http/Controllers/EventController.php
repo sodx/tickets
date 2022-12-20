@@ -54,11 +54,12 @@ class EventController extends Controller
         ]);
     }
 
+
     public function favorites()
     {
         $favorites = request()->cookie('favorites');
         $favorites = json_decode($favorites, true);
-        $events = Event::whereIn('event_id', $favorites)->get();
+        $events = $favorites ? Event::whereIn('event_id', $favorites)->get() : [];
         return view('home', [
             'events' => $events,
             'tours' => []

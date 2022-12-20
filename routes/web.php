@@ -39,6 +39,9 @@ Route::get('/city/{location}', function ($location) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+    if ($location === 'All Cities') {
+        return $eventController->index();
+    }
     return $eventController->index($location, 'city');
 })->name('home');
 
@@ -137,7 +140,6 @@ Menu::macro('main', function () {
     return Menu::new()
         ->route('home', 'Home', [
             'location' => Slugify::run($activeCity['user_location']),
-            'type' => $activeCity['user_location_type']
         ])
         ->route('segment', 'Concerts', [
             'location' => Slugify::run($activeCity['user_location']),
@@ -160,7 +162,7 @@ Route::get('post/{slug}', function ($slug) {
     return view('post', compact('post'));
 });
 
-Route::controller(SearchController::class)->group(function(){
+Route::controller(SearchController::class)->group(function () {
     Route::get('demo-search', 'index');
     Route::get('autocomplete', 'autocomplete')->name('autocomplete');
 });

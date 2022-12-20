@@ -65,13 +65,33 @@ class Segment extends Model
     public function filterEventByLocation($location = '')
     {
         if ($location !== 'all-cities' && $location !== '') {
-            return $this->hasMany(Event::class, 'segment_id', 'id')
+            $events = $this->hasMany(Event::class, 'segment_id', 'id')
                 ->where('start_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')
                 ->whereHas('venue', function ($query) use ($location) {
                     $query->where('city', $location);
                 })->get();
         } else {
-            return $this->upcomingEvents()->get();
+            $events = $this->upcomingEvents()->get();
         }
+
+        return $this->groupTourEvents($events);
+    }
+
+    private function groupTourEvents($events)
+    {
+        $groups = $events->groupBy('tour_id');
+        $tourGroup = [
+            'single' => [],
+            'tour' => []
+        ];
+        foreach ($groups as $group) {
+            if (count($group) > 1) {
+                $tourGroup['tour'][] = $group;
+            } else {
+                $tourGroup['single'][] = $group[0];
+            }
+        }
+
+        return $tourGroup;
     }
 }
