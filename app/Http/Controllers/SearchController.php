@@ -72,7 +72,7 @@ class SearchController extends Controller
                 'name' => $event->name,
                 'url' => route('event', [
                     'location' => Slugify::run($event->city()),
-                    'date' => $event->getFormattedDateAttribute(),
+                    'segment' => $event->segment->slug,
                     'slug' => $event->slug
                 ]),
                 'image' => $event->thumbnail,

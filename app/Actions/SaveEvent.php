@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\GenerateSeoMeta;
 use App\Models\Event;
 use App\Models\Genre;
 use App\Models\Segment;
@@ -9,14 +10,22 @@ use App\Models\Subgenre;
 use App\Models\Venue;
 use App\Models\Tour;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use App\Actions\GenerateSeoMeta;
 
 class SaveEvent extends SaveDataFromTM
 {
-    public function upsertData(array $data): Event
+    public function upsertData(array $data): Event | null
     {
+        if (!isset($data['_embedded']['attractions'])) {
+            return null;
+        }
+
+        $info = GenerateSeoMeta::run($data);
+        $info = isset($info['info']) ? $info['info'] : '';
+        $info = isset($data['info']) ? $info . ' ' . $data['info'] : $info;
+
         $venue = $this->saveVenue($data['_embedded']['venues'][0]);
         $attractions = $this->saveAttractions($data['_embedded']['attractions']);
+
         $event = Event::updateOrCreate(
             ['ticketmaster_id' => $data['id']],
             [
@@ -34,8 +43,9 @@ class SaveEvent extends SaveDataFromTM
                 'slug' => SlugService::createSlug(Event::class, 'slug', $data['name']),
                 'thumbnail' => $this->getSmallestImage($data['images']),
                 'poster' => $this->getBiggestImage($data['images']),
+                'medium_image' => $this->getMediumImage($data['images']),
                 'seatmap' => $data['seatmap']['staticUrl'] ?? '',
-                'info' => $data['info'] ?? '',
+                'info' => $info,
                 'pleaseNote' => $data['pleaseNote'] ?? '',
                 'meta_title' => $this->generateTitle($data),
                 'meta_keywords' => '',
@@ -47,9 +57,15 @@ class SaveEvent extends SaveDataFromTM
         );
 
         $event->attractions()->sync($attractions->pluck('attraction_id'));
-        $event->subgenre()->associate($this->saveSubgenre($data['classifications'][0]['subGenre']));
-        $event->genre()->associate($this->saveGenre($data['classifications'][0]['genre']));
-        $event->segment()->associate($this->saveSegment($data['classifications'][0]['segment']));
+        if (isset($data['classifications'][0]['subGenre'])) {
+            $event->subgenre()->associate($this->saveSubgenre($data['classifications'][0]['subGenre']));
+        }
+        if (isset($data['classifications'][0]['genre'])) {
+            $event->genre()->associate($this->saveGenre($data['classifications'][0]['genre']));
+        }
+        if (isset($data['classifications'][0]['segment'])) {
+            $event->segment()->associate($this->saveSegment($data['classifications'][0]['segment']));
+        }
         $event->tour()->associate($this->saveTour($data));
 
         $event->save();

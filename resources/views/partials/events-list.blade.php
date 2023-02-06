@@ -1,5 +1,6 @@
 @inject('slugify', 'App\Actions\Slugify')
 @if($events)
+    <div class="events-list-section">
     <h3>{{$events[0]->name}}</h3>
     <div class="events-grid">
         <div class="events-grid__row events-grid__row--heading">
@@ -26,9 +27,16 @@
             </div>
         </div>
         @foreach($events as $event)
+            @inject('eventSchema', 'App\Actions\GenerateEventSchema')
+            @php
+                $schema = $eventSchema->handle($event)
+            @endphp
+            {!! $schema['event'] !!}
             <div class="events-grid__row">
                 <div class="events-grid__item events-grid__item--small">
-                    <img src="{{ $event->venue->image }}" alt="{{ $event->venue->name }}"/>
+                    @if($event->venue->image)
+                        <img src="{{ $event->venue->image }}" alt="{{ $event->venue->name }}"/>
+                    @endif
                 </div>
                 <div class="events-grid__item events-grid__item--small">
                     {{ $event->venue->state_code }}
@@ -48,7 +56,7 @@
                 <div class="events-grid__item">
                     <a class="btn btn-ghost" href="{{ route('event', [
                         'slug' => $event->slug,
-                        'date' => $event->getFormattedDateAttribute(),
+                        'segment' => $event->segment->slug,
                         'location' => $slugify->handle($event->venue->city)])
                         }}">More Info</a>
                 </div>
@@ -57,5 +65,6 @@
                 </div>
             </div>
         @endforeach
+    </div>
     </div>
 @endif

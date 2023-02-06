@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('partials.head')
-<body style="opacity: 0;">
+<body>
 @include('partials.header')
-
 <main class="page">
     @yield('content')
+    @inject('recentlyViewed', 'App\Actions\GetRecentlyViewed')
+    @php
+        $recentlyViewedEvents = $recentlyViewed->handle();
+    @endphp
+    @include('partials.recently-viewed-container', $recentlyViewedEvents)
 </main>
 @include('partials.footer')
 <script>
@@ -13,5 +17,6 @@
         document.body.classList.add('loaded');
     }
 </script>
+@include('partials.schema')
 </body>
 </html>

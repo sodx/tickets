@@ -27,8 +27,12 @@ class ParseTicketMasterQueryOutput
             ?? env('TICKETMASTER_QUERY_SIZE')
             ?? 20
         );
-
-        $this->iterateThroughOutput($output);
+        try {
+            $this->iterateThroughOutput($output);
+        } catch (\Exception $e) {
+            ray($e);
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -39,7 +43,12 @@ class ParseTicketMasterQueryOutput
      */
     private function iterateThroughOutput(array $output): void
     {
-        $events = $output['_embedded']['events'];
+        ray($output);
+        $events = $output['_embedded']['events'] ?? [];
+        if(empty($events)) {
+            ray('No events found');
+            return;
+        }
         foreach ($events as $event) {
             $this->processEvent($event);
         }

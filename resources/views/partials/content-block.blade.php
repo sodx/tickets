@@ -5,7 +5,13 @@
             {!! $content !!}
         @endif
         @if( isset( $image ) )
+            @if(isset($imageLink))
+                <a href="{{ $imageLink }}" target="_blank">
+            @endif
             <img src="{{ $image }}" alt="{{$title}}"/>
-        @endif
+            @if(isset($imageLink))
+                </a>
+            @endif
+            @endif
     </div>
 </div>

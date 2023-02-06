@@ -2,18 +2,19 @@
 
 namespace App\Actions;
 
+use App\Actions\GenerateSeoMeta;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 abstract class SaveDataFromTM
 {
     use AsAction;
 
-    public function handle($data): object
+    public function handle($data): object | null
     {
         return $this->upsertData($data);
     }
 
-    public function upsertData(array $data): object
+    public function upsertData(array $data): object | null
     {
         return (object)$data;
     }
@@ -84,6 +85,20 @@ abstract class SaveDataFromTM
         return $biggestImage['url'];
     }
 
+    protected function getMediumImage(array $images): string | null
+    {
+        if (empty($images)) {
+            return null;
+        }
+        $mediumImage = $images[0];
+        foreach ($images as $image) {
+            if ($image['width'] > $mediumImage['width'] && $image['width'] < 600) {
+                $mediumImage = $image;
+            }
+        }
+        return $mediumImage['url'];
+    }
+
     /**
      * Get the smallest image from array of images.
      *
@@ -107,12 +122,13 @@ abstract class SaveDataFromTM
 
     protected function generateTitle($event): string
     {
-        return $event['name'];
+        $meta = GenerateSeoMeta::run($event);
+        return $meta['title'];
     }
-
 
     protected function generateDescription($event): string
     {
-        return $event['name'];
+        $meta = GenerateSeoMeta::run($event);
+        return $meta['description'];
     }
 }

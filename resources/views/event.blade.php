@@ -1,8 +1,12 @@
 @extends('layouts.app')
-
+@inject('slugify', 'App\Actions\Slugify')
+@inject('activeCity', 'App\Actions\GetActiveCity')
+@php
+    $activeCity = $activeCity->handle();
+@endphp
 @section('title', $event->title)
-
 @section('content')
+    <div class="event-item" data-id="{{$event->event_id}}"></div>
     <figure class="event-poster">
         <div class="event-poster__image-wrapper" id="parallax-scene">
             <div class="event-poster__image" style="background-image:url({{ $event->poster }})"></div>
@@ -19,16 +23,18 @@
                 </div>
                 <div class="event-meta">
                     @if( $event->segment )
-                        <a class="event-meta__link" title="{{ $event->segment->name }}" href="{{ route('segment', ['slug' => $event->segment->slug, 'location' => 'all-cities']) }}">
+                        <a class="event-meta__link" title="{{ $event->segment->name }}" href="{{ route('segment', ['slug' => $event->segment->slug, 'location' => $slugify->handle($activeCity['user_location'])]) }}">
                             {{ $event->segment->name }}
                         </a>
                     @endif
                     @if( $event->genre )
-                        <a class="event-meta__link" title=""  href="{{ route('genre', ['slug' => $event->genre->slug, 'location' => 'all-cities' ]) }}">
+                        <a class="event-meta__link" title=""  href="{{ route('genre', ['slug' => $event->genre->slug, 'location' => $slugify->handle($activeCity['user_location']) ]) }}">
                             {{ $event->genre->name }}
                         </a>
                     @endif
                 </div>
+                {!! Breadcrumbs::view('breadcrumbs::json-ld', 'event', $slugify->handle($event->venue->city), $event->segment->slug, $event->slug); !!}
+                {{ Breadcrumbs::render('event', $slugify->handle($event->venue->city), $event->segment->slug, $event->slug) }}
             </div>
         </figcaption>
     </figure>
@@ -85,7 +91,8 @@
                     @if($event->seatmap)
                         @include('partials.content-block', [
                             'title' => 'Seatmap',
-                            'image' => $event->seatmap
+                            'image' => $event->seatmap,
+                            'imageLink' => $event->url
                         ])
                     @endif
                 </section>
@@ -127,3 +134,6 @@
     </div>
 @endsection
 
+@section('schema')
+    {!! $schema !!}
+@endsection

@@ -44,8 +44,9 @@ class GenerateTicketMasterQuery
             'startDateTime' => $this->getFormattedDate(setting('ticketmaster.startDateTime')),
             'endDateTime' => $this->getFormattedDate(setting('ticketmaster.endDateTime')),
             'size' => setting('ticketmaster.size') ?? env('TICKETMASTER_QUERY_SIZE') ?? 20,
+            //'size' => 1,
             'page' => setting('ticketmaster.page') ?? 0,
-            'sort' => setting('ticketmaster.sort'),
+            'sort' => setting('ticketmaster.sort') ?? 'rand',
             'onsaleStartDateTime' => $this->getFormattedDate(setting('ticketmaster.onsaleStartDateTime'))
                 ?? $this->getDefaultOnSaleStartDateTime(),
             'onsaleEndDateTime' => $this->getFormattedDate(setting('ticketmaster.onsaleEndDateTime'))

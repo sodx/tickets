@@ -1,10 +1,12 @@
 @import "@splidejs/splide/dist/css/splide.min.css";
 @import "@splidejs/splide-extension-video/dist/css/splide-extension-video.min.css";
+@import "js-datepicker/dist/datepicker.min.css";
 @import "fonts";
 @import "bootstrap";
 @import "global";
 @import "resources/sass/components/_attractions";
 @import "resources/sass/components/_attraction-card";
+@import "components/breadcrumbs";
 @import "components/content-block";
 @import "components/city-picker";
 @import "components/header";
@@ -17,6 +19,7 @@
 @import "components/page-nav";
 @import "components/event-meta";
 @import "components/search";
+@import "components/footer";
 @import "components/sticky-sidebar";
 @import "components/venue-card";
 @import "components/venue-poster";

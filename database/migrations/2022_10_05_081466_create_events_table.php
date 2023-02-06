@@ -23,6 +23,7 @@ class CreateEventsTable extends Migration
             $table->text('pleaseNote', 65535)->nullable();
             $table->string('thumbnail', 256)->nullable();
             $table->string('poster', 256)->nullable();
+            $table->string('medium_image', 256)->nullable();
             $table->text('images', 65535)->nullable();
             $table->integer('price_min')->nullable();
             $table->integer('price_max')->nullable();

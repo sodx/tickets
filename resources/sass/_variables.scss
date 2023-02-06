@@ -6,7 +6,7 @@ $font-family-sans-serif: "Quicksand", sans-serif;
 $font-family-monospace: "Roboto Mono", monospace;
 $headings-font-family: "Bebas Neue", cursive;
 $display-font-family: "Bebas Neue", cursive;
-$primary: #4fb75d;
+$primary: $red;
 $link-color: $primary;
 $link-shade-percentage: 40%;
 $link-hover-color: shift-color($link-color, $link-shade-percentage);

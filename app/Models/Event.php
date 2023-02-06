@@ -6,11 +6,13 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Kyslik\ColumnSortable\Sortable;
 
 class Event extends Model
 {
     use Sluggable;
     use HasFactory;
+    use Sortable;
 
 
     /**
@@ -45,6 +47,7 @@ class Event extends Model
         'info',
         'pleaseNote',
         'thumbnail',
+        'medium_image',
         'poster',
         'images',
         'price_min',
@@ -88,6 +91,11 @@ class Event extends Model
         'status' => 'boolean',
     ];
 
+    public $sortable = [
+        'name',
+        'start_date',
+        'views',
+    ];
 
     /**
      * Get attractions for the event.

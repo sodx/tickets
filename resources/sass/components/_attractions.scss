@@ -2,6 +2,10 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
+
+    @include media-breakpoint-down(lg) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 .attractions-videos-slider {

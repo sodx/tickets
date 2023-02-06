@@ -5,6 +5,7 @@ body.modal-open {
         display: block;
     }
 }
+
 .modal-overlay {
     display: none;
     position: fixed;
@@ -15,6 +16,7 @@ body.modal-open {
     background: rgba($black, 0.5);
     z-index: 999;
 }
+
 .modal {
     position: fixed;
     top: 0;
@@ -50,6 +52,7 @@ body.modal-open {
 
     &__content {
         @extend .card-item;
+
         width: 500px;
         overflow: hidden;
         position: absolute;

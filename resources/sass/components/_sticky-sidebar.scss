@@ -9,4 +9,14 @@
     margin-top: -147px;
     padding: 0;
     z-index: 12;
+
+    @include media-breakpoint-down(lg) {
+        position: fixed;
+        bottom: 0;
+        top: initial;
+        margin-top: 0;
+        width: 100%;
+        height: auto;
+        border-radius: 0;
+    }
 }

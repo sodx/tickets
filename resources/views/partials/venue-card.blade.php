@@ -1,7 +1,9 @@
 <a class="venue-card" href="{{ route('venue', $venue->slug) }}">
+    @if($venue->image)
     <figure class="venue-card__image">
         <img src="{{$venue->image}}" alt="{{$venue->name}}"/>
     </figure>
+    @endif
     <figcaption class="venue-card__content">
         <h3 class="venue-card__title">{{ $venue->name }}</h3>
         <ul class="venue-card__meta">

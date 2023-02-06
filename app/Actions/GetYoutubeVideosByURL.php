@@ -23,7 +23,7 @@ class GetYoutubeVideosByURL
         $videos = '';
 
         if ($this->contentType == 'playlist') {
-            $this->ID = $this->getYoutubeVideosFromPlaylist();
+            $this->ID = $this->retrieveChannelIDByPlaylist();
         } elseif ($this->contentType == 'user') {
             $this->ID = $this->retrieveChannelIDByAccountName();
         }
@@ -94,6 +94,17 @@ class GetYoutubeVideosByURL
         try {
             $channel = $this->youtubeService->getChannelByName($this->ID);
             return $channel->id;
+        } catch (\Exception $e) {
+            $this->issues[] = $e->getMessage();
+            return $e;
+        }
+    }
+
+    protected function retrieveChannelIDByPlaylist()
+    {
+        try {
+            $playlist = $this->youtubeService->getPlaylistById($this->ID);
+            return $playlist->snippet->channelId;
         } catch (\Exception $e) {
             $this->issues[] = $e->getMessage();
             return $e;

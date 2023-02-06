@@ -25,11 +25,12 @@ class SaveAttraction extends SaveDataFromTM
                     'facebook' => $data['externalLinks']['facebook'][0]['url'] ?? '',
                     'homepage' => $data['externalLinks']['homepage'][0]['url'] ?? '',
                     'instagram' => $data['externalLinks']['instagram'][0]['url'] ?? '',
-                    'thumbnail' => $this->getSmallestImage($data['images']) ?? '',
-                    'poster' => $this->getBiggestImage($data['images']) ?? '',
+                    'thumbnail' => isset($data['images']) ? $this->getSmallestImage($data['images']) : '',
+                    'poster' => isset($data['images']) ? $this->getBiggestImage($data['images']) : '',
+                    'medium_image' => isset($data['images']) ? $this->getMediumImage($data['images']) : '',
                     'video_ids' => isset($data['externalLinks']['youtube']) ?
                         $this->getVideoIds($data['externalLinks']['youtube'][0]['url']) : '',
-                    'slug' => SlugService::createSlug(Attraction::class, 'slug', $data['name']) ?? '',
+                    'slug' => isset($data['name']) ? SlugService::createSlug(Attraction::class, 'slug', $data['name']) : '',
                 ]
             );
         } else {

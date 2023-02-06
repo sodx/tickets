@@ -46,6 +46,7 @@ class Attraction extends Model
         'instagram',
         'thumbnail',
         'poster',
+        'medium_image',
         'video_ids',
         'slug',
     ];

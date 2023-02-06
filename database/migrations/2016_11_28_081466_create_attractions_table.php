@@ -29,6 +29,7 @@ class CreateAttractionsTable extends Migration
             $table->string('instagram', 128)->nullable();
             $table->string('thumbnail', 128)->nullable();
             $table->string('poster', 128)->nullable();
+            $table->string('medium_image', 256)->nullable();
             $table->string('video_ids', 520)->nullable();
             $table->timestamps();
             $table->string('slug', 520)->nullable()->unique();

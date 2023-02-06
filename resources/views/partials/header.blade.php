@@ -5,6 +5,15 @@
 <header class="sticky-header">
     <div class="content-wrapper">
         <div class="navigation-left">
+            <nav class="navigation navigation-mobile">
+                <button class="navigation-mobile-toggler">
+                    <span class="material-symbols-outlined navigation-mobile-toggler-open">menu</span>
+                    <span class="material-symbols-outlined navigation-mobile-toggler-close">close</span>
+                </button>
+                <div class="navigation-mobile-items">
+                    {!! Menu::main() !!}
+                </div>
+            </nav>
             <a href="{{route('home', $activeCity['user_location'])}}" class="logo" rel="nofollow">Logo</a>
             <nav class="navigation navigation-main">
                 {!! Menu::main() !!}
@@ -43,9 +52,9 @@
                     @if($citiesArr)
                         @foreach($citiesArr as $state => $cities)
                             <div class="city-picker__state">
-                                <a href="{{ route('home', [ 'location' => $slugify->handle($state), 'type' => 'state' ]) }}" data-type="state" class="city-picker__link city-picker__state-link city-picker__searchable">{{ $state }}</a>
+                                <a href="#" data-type="state" class="city-picker__link city-picker__state-link city-picker__searchable">{{ $state }}</a>
                                 @foreach($cities as $city)
-                                    <a href="{{ route('home', ['location' => $slugify->handle($city), 'type' => 'city' ]) }}" data-type="city" class="city-picker__link city-picker__city-link city-picker__searchable">{{ $city }}</a>
+                                    <a href="{{ route('city', ['location' => $slugify->handle($city)]) }}" data-type="city" class="city-picker__link city-picker__city-link city-picker__searchable">{{ $city }}</a>
                                 @endforeach
                             </div>
                         @endforeach

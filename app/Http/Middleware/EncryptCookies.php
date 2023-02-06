@@ -15,5 +15,6 @@ class EncryptCookies extends Middleware
         'user_location',
         'user_location_type',
         'favorites',
+        'recently_viewed'
     ];
 }
