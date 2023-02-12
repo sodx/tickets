@@ -27,9 +27,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            ls
-          #script: "cd /var/www/liveconcerts && ./scripts/deploy.sh"
+          script: "cd /var/www/liveconcerts && ./scripts/deploy.sh"
 # jobs:
 #   deploy:
 #     runs-on: ubuntu-latest
