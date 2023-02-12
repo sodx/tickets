@@ -1,0 +1,62 @@
+.city-picker {
+    &__search {
+        margin-bottom: 1rem;
+    }
+
+    &__search-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+    }
+
+    &__search-input:focus {
+        outline: none;
+        border-color: #000;
+    }
+
+    &__search-input::placeholder {
+        color: #ccc;
+    }
+
+    &__search-input:disabled {
+        background-color: #eee;
+    }
+
+    &__search-btn {
+        display: none;
+    }
+
+    &__cities {
+        column-count: 2;
+    }
+
+    &__state {
+        margin-bottom: 1rem;
+    }
+
+    &__state-link {
+        display: block;
+        font-weight: 700;
+        font-size: 18px;
+        text-decoration: none;
+        font-family: $display-font-family;
+        color: #000;
+    }
+
+    &__state-link:hover {
+        background-color: #eee;
+    }
+
+    &__city-link {
+        display: block;
+        margin-bottom: 0.5rem;
+        text-decoration: none;
+        color: #000;
+        padding-left: 10px;
+    }
+
+    &__city-link:hover {
+        background-color: #eee;
+    }
+}

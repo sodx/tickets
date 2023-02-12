@@ -1,0 +1,28 @@
+.event-meta {
+    display: flex;
+    gap: 1rem;
+
+    &__link {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        color: $white;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        text-align: center;
+        padding: 0.5rem;
+        background: $primary;
+        transition: all 0.3s ease-in-out;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        z-index: 2;
+        box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.15);
+
+        &:hover {
+            background-color: $link-hover-color;
+            color: $white;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+.content-block {
+    @extend .card-item;
+
+    &__body {
+        img,
+        iframe {
+            width: 100%;
+        }
+    }
+
+    &__title {
+
+    }
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
