@@ -2,7 +2,7 @@
 @php
     $activeCity = $activeCity->handle();
 @endphp
-<header class="sticky-header">
+<header class="sticky-header loading">
     <div class="content-wrapper">
         <div class="navigation-left">
             <nav class="navigation navigation-mobile">

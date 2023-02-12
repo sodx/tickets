@@ -31,10 +31,10 @@ class GetCities
     {
         $output = [];
         foreach ($this->venues as $venue) {
-            if( !isset($output[$venue->state]) ) {
+            if (!isset($output[$venue->state])) {
                 $output[$venue->state] = [];
             }
-            if(!in_array($venue->city, $output[$venue->state])) {
+            if (!in_array($venue->city, $output[$venue->state])) {
                 $output[$venue->state][] = $venue->city;
             }
         }

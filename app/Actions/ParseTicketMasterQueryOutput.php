@@ -45,7 +45,7 @@ class ParseTicketMasterQueryOutput
     {
         ray($output);
         $events = $output['_embedded']['events'] ?? [];
-        if(empty($events)) {
+        if (empty($events)) {
             ray('No events found');
             return;
         }

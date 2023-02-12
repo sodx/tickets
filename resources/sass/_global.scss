@@ -5,10 +5,10 @@ body {
     margin: 0;
     padding: 0;
     transition: opacity 0.3s ease-in-out;
+}
 
-    &.loaded {
-        opacity: 1 !important;
-    }
+.loaded {
+    opacity: 1 !important;
 }
 
 ::selection {
@@ -145,14 +145,15 @@ main {
 
 .attraction-links {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
 
     a {
-        color: $body-color;
+        color: $white;
     }
 
     svg {
+        fill: white;
         margin-right: 5px;
         width: 30px;
         height: 30px;

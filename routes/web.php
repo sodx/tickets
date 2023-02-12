@@ -1,11 +1,15 @@
 <?php
 
 use App\Actions\GenerateEventSchema;
+use App\Actions\GetMenuItems;
+use App\Http\Controllers\AttractionsSitemapController;
 use App\Http\Controllers\EventCitySitemapController;
 use App\Http\Controllers\EventSitemapController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\ToursSitemapController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VenuesSitemapController;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -207,83 +211,67 @@ Route::get('perform', function () {
     $tt->index();
 });
 
+function getSubMenu($menuItems, $key, $activeCity)
+{
+    if (!array_key_exists($key, $menuItems)) {
+        return;
+    }
+    $menu = Menu::new();
+    $menu->addClass('submenu');
+    foreach ($menuItems[$key]['genres'] as $genre) {
+        if ($genre->slug === 'undefined') {
+            continue;
+        }
+        $menu->route('genre', $genre->name, [
+            'location' => Slugify::run($activeCity['user_location']),
+            'slug' => $genre->slug,
+        ]);
+    }
+    return $menu;
+}
+
+function getSubMenuHeader($menuItems, $key, $activeCity)
+{
+    if (!array_key_exists($key, $menuItems)) {
+        return '';
+    }
+    return '<a class="has-submenu"
+        href="/city/' . Slugify::run($activeCity['user_location']) . '/segment/'.$menuItems[$key]['slug'].'">'
+        .$menuItems[$key]['name'] .'<span class="material-symbols-outlined">arrow_drop_down</span></a>';
+}
+
 Menu::macro('main', function () {
     $activeCity = GetActiveCity::run();
-    $concertsUrl = '<a class="has-submenu" href="/city/' . Slugify::run($activeCity['user_location']) . '/segment/music">Concerts</a>';
-    $sportsUrl = '<a class="has-submenu" href="/city/' . Slugify::run($activeCity['user_location']) . '/segment/sports">Sports</a>';
+    $menuItems = GetMenuItems::run();
+
     return Menu::new()
         ->route('city', 'Home', [
             'location' => Slugify::run($activeCity['user_location']),
         ])
-        ->submenu(
-            $concertsUrl,
-            Menu::new()
-                ->addClass('submenu')
-                ->route('genre', 'Country', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'country'
-                ])
-                ->route('genre', 'Rock', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'rock'
-                ])
-                ->route('genre', 'Pop', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'pop'
-                ])
-                ->route('genre', 'R&B', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'r-b'
-                ])
-                ->route('genre', 'Hip Hop', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'hip-hop'
-                ])
-                ->route('genre', 'Jazz', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'jazz'
-                ])
-                ->route('genre', 'Classical', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'classical'
-                ])
-                ->route('genre', 'Folk', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'folk'
-                ])
-                ->route('genre', 'Blues', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'blues'
-                ])
-                ->route('genre', 'Metal', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'metal'
-                ])
-                ->route('genre', 'Dance/Electronic', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'dance-electronic'
-                ])
+        ->submenuIf(
+            array_key_exists(0, $menuItems),
+            getSubMenuHeader($menuItems, 0, $activeCity),
+            getSubMenu($menuItems, 0, $activeCity)
         )
-        ->submenu(
-            $sportsUrl,
-            Menu::new()
-                ->addClass('submenu')
-                ->route('genre', 'Baseball', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'baseball'
-                ])
-                ->route('genre', 'Football', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'football'
-                ])
-                ->route('genre', 'Basketball', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'basketball'
-                ])
-                ->route('genre', 'Tennis', [
-                    'location' => Slugify::run($activeCity['user_location']),
-                    'slug' => 'tennis'
-                ])
+        ->submenuIf(
+            array_key_exists(1, $menuItems),
+            getSubMenuHeader($menuItems, 1, $activeCity),
+            getSubMenu($menuItems, 1, $activeCity)
+        )
+        ->submenuIf(
+            isset($menuItems[2]),
+            getSubMenuHeader($menuItems, 2, $activeCity),
+            getSubMenu($menuItems, 2, $activeCity)
+        )
+        ->submenuIf(
+            isset($menuItems[3]),
+            getSubMenuHeader($menuItems, 3, $activeCity),
+            getSubMenu($menuItems, 3, $activeCity)
+        )
+        ->submenuIf(
+            isset($menuItems[4]),
+            getSubMenuHeader($menuItems, 4, $activeCity),
+            getSubMenu($menuItems, 4, $activeCity)
         )
         ->setActiveFromRequest();
 });
@@ -296,9 +284,6 @@ Menu::macro('footer', function () {
         ])
         ->setActiveFromRequest();
 });
-
-
-
 
 Route::get('display-user', [UserController::class, 'index']);
 
@@ -315,5 +300,8 @@ Route::controller(SearchController::class)->group(function () {
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
 Route::get('/sitemap/events.xml', [EventSitemapController::class, 'index'])->name('sitemap.events.index');
 Route::get('/sitemap/events/{letter}.xml', [EventSitemapController::class, 'show'])->name('sitemap.events.show');
-Route::get('/sitemap/eventsCity.xml', [EventCitySitemapController::class, 'index'])->name('sitemap.eventsCity.index');
-Route::get('/sitemap/eventsCity.xml', [EventCitySitemapController::class, 'show'])->name('sitemap.eventsCity.show');
+Route::get('/sitemap/events-cities.xml', [EventCitySitemapController::class, 'index'])->name('sitemap.eventsCity.index');
+Route::get('/sitemap/events-cities/{city}.xml', [EventCitySitemapController::class, 'show'])->name('sitemap.eventsCity.show');
+Route::get('/sitemap/venues.xml', [VenuesSitemapController::class, 'index'])->name('sitemap.venues.index');
+Route::get('/sitemap/attractions.xml', [AttractionsSitemapController::class, 'index'])->name('sitemap.attractions.index');
+Route::get('/sitemap/tours.xml', [ToursSitemapController::class, 'index'])->name('sitemap.tours.index');

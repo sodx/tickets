@@ -7,6 +7,10 @@
         height: 500px;
         overflow: hidden;
         position: relative;
+
+        &--featured {
+            height: 600px;
+        }
     }
 
     &__image {
@@ -31,12 +35,16 @@
         flex-direction: column;
         justify-content: flex-end;
         align-items: flex-start;
-    }
 
-    &__title-block {
+        &--centered {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
     }
 
     &__title {
+        font-family: $headings-font-family;
         font-size: 6rem;
         font-weight: 700;
         color: $white;
@@ -48,6 +56,35 @@
         @include media-breakpoint-down(lg) {
             font-size: 4rem;
         }
+
+        &--featured {
+            line-height: 1.1;
+            margin: 0 auto;
+            display: block;
+            width: 60%;
+            font-size: 8rem;
+            color: white; /* Unfortunately you can't use transparent here … */
+            text-shadow:
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+            border-bottom: 1px solid $white;
+
+            /* Real outline for modern browsers */
+            @supports ((text-stroke: 1px $white) or (-webkit-text-stroke: 1px $white)) {
+                color: transparent;
+                -webkit-text-stroke: 0.5px $white;
+                text-stroke: 0.5px $white;
+                text-shadow: none;
+            }
+        }
+    }
+
+    &__date {
+        display: block;
+        margin: 1rem;
+        font-size: 1rem;
     }
 
     &__favorites {

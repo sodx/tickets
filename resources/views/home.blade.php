@@ -1,32 +1,33 @@
 @extends('layouts.app')
-
 @section('title', 'HomePage')
-
 @section('sidebar')
     @parent
 @endsection
+@inject('slugify', 'App\Actions\Slugify')
 @inject('activeCity', 'App\Actions\GetActiveCity')
 @php
     $activeCity = $activeCity->handle();
 @endphp
 @section('content')
+    @include('partials.featured-event', ['event' => $featuredEvent])
     <div class="content-container">
         <h1 class="page-heading">{{$h1}}</h1>
-        {!! Breadcrumbs::view('breadcrumbs::json-ld'); !!}
         {{ Breadcrumbs::render() }}
-        @if($topViewed)
+        @if($topViewed && count($topViewed) > 1)
             <section class="page-section">
-                <h2>Most Popular Upcoming Events</h2>
+                <h2>Most Popular Upcoming Events in {{$location}}</h2>
                 @include('partials.events-container', ['events' => $topViewed])
             </section>
         @endif
-        @if($events)
+        @if($events && count($events) > 1 && count($events) >= count($topViewed))
             <section class="page-section">
-                <h2>All Events</h2>
+                <h2>All Events in {{$events[0]->city()}}</h2>
                 @include('partials.events-container', $events)
-                <div class="btn-wrapper">
-                <a href="{{route('events', $activeCity['user_location'] )}}" class="btn">Load More Events</a>
-                </div>
+                @if(count($events) > 7)
+                    <div class="btn-wrapper">
+                        <a href="{{route('events', $slugify->handle( $location ) )}}" class="btn">Load More Events</a>
+                    </div>
+                @endif
             </section>
             @if(isset($links))
                 {!! $links !!}
@@ -34,11 +35,13 @@
         @endif
         @if($tours)
             <section class="page-section">
-                <h2>All Tours in {{$activeCity['user_location']}}</h2>
+                <h2>All Tours in {{$location}}</h2>
                 @include('partials.tours-container', $tours)
-                <div class="btn-wrapper">
-                    <a href="" class="btn">Load More Tours</a>
-                </div>
+                @if(count($tours) > 3)
+                    <div class="btn-wrapper">
+                        <a href="" class="btn">Load More Tours</a>
+                    </div>
+                @endif
             </section>
         @endif
     </div>

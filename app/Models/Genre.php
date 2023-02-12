@@ -61,6 +61,13 @@ class Genre extends Model
         return $this->events()->where('start_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc');
     }
 
+    public function eventsInCity($city)
+    {
+        return $this->events()->whereHas('venue', function ($query) use ($city) {
+            $query->where('city', $city);
+        })->get();
+    }
+
     public function filterEventByLocation($location = '')
     {
         if ($location !== 'all-cities' && $location !== '') {

@@ -32,7 +32,7 @@ class SearchController extends Controller
         $city = GetActiveCity::run();
         $events = Event::select()
             ->where('name', 'LIKE', '%'. $request->get('search'). '%')
-            ->where('start_date','>=', date('Y-m-d'))
+            ->where('start_date', '>=', date('Y-m-d'))
             ->get()->sortBy('start_date');
 
         $eventsInUserCity = $events->filter(function ($event) use ($city) {

@@ -14,12 +14,17 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('home'));
 });
 
-
 // Home > [City Name]
 Breadcrumbs::for('city', function (BreadcrumbTrail $trail, $location) {
     $trail->parent('home');
     $unslugify = new Unslugify();
     $trail->push($unslugify->handle($location), route('city', $location));
+});
+
+// Home > [City Name] > Events
+Breadcrumbs::for('events', function (BreadcrumbTrail $trail, $location) {
+    $trail->parent('city', $location);
+    $trail->push('Events', route('city', $location));
 });
 
 // Home > [City Name] > [Segment Name]
@@ -33,7 +38,8 @@ Breadcrumbs::for('segment', function (BreadcrumbTrail $trail, $location, $segmen
 Breadcrumbs::for('event', function (BreadcrumbTrail $trail, $location, $segment, $event) {
     $trail->parent('segment', $location, $segment);
     $unslugify = new Unslugify();
-    $trail->push($unslugify->handle($event), route('event', ['location' => $location, 'segment' => $segment, 'slug' => $event]));
+    $event = \App\Models\Event::where('slug', $event)->first();
+    $trail->push($event->name, route('event', ['location' => $location, 'segment' => $segment, 'slug' => $event]));
 });
 
 Breadcrumbs::for('genre', function (BreadcrumbTrail $trail, $location, $genre) {

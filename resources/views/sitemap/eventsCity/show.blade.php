@@ -1,15 +1,19 @@
 @inject('slugify', 'App\Actions\Slugify')
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    @foreach ($cities as $city)
-        <url>
-            <loc>{{ route('event', [
-                'slug' => $event->slug,
-                 'segment' => $event->segment->slug,
-                'location' => $slugify->handle($event->venue->city)])
+    <url>
+        <loc>{{ route('city', [
+                'location' => $city,
+                ])
                 }}</loc>
-            <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.6</priority>
+        <lastmod>{{ $segments[0]->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+    </url>
+    @foreach ($segments as $segment)
+        <url>
+            <loc>{{ route('segment', [
+                'location' => $city,
+                'slug' => $segment->slug])
+                }}</loc>
+            <lastmod>{{ $segment->updated_at->tz('UTC')->toAtomString() }}</lastmod>
         </url>
     @endforeach
 </urlset>

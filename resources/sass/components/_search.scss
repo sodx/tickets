@@ -7,6 +7,8 @@
     top: $header-height !important;
     z-index: 1000;
     padding: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
 
     // override default styles
     &.ui-menu {

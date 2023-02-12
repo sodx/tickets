@@ -228,9 +228,9 @@ class GenerateSeoMeta
         $variables = $this->parseVariableName($string);
 
         foreach ($variables as $variable) {
-            if($variable === 'start_date') {
+            if ($variable === 'start_date') {
                 $eventVar = $event['dates']['start']['localDate'];
-            } elseif($variable === 'venue->name') {
+            } elseif ($variable === 'venue->name') {
                 $eventVar = $event['_embedded']['venues'][0]['name'];
             } elseif ($variable === 'state') {
                 $eventVar = $event['_embedded']['venues'][0]['state']['stateCode'];
@@ -244,5 +244,4 @@ class GenerateSeoMeta
         }
         return $string;
     }
-
 }

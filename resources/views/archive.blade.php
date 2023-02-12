@@ -8,6 +8,7 @@
     $activeCity = $activeCity->handle();
 @endphp
 @section('content')
+    @include('partials.featured-event', ['event' => $featuredEvent])
     <div class="content-container">
         <h1 class="page-heading">{{$h1}}</h1>
         {!! Breadcrumbs::view('breadcrumbs::json-ld'); !!}
@@ -34,7 +35,7 @@
                     </div>
                     <div class="sorting-item">
                         <span>Event Dates:</span>
-                        <input type="text" class="datefrom" placeholder="Starts From" value="{{request()->query('date')}}">
+                        <input type="text" class="datefrom" placeholder="Start Date" value="{{request()->query('date')}}">
                         <input type="text" class="dateto" placeholder="End Date" value="{{request()->query('date_to')}}">
                     </div>
                 </div>

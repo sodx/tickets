@@ -12,7 +12,7 @@ class Unslugify
 
     public $description;
 
-    public function handle( $string )
+    public function handle($string)
     {
         $string = str_replace('-', ' ', $string);
         $string = ucwords($string);
