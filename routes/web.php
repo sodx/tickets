@@ -78,11 +78,6 @@ Route::get('/city/{location}/segment/{slug}', function ($location, $slug) {
 })->name('segment');
 
 Route::get('/city/{location}/genre/{slug}', function ($location, $slug) {
-    $term = App\Models\Genre::where('slug', '=', $slug)->firstOrFail();
-    return view('term', compact('term', 'location'));
-})->name('genre');
-
-Route::get('/city/{location}/genre/{slug}', function ($location, $slug) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
@@ -122,7 +117,7 @@ Route::get('/city/{location}/date/{date}/date_to/{date_to}', function ($location
     $location = $unslugify->handle($location);
     $eventController = new EventController();
     return $eventController->indexEvents($location, 'city', $date, $date_to);
-})->name('date');
+})->name('date_to');
 
 
 /**
