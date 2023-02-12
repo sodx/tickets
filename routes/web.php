@@ -211,38 +211,38 @@ Route::get('perform', function () {
     $tt->index();
 });
 
-function getSubMenu($menuItems, $key, $activeCity)
-{
-    if (!array_key_exists($key, $menuItems)) {
-        return;
-    }
-    $menu = Menu::new();
-    $menu->addClass('submenu');
-    foreach ($menuItems[$key]['genres'] as $genre) {
-        if ($genre->slug === 'undefined') {
-            continue;
-        }
-        $menu->route('genre', $genre->name, [
-            'location' => Slugify::run($activeCity['user_location']),
-            'slug' => $genre->slug,
-        ]);
-    }
-    return $menu;
-}
-
-function getSubMenuHeader($menuItems, $key, $activeCity)
-{
-    if (!array_key_exists($key, $menuItems)) {
-        return '';
-    }
-    return '<a class="has-submenu"
-        href="/city/' . Slugify::run($activeCity['user_location']) . '/segment/'.$menuItems[$key]['slug'].'">'
-        .$menuItems[$key]['name'] .'<span class="material-symbols-outlined">arrow_drop_down</span></a>';
-}
-
 Menu::macro('main', function () {
     $activeCity = GetActiveCity::run();
     $menuItems = GetMenuItems::run();
+
+    function getSubMenu($menuItems, $key, $activeCity)
+    {
+        if (!array_key_exists($key, $menuItems)) {
+            return;
+        }
+        $menu = Menu::new();
+        $menu->addClass('submenu');
+        foreach ($menuItems[$key]['genres'] as $genre) {
+            if ($genre->slug === 'undefined') {
+                continue;
+            }
+            $menu->route('genre', $genre->name, [
+                'location' => Slugify::run($activeCity['user_location']),
+                'slug' => $genre->slug,
+            ]);
+        }
+        return $menu;
+    }
+
+    function getSubMenuHeader($menuItems, $key, $activeCity)
+    {
+        if (!array_key_exists($key, $menuItems)) {
+            return '';
+        }
+        return '<a class="has-submenu"
+        href="/city/' . Slugify::run($activeCity['user_location']) . '/segment/'.$menuItems[$key]['slug'].'">'
+            .$menuItems[$key]['name'] .'<span class="material-symbols-outlined">arrow_drop_down</span></a>';
+    }
 
     return Menu::new()
         ->route('city', 'Home', [
