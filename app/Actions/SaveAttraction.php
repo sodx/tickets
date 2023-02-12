@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Attraction;
+use App\Models\Event;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class SaveAttraction extends SaveDataFromTM
@@ -29,8 +30,10 @@ class SaveAttraction extends SaveDataFromTM
                     'poster' => isset($data['images']) ? $this->getBiggestImage($data['images']) : '',
                     'medium_image' => isset($data['images']) ? $this->getMediumImage($data['images']) : '',
                     'video_ids' => isset($data['externalLinks']['youtube']) ?
-                        $this->getVideoIds($data['externalLinks']['youtube'][0]['url']) : '',
-                    'slug' => isset($data['name']) ? SlugService::createSlug(Attraction::class, 'slug', $data['name']) : '',
+                        $this->getVideoIds($data['externalLinks']['youtube'][0]['url'], $data['name']) : '',
+                    'slug' => isset($data['name'])
+                        ? SlugService::createSlug(Attraction::class, 'slug', $data['name'])
+                        : '',
                 ]
             );
         } else {
@@ -39,15 +42,25 @@ class SaveAttraction extends SaveDataFromTM
         return $attraction;
     }
 
-
     /**
      * Method to receive most viewed youtube videos by providen playlist url using youtube API.
      */
-    public function getVideoIds($youtubeUrl)
+    public function getVideoIds($youtubeUrl, $attractionName)
     {
         if (empty($youtubeUrl)) {
             return '';
         }
+        $events = $this->getEventsByAttractionName($attractionName);
+        if ($events->count() > 4) {
+            return '';
+        }
         return GetYoutubeVideosByURL::run($youtubeUrl);
+    }
+
+    public function getEventsByAttractionName($attractionName)
+    {
+        return Event::whereHas('attraction', function ($query) use ($attractionName) {
+            $query->where('name', 'LIKE', "%{$attractionName}%");
+        })->get();
     }
 }

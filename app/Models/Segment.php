@@ -57,6 +57,13 @@ class Segment extends Model
         return $this->hasMany(Event::class, 'segment_id', 'id');
     }
 
+    public function eventsInCity($city)
+    {
+        return $this->events()->whereHas('venue', function ($query) use ($city) {
+            $query->where('city', $city);
+        })->get();
+    }
+
     public function upcomingEvents()
     {
         return $this->events()->where('start_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc');

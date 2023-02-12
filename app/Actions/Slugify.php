@@ -12,7 +12,7 @@ class Slugify
 
     public $description;
 
-    public function handle( $string )
+    public function handle($string)
     {
         $string = strtolower($string);
         $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);

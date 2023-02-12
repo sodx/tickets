@@ -14,12 +14,12 @@ class ArchiveSeoMeta
 
     public $h1;
 
-    public function handle($location = '', $type = '', $date = '', $date_to = '', $genre = '', $segment = '')
+    public function handle($location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
         $currentRouteName = $this->getCurrentRouteName();
-        $this->generateTitle($currentRouteName, $location, $type, $date, $date_to, $genre, $segment);
-        $this->generateDescription($currentRouteName, $location, $type, $date, $date_to, $genre, $segment);
-        $this->generateH1($currentRouteName, $location, $type, $date, $date_to, $genre, $segment);
+        $this->generateTitle($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
+        $this->generateDescription($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
+        $this->generateH1($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
 
         return [
             'title' => $this->title,
@@ -34,7 +34,7 @@ class ArchiveSeoMeta
         return \Request::route()->getName();
     }
 
-    private function generateH1($currentRouteName, $location = '', $type = '', $date = '', $date_to = '', $genre = '', $segment = '')
+    private function generateH1($currentRouteName, $location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
         switch ($currentRouteName) {
             case 'segment':
@@ -42,14 +42,14 @@ class ArchiveSeoMeta
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '');
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '');
                 break;
             case 'genre':
                 $this->h1 = ucfirst($genre) . ' Events ' .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '');
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '');
                 break;
             default:
                 $this->h1 = 'Events ' .
@@ -57,12 +57,13 @@ class ArchiveSeoMeta
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '');
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '');
                 break;
         }
     }
 
-    private function generateTitle($currentRouteName, $location = '', $type = '', $date = '', $date_to = '', $genre = '', $segment = '')
+
+    private function generateTitle($currentRouteName, $location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
         switch ($currentRouteName) {
             case 'segment':
@@ -70,7 +71,7 @@ class ArchiveSeoMeta
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '') .
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             case 'genre':
@@ -78,7 +79,7 @@ class ArchiveSeoMeta
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '') .
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             default:
@@ -87,13 +88,13 @@ class ArchiveSeoMeta
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '') .
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
         }
     }
 
-    private function generateDescription($currentRouteName, $location = '', $type = '', $date = '', $date_to = '', $genre = '', $segment = '')
+    private function generateDescription($currentRouteName, $location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
         switch ($currentRouteName) {
             case 'segment':
@@ -101,7 +102,7 @@ class ArchiveSeoMeta
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '') .
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             case 'genre':
@@ -109,7 +110,7 @@ class ArchiveSeoMeta
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '') .
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             default:
@@ -117,7 +118,7 @@ class ArchiveSeoMeta
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
-                    ($date_to !== '' ? 'Ends On ' . $date_to : '') .
+                    ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
         }

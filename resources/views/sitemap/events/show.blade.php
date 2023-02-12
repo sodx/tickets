@@ -8,8 +8,6 @@
                 'location' => $slugify->handle($event->venue->city)])
                 }}</loc>
             <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.6</priority>
         </url>
     @endforeach
 </urlset>

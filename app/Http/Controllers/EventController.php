@@ -14,18 +14,19 @@ use Kyslik\ColumnSortable\Sortable;
 
 class EventController extends Controller
 {
-    public function queryEvents($location = '', $type = '', $date = '', $date_to = '', $sort = '', $genre = '', $segment = '')
+    public function queryEvents($location = '', $type = '', $date = '', $dateTo = '', $sort = '', $genre = '', $segment = '')
     {
         if ($date === '') {
             $events = Event::where('start_date', '>=', date('Y-m-d'))->get()->sortBy($sort);
-        } elseif ($date !== '' && $date_to === '') {
+        } elseif ($date !== '' && $dateTo === '') {
             $events = Event::where('start_date', '>=', date('Y-m-d', strtotime($date)))->get()->sortBy($sort);
-        } elseif ($date !== '' && $date_to !== '') {
+        } elseif ($date !== '' && $dateTo !== '') {
             $events = Event::whereBetween('start_date', [
                 date('Y-m-d', strtotime($date)),
-                date('Y-m-d', strtotime($date_to))
+                date('Y-m-d', strtotime($dateTo))
             ])->get()->sortBy('start_date');
         }
+
         // filter upcoming events and sort by date
         if ($location !== '' && $type !== '') {
             if ($type === 'city' && $location !== '' && $location !== 'All Cities') {
@@ -45,60 +46,67 @@ class EventController extends Controller
 
         if ($segment !== '' && $segment !== 'All Segments') {
             $events = $events->filter(function ($event) use ($segment) {
-                if(isset($event->segment['slug'])) {
+                if (isset($event->segment['slug'])) {
                     return $event->segment['slug'] === $segment;
                 }
             });
         }
 
-        if ($genre !== '' && $genre !== 'All Genres' ) {
+        if ($genre !== '' && $genre !== 'All Genres') {
             $events = $events->filter(function ($event) use ($genre) {
-                if(isset($event->genre['slug'])) {
+                if (isset($event->genre['slug'])) {
                     return $event->genre['slug'] === $genre;
                 }
             });
         }
 
-        return $events;
+        return [
+            'events' => $events,
+            'featuredEvent' => $events->sortByDesc('views')->first()
+        ];
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-    public function index($location = '', $type = '', $date = '', $date_to = '')
+    public function index($location = '', $type = '', $date = '', $dateTo = '')
     {
-        $events= $this->queryEvents($location, $type, $date, $date_to);
-
+        $eventsQuery = $this->queryEvents($location, $type, $date, $dateTo);
+        $events = $eventsQuery['events'];
         $tourGroup = $this->groupTourEvents($events);
         $topViewed = $this->getTopViewed($events);
-        $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $date_to);
+        $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $dateTo);
 
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
         return view('home', [
+            'location' => $location === '' ? 'All Cities' : $location,
+            'featuredEvent' => $eventsQuery['featuredEvent'],
             'topViewed' => $topViewed,
             'events' => array_slice($tourGroup['single'], 0, 8),
-            'tours' => array_slice($tourGroup['tour'], 0, 4),
+            'tours' => array_slice($tourGroup['tour'], 0, 8),
             'h1' => $seoMeta['h1'],
         ]);
     }
 
-    public function indexEvents($location = '', $type = '', $date = '', $date_to = '', $genre = '', $segment = '')
+    public function indexEvents($location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
         $sort = request()->query('sort') ?? 'start_date';
         $perPage = request()->query('per_page') ?? 20;
         $date = request()->query('date') ?? '';
-        $date_to = request()->query('date_to') ?? '';
-        $events = $this->queryEvents($location, $type, $date, $date_to, $sort, $genre, $segment);
+        $dateTo = request()->query('date_to') ?? '';
+        $eventsQuery = $this->queryEvents($location, $type, $date, $dateTo, $sort, $genre, $segment);
+        $events = $eventsQuery['events'];
 
         $events = $events->paginate($perPage);
-        $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $date_to, $genre, $segment);
+        $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $dateTo, $genre, $segment);
 
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
 
         return view('archive', [
+            'featuredEvent' => $eventsQuery['featuredEvent'],
             'topViewed' => [],
             'events' => $events,
             'tours' => [],

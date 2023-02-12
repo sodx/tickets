@@ -14,7 +14,10 @@
 @include('partials.footer')
 <script>
     window.onload=function(){
-        document.body.classList.add('loaded');
+        var loading = document.querySelectorAll('.loading');
+        for (var i = 0; i < loading.length; i++) {
+            loading[i].classList.add('loaded');
+        }
     }
 </script>
 @include('partials.schema')

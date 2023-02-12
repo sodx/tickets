@@ -48,6 +48,11 @@
             &:has(.has-submenu) {
                 position: relative;
 
+                .material-symbols-outlined {
+                    margin-top: 5px;
+                    margin-left: 5px;
+                }
+
                 &:hover {
                     .submenu {
                         opacity: 1;

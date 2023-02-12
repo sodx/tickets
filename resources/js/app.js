@@ -8,6 +8,7 @@ import './components/mobileMenu';
 import './components/modal';
 import './components/parallax';
 import './components/search';
+import './components/titleFontSizeReducer';
 import './components/videoSlider';
 
 const body = document.querySelector('body');

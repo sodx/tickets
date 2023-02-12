@@ -5,7 +5,19 @@
             <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
         </sitemap>
         <sitemap>
-            <loc>{{ route('sitemap.eventsCity.show') }}</loc>
+            <loc>{{ route('sitemap.eventsCity.index') }}</loc>
+            <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+        </sitemap>
+        <sitemap>
+            <loc>{{ route('sitemap.venues.index') }}</loc>
+            <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+        </sitemap>
+        <sitemap>
+            <loc>{{ route('sitemap.attractions.index') }}</loc>
+            <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+        </sitemap>
+        <sitemap>
+            <loc>{{ route('sitemap.tours.index') }}</loc>
             <lastmod>{{ $event->updated_at->tz('UTC')->toAtomString() }}</lastmod>
         </sitemap>
     @endif
