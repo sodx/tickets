@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         alchemyguy\YoutubeLaravelApi\YoutubeLaravelApiServiceProvider::class,
+        Spatie\Menu\Laravel\MenuServiceProvider::class,
         Alaouy\Youtube\YoutubeServiceProvider::class,
         \Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
@@ -215,6 +216,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+        'Menu' => Spatie\Menu\Laravel\Facades\Menu::class,
     ])->toArray(),
 
 ];
