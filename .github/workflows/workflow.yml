@@ -1,0 +1,52 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+  DROPLET_ID: ${{ secrets.DROPLET_ID }}
+  DO_API_KEY: ${{ secrets.DO_API_KEY }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Configure SSH
+      uses: ssh-actions/ssh-add-key@v2
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-known-hosts: digitalocean.com
+
+    - name: Deploy Laravel Sail
+      uses: docker/deploy-action@v2
+      with:
+        context: .
+        push: true          
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout main branch
+#       uses: actions/checkout@v2  
+#     - name: Install doctl
+#       uses: digitalocean/action-doctl@v2
+#       with:
+#         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+#     - name: Build Docker images
+#       run: |
+#         docker-compose build
+#     - name: Deploy to DigitalOcean
+#       uses: sodx/tickets@latest
+#       with:
+#         access-token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+#         context: production
+#         env-file: production.env
