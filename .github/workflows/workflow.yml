@@ -20,13 +20,13 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Configure SSH
-      uses: ssh-actions/ssh-add-key@v1
+      uses: ssh-actions/ssh-add-key@v2
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         ssh-known-hosts: digitalocean.com
 
     - name: Deploy Laravel Sail
-      uses: docker/deploy-action@v1
+      uses: docker/deploy-action@v2
       with:
         context: .
         push: true          
