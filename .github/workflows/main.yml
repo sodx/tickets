@@ -21,7 +21,7 @@ jobs:
         docker-compose build
 
     - name: Deploy to DigitalOcean
-      uses: docker/deploy-action@v1
+      uses: sodx/tickets@v1
       with:
         access-token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         context: production
