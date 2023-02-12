@@ -206,10 +206,9 @@ Route::get('perform', function () {
     $tt->index();
 });
 
-Menu::macro('main', function () {
+Menu::macro('Main', function () {
     $activeCity = GetActiveCity::run();
     $menuItems = GetMenuItems::run($activeCity);
-
     $menuBuilder = new GetMenuItems();
 
     return Menu::new()

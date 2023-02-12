@@ -11,12 +11,12 @@
                     <span class="material-symbols-outlined navigation-mobile-toggler-close">close</span>
                 </button>
                 <div class="navigation-mobile-items">
-                    {!! Menu::main() !!}
+                    {!! Menu::Main() !!}
                 </div>
             </nav>
             <a href="{{route('home', $activeCity['user_location'])}}" class="logo" rel="nofollow">Logo</a>
             <nav class="navigation navigation-main">
-                {!! Menu::main() !!}
+                {!! Menu::Main() !!}
             </nav>
         </div>
         <div class="navigation-right">
