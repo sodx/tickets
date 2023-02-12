@@ -208,36 +208,9 @@ Route::get('perform', function () {
 
 Menu::macro('main', function () {
     $activeCity = GetActiveCity::run();
-    $menuItems = GetMenuItems::run();
+    $menuItems = GetMenuItems::run($activeCity);
 
-    function getSubMenu($menuItems, $key, $activeCity)
-    {
-        if (!array_key_exists($key, $menuItems)) {
-            return;
-        }
-        $menu = Menu::new();
-        $menu->addClass('submenu');
-        foreach ($menuItems[$key]['genres'] as $genre) {
-            if ($genre->slug === 'undefined') {
-                continue;
-            }
-            $menu->route('genre', $genre->name, [
-                'location' => Slugify::run($activeCity['user_location']),
-                'slug' => $genre->slug,
-            ]);
-        }
-        return $menu;
-    }
-
-    function getSubMenuHeader($menuItems, $key, $activeCity)
-    {
-        if (!array_key_exists($key, $menuItems)) {
-            return '';
-        }
-        return '<a class="has-submenu"
-        href="/city/' . Slugify::run($activeCity['user_location']) . '/segment/'.$menuItems[$key]['slug'].'">'
-            .$menuItems[$key]['name'] .'<span class="material-symbols-outlined">arrow_drop_down</span></a>';
-    }
+    $menuBuilder = new GetMenuItems();
 
     return Menu::new()
         ->route('city', 'Home', [
@@ -245,28 +218,28 @@ Menu::macro('main', function () {
         ])
         ->submenuIf(
             array_key_exists(0, $menuItems),
-            getSubMenuHeader($menuItems, 0, $activeCity),
-            getSubMenu($menuItems, 0, $activeCity)
+            $menuBuilder->getSubMenuHeader($menuItems, 0, $activeCity),
+            $menuBuilder->getSubMenu($menuItems, 0, $activeCity)
         )
         ->submenuIf(
             array_key_exists(1, $menuItems),
-            getSubMenuHeader($menuItems, 1, $activeCity),
-            getSubMenu($menuItems, 1, $activeCity)
+            $menuBuilder->getSubMenuHeader($menuItems, 1, $activeCity),
+            $menuBuilder->getSubMenu($menuItems, 1, $activeCity)
         )
         ->submenuIf(
             isset($menuItems[2]),
-            getSubMenuHeader($menuItems, 2, $activeCity),
-            getSubMenu($menuItems, 2, $activeCity)
+            $menuBuilder->getSubMenuHeader($menuItems, 2, $activeCity),
+            $menuBuilder->getSubMenu($menuItems, 2, $activeCity)
         )
         ->submenuIf(
             isset($menuItems[3]),
-            getSubMenuHeader($menuItems, 3, $activeCity),
-            getSubMenu($menuItems, 3, $activeCity)
+            $menuBuilder->getSubMenuHeader($menuItems, 3, $activeCity),
+            $menuBuilder->getSubMenu($menuItems, 3, $activeCity)
         )
         ->submenuIf(
             isset($menuItems[4]),
-            getSubMenuHeader($menuItems, 4, $activeCity),
-            getSubMenu($menuItems, 4, $activeCity)
+            $menuBuilder->getSubMenuHeader($menuItems, 4, $activeCity),
+            $menuBuilder->getSubMenu($menuItems, 4, $activeCity)
         )
         ->setActiveFromRequest();
 });
