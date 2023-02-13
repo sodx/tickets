@@ -38,10 +38,8 @@ class ParseTicketMasterQueryOutput
      */
     private function iterateThroughOutput(array $output): void
     {
-        ray($output);
         $events = $output['_embedded']['events'] ?? [];
         if (empty($events)) {
-            ray('No events found');
             return;
         }
         foreach ($events as $event) {
