@@ -23,6 +23,7 @@ class GenerateTicketMasterQuery
     public function filteredQueryMapping(): array
     {
         $data = $this->getQueryDataFromDB();
+        print_r($data);
         return array_filter($data, fn ($value) => $value !== '');
     }
 
