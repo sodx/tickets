@@ -11,7 +11,6 @@ class TicketMasterController extends Controller
     public function index()
     {
         $outputItem = $this->getEvents();
-        print_r($outputItem);
         $items = parseTicketMasterQueryOutput::run($outputItem);
         return view('performs', [
             'saved' => $items['saved'],
