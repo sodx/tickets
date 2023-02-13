@@ -27,12 +27,7 @@ class ParseTicketMasterQueryOutput
             ?? env('TICKETMASTER_QUERY_SIZE')
             ?? 20
         );
-        try {
-            $this->iterateThroughOutput($output);
-        } catch (\Exception $e) {
-            ray($e);
-            return $e->getMessage();
-        }
+        $this->iterateThroughOutput($output);
     }
 
     /**
