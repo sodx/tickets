@@ -50,10 +50,6 @@ class SaveAttraction extends SaveDataFromTM
         if (empty($youtubeUrl)) {
             return '';
         }
-        $events = $this->getEventsByAttractionName($attractionName);
-        if ($events->count() > 4) {
-            return '';
-        }
         return GetYoutubeVideosByURL::run($youtubeUrl);
     }
 
