@@ -10,10 +10,13 @@ class TicketMasterController extends Controller
 {
     public function index()
     {
-
-        $output = $this->getEvents();
-        parseTicketMasterQueryOutput::run($output);
-        return view('test', $output);
+        $outputItem = $this->getEvents();
+        $items = parseTicketMasterQueryOutput::run($outputItem);
+        return view('performs', [
+            'saved' => $items['saved'],
+            'updated' => $items['updated'],
+            'processed' => $items['processed'],
+        ]);
     }
 
     /**

@@ -28,6 +28,12 @@ class ParseTicketMasterQueryOutput
             ?? 20
         );
         $this->iterateThroughOutput($output);
+
+        return [
+            'saved' => $this->savedEvents,
+            'updated' => $this->updatedEvents,
+            'processed' => $this->processedEvents,
+        ];
     }
 
     /**
@@ -101,13 +107,13 @@ class ParseTicketMasterQueryOutput
      * @param string $ticketMasterID
      * @return boolean
      */
-    public function isEventUpdatedDuringLast24Hours(string $ticketMasterID): bool
+    public function isEventUpdatedDuringLastWeek(string $ticketMasterID): bool
     {
         $lastUpdateDate = $this->getLastEventUpdateDate($ticketMasterID);
         $lastUpdateDate = strtotime($lastUpdateDate);
         $now = strtotime(date('Y-m-d H:i:s'));
         $diff = $now - $lastUpdateDate;
-        return $diff < 86400;
+        return $diff < 86400 * 7;
     }
 
     /**
@@ -116,10 +122,12 @@ class ParseTicketMasterQueryOutput
      */
     public function processEvent(array $event): void
     {
-        if (!$this->isEventExists($event['id'])
-            || ($this->isEventExists($event['id']) && !$this->isEventUpdatedDuringLast24Hours($event['id']))) {
+        if (!$this->isEventExists($event['id'])) {
             $this->saveEvent($event);
-            $this->setSavedEvents($this->savedEvents + 1);
+            $this->setSavedEvents((int) $this->savedEvents + 1);
+        } elseif ($this->isEventExists($event['id']) && $this->isEventUpdatedDuringLastWeek($event['id'])) {
+            $this->saveEvent($event);
+            $this->setUpdatedEvents($this->updatedEvents + 1);
         }
         $this->setProcessedEvents($this->processedEvents + 1);
     }

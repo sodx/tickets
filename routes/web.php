@@ -203,7 +203,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('perform', function () {
     $tt = new TicketMasterController();
-    $tt->index();
+    return $tt->index();
 });
 
 Route::get('display-user', [UserController::class, 'index']);
