@@ -15,7 +15,6 @@ composer update --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Clear the old cache
 php artisan clear-compiled
-php artisan config:clear
 
 # Recreate cache
 php artisan optimize
@@ -28,5 +27,6 @@ php artisan migrate --force
 
 # Exit maintenance mode
 php artisan up
+php artisan config:clear
 
 echo "Deployment finished!"
