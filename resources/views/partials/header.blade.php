@@ -54,7 +54,7 @@
                             <div class="city-picker__state">
                                 <a href="#" data-type="state" class="city-picker__link city-picker__state-link city-picker__searchable">{{ $state }}</a>
                                 @foreach($cities as $city)
-                                    <a href="{{ route('city', ['location' => $slugify->handle($city)]) }}" data-type="city" class="city-picker__link city-picker__city-link city-picker__searchable">{{ $city }}</a>
+                                    <a href="{{ route('city', ['location' => $slugify->handle($city)]) }}" data-type="city" data-state="{{$slugify->handle($state)}}" class="city-picker__link city-picker__city-link city-picker__searchable">{{ $city }}</a>
                                 @endforeach
                             </div>
                         @endforeach

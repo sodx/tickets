@@ -1,10 +1,5 @@
 @inject('slugify', 'App\Actions\Slugify')
-@inject('eventSchema', 'App\Actions\GenerateEventSchema')
-@php
-    $schema = $eventSchema->handle($event)
-@endphp
-{!! $schema['event'] !!}
-<a class="event-card card" href="{{ route('event', [
+<a class="event-card card {{ isset($isSmall) && $isSmall === true ? 'small' : '' }}" href="{{ route('event', [
     'slug' => $event->slug,
     'segment' => $event->segment->slug,
     'location' => $slugify->handle($event->venue->city)])
@@ -31,4 +26,8 @@
         @endif
     </div>
 </a>
-
+@inject('eventSchema', 'App\Actions\GenerateEventSchema')
+@php
+     $schema = $eventSchema->handle($event)
+@endphp
+{!! $schema['event'] !!}

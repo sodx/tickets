@@ -126,30 +126,8 @@ Route::get('/city/{location}/date/{date}/date_to/{date_to}', function ($location
  * =====================
  */
 Route::get('/city/{location}/segment/{segment}/event/{slug}', function ($location, $segment, $slug) {
-    $event = App\Models\Event::where('slug', '=', $slug)->firstOrFail();
-
-    SEOMeta::setTitle($event->meta_title);
-    SEOMeta::setDescription($event->meta_description);
-    SEOMeta::addMeta('article:published_time', $event->created_at->toW3CString(), 'property');
-    SEOMeta::addMeta('article:section', $event->category, 'property');
-
-    OpenGraph::setDescription($event->info);
-    OpenGraph::setTitle($event->title);
-    OpenGraph::setUrl(Request::url());
-    OpenGraph::setSiteName('Live Concerts');
-    OpenGraph::addProperty('type', 'article');
-    OpenGraph::addProperty('locale', 'en-us');
-    OpenGraph::addImage($event->medium_image);
-
-    $event->views = $event->views + 1;
-    $event->save();
-    $schema = GenerateEventSchema::run($event);
-
-    return view('event', [
-        'event' => $event,
-        'schema' => $schema['event'].$schema['faq'],
-     //   'breadcrumbsJson' => $breadcrumbsJson,
-    ]);
+    $eventController = new EventController();
+    return $eventController->show($slug);
 })->name('event');
 
 

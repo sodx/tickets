@@ -31,7 +31,9 @@ if(cityPickerInput) {
         const value = event.target.value;
         const cities = document.querySelectorAll('.city-picker__searchable');
         cities.forEach(function (city) {
-            if (city.innerText.toLowerCase().indexOf(value.toLowerCase()) > -1) {
+            console.log(city.dataset);
+            if (city.innerText.toLowerCase().indexOf(value.toLowerCase()) > -1
+                || city.dataset?.state?.toLowerCase().indexOf(value.toLowerCase()) > -1) {
                 city.style.display = 'block';
             } else {
                 city.style.display = 'none';

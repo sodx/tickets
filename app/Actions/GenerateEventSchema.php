@@ -57,7 +57,7 @@ class GenerateEventSchema
     public function generateEventSchema($event): string
     {
         return Schema::event()
-            ->image($event->thumbnail)
+            ->image(isset($event->thumbnail) ? $event->thumbnail : '')
             ->name($event->name)
             ->description($event->info)
             ->startDate($event->start_date)

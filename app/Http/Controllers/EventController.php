@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ArchiveSeoMeta;
+use App\Actions\GenerateEventSchema;
 use App\Http\Requests\StoreAttractionRequest;
 use App\Http\Requests\UpdateAttractionRequest;
 use App\Models\Attraction;
 use App\Models\Event;
+use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Diglactic\Breadcrumbs\Breadcrumbs;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -182,6 +185,34 @@ class EventController extends Controller
         return $tourGroup;
     }
 
+    private function getRelatedEvents($event, $quantity = 8, $states = false)
+    {
+        $events = Event::where('event_id', '!=', $event->event_id)
+            ->where('start_date', '>=', date('Y-m-d'))
+            ->whereHas('venue', function($query) use ($event) {
+                $query->where('city', '=', $event->venue->city);
+            })
+            ->whereHas('segment', function($query) use ($event) {
+                $query->where('name', '=', $event->segment->name);
+            })
+            ->orderBy('clicks')
+            ->take($quantity)
+            ->get();
+        if($events->count() < $quantity) {
+            $eventsInState = Event::where('event_id', '!=', $event->event_id)
+                ->where('start_date', '>=', date('Y-m-d'))
+                ->whereHas('venue', function($query) use ($event) {
+                    $query->where('state', '=', $event->venue->state);
+                })
+                ->orderBy('clicks')
+                ->take($quantity - $events->count())
+                ->get();
+            $events = $events->merge($eventsInState);
+        }
+
+        return $events;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -209,9 +240,31 @@ class EventController extends Controller
      * @param  \App\Models\Attraction  $attraction
      * @return \Illuminate\Http\Response
      */
-    public function show(Attraction $attraction)
+    public function show($slug)
     {
-        //
+        $event = Event::where('slug', '=', $slug)->first();
+        SEOMeta::setTitle($event->meta_title);
+        SEOMeta::setDescription($event->meta_description);
+        SEOMeta::addMeta('article:published_time', $event->created_at->toW3CString(), 'property');
+        SEOMeta::addMeta('article:section', $event->category, 'property');
+
+        OpenGraph::setDescription($event->info);
+        OpenGraph::setTitle($event->title);
+        OpenGraph::setUrl(Request::url());
+        OpenGraph::setSiteName('Live Concerts');
+        OpenGraph::addProperty('type', 'article');
+        OpenGraph::addProperty('locale', 'en-us');
+        OpenGraph::addImage($event->medium_image);
+        $schema = GenerateEventSchema::run($event);
+
+        $event->views = $event->views + 1;
+        $event->save();
+
+        return view('event', [
+            'event' => $event,
+            'schema' => $schema['event'].$schema['faq'],
+            'relatedEvents' => $relatedEvents = $this->getRelatedEvents($event)
+        ]);
     }
 
     /**

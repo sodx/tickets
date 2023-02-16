@@ -59,9 +59,6 @@
     </nav>
     <div class="content-wrapper">
         <div class="content-container">
-            @if($event->attractions)
-                @include('partials.attractions-videos', ['attractions' => $event->attractions])
-            @endif
             @if($event->info || $event->pleaseNote)
                 <section id="event-info" class="content-section">
                     @if($event->info)
@@ -78,23 +75,26 @@
                     @endif
                 </section>
             @endif
+                @if($event->venue)
+                    <section id="venue" class="content-section">
+                        <h2>Venue</h2>
+                        @include('partials.venue-card', ['venue' => $event->venue])
+                        @if($event->seatmap)
+                            @include('partials.content-block', [
+                                'title' => 'Seatmap',
+                                'image' => $event->seatmap,
+                                'imageLink' => $event->url
+                            ])
+                        @endif
+                    </section>
+                @endif
+                @if($event->attractions)
+                    @include('partials.attractions-videos', ['attractions' => $event->attractions])
+                @endif
             @if($event->attractions)
                 <section id="attractions" class="content-section">
                     <h2>Attractions</h2>
                     @include('partials.attractions', ['attractions' => $event->attractions])
-                </section>
-            @endif
-            @if($event->venue)
-                <section id="venue" class="content-section">
-                    <h2>Venue</h2>
-                    @include('partials.venue-card', ['venue' => $event->venue])
-                    @if($event->seatmap)
-                        @include('partials.content-block', [
-                            'title' => 'Seatmap',
-                            'image' => $event->seatmap,
-                            'imageLink' => $event->url
-                        ])
-                    @endif
                 </section>
             @endif
         </div>
@@ -132,8 +132,10 @@
             </ul>
         </aside>
     </div>
+    @include('partials.related-events', $relatedEvents)
 @endsection
 
 @section('schema')
     {!! $schema !!}
 @endsection
+

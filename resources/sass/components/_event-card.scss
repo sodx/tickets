@@ -217,3 +217,128 @@
         }
     }
 }
+
+.event-card.small {
+    height: 280px;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .event-card__image-wrapper {
+        width: 100%;
+        height: 100%;
+
+        &::after {
+            content: "";
+            position: absolute;
+            background: rgb(0 0 0 / 0.4);
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+        }
+
+        .event-card__image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .event-card__body {
+        position: absolute;
+        background-color: transparent;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .event-card__footer {
+        display: none;
+        width: 100%;
+        bottom: 0;
+        position: absolute;
+        border-top: 0;
+        flex-direction: row;
+
+        .text-muted {
+            color: $white !important;
+        }
+    }
+
+    .event-card__date {
+        top: 1rem;
+        left: 1rem;
+        transform: translate(0, 0);
+        border-bottom: 0;
+        font-size: 1rem;
+        font-family: $display-font-family;
+
+        .material-symbols-outlined {
+            display: inline-block;
+        }
+    }
+
+    .event-card__title {
+        width: 100%;
+        font-size: 2rem;
+        text-align: center;
+        color: white; /* Unfortunately you can't use transparent here … */
+    }
+
+    &:hover {
+        .event-card__image-wrapper {
+            &::after {
+                content: "";
+                position: absolute;
+                background: rgb(0 0 0 / 0.6);
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                left: 0;
+            }
+        }
+
+        .event-card__footer {
+            display: flex;
+            padding: 1rem;
+            left: 0;
+            transform: translate(0, 0);
+
+            .text-muted {
+                display: block;
+                font-size: 0.75rem;
+
+                &.event-card__location {
+                    width: 150px;
+                }
+
+                .material-symbols-outlined {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .event-card__favorites {
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .event-card__body {
+            border: none;
+            margin: 0;
+
+            .event-card__title {
+                position: static;
+                transform: translate(0, 0);
+
+                &::before {
+                    display: none;
+                }
+
+                &::after {
+                    display: none;
+                }
+            }
+        }
+    }
+}
