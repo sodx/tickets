@@ -4,10 +4,11 @@
     &__body {
         img,
         iframe {
+            max-height: 400px;
             width: 100%;
+            object-fit: contain;
         }
     }
-
     &__title {
 
     }

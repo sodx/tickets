@@ -1,9 +1,9 @@
 <a href="{{ route('attraction', $attraction->slug) }}" class="attraction-card card">
-    <figure class="attraction-card__image-wrapper">
+    <figure class="attraction-card__image-wrapper lazy-image">
         @if($attraction->medium_image)
-            <img class="attraction-card__image" src="{{ $attraction->medium_image }}" alt="{{ $attraction->name }}" loading="lazy">
+            <img class="attraction-card__image" data-src={{ $attraction->medium_image }} src="{{ $attraction->thumbnail }}" alt="{{ $attraction->name }}" loading="lazy">
         @else
-            <img class="attraction-card__image" src="{{ $attraction->poster }}" alt="{{ $attraction->name }}" loading="lazy">
+            <img class="attraction-card__image" data-src={{ $attraction->poster }} src="{{ $attraction->thumbnail }}" alt="{{ $attraction->name }}" loading="lazy">
         @endif
         <p class="attraction-card__description">
             <span class="attraction-card__name">{{$attraction->name}}</span>
