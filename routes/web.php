@@ -185,7 +185,7 @@ Route::get('favorites', function () {
 })->name('favorites');
 
 
-Route::group(['prefix' => 'manage'], function () {
+Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
     Route::get('perform', function () {
