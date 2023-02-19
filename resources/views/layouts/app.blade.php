@@ -9,7 +9,7 @@
     @php
         $recentlyViewedEvents = $recentlyViewed->handle();
     @endphp
-    @if($recentlyViewedEvents->count() > 0)
+    @if(count($recentlyViewedEvents) > 0)
         @include('partials.recently-viewed-container', $recentlyViewedEvents)
     @endif
 </main>
