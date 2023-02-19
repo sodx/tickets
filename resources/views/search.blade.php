@@ -16,10 +16,11 @@
             <section class="page-section">
                 <h1>Search Results for {{$searchTerm}}</h1>
                 @if($eventsInUserCity && count($eventsInUserCity) > 0)
-                    <section class="section">
+                    <section class="section section--mb">
                         <h2>Events</h2>
                         @include('partials.events-container', ['events' => $eventsInUserCity])
                     </section>
+                    <br>
                 @endif
                 @if($attractions && count($attractions) > 0)
                     <section class="section">
