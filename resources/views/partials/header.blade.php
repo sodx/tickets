@@ -14,7 +14,7 @@
                     {!! Menu::Main() !!}
                 </div>
             </nav>
-            <a href="{{route('home', $activeCity['user_location'])}}" class="logo" rel="nofollow"><img src="{{setting('site.logo')}}" alt="Logo"></a>
+            <a href="{{route('home', $activeCity['user_location'])}}" class="logo" rel="nofollow"><img src="/storage/{{setting('site.logo')}}" alt="Logo"></a>
             <nav class="navigation navigation-main">
                 {!! Menu::Main() !!}
             </nav>
