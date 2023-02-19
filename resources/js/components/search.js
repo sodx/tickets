@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 import $ from "jquery";
 import "jquery-ui/dist/jquery-ui.min";
-
 import "jquery-ui/ui/widgets/autocomplete";
 //import "jquery-ui/ui/widgets/menu";
 //import "jquery-autocomplete";
@@ -55,6 +54,13 @@ $(document).ready(function () {
             return $("").appendTo(ul);
         }
     };
+
+    //on click enter redirect to search results page
+    $('#search').keypress(function (e) {
+        if (e.which == 13) {
+            window.location.href = '/search/' + $('#search').val();
+        }
+    });
 
 });
 

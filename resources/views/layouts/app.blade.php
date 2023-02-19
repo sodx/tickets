@@ -9,7 +9,9 @@
     @php
         $recentlyViewedEvents = $recentlyViewed->handle();
     @endphp
-    @include('partials.recently-viewed-container', $recentlyViewedEvents)
+    @if($recentlyViewedEvents->count() > 0)
+        @include('partials.recently-viewed-container', $recentlyViewedEvents)
+    @endif
 </main>
 @include('partials.footer')
 <script>

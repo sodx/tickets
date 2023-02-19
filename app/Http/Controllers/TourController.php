@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
+use App\Models\Event;
 use App\Models\Tour;
 
 class TourController extends Controller
@@ -13,9 +14,26 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($slug)
+    public function index()
     {
-        //
+        //Get tours where more than 1 event. With join clause from events table. Join Event object to output.
+
+        $tours = Event::where('start_date', '>=', date('Y-m-d'))
+            ->whereNotNull('tour_id')
+            ->orderBy('start_date', 'asc')
+            //where more than 1 event
+            ->get();
+        $tours = $tours->groupBy('tour_id');
+
+        $tourGroup = [];
+        // group by tour id and count more than 1
+        foreach ($tours as $tour) {
+            if (count($tour) > 1) {
+                $tourGroup[] = $tour;
+            }
+        };
+
+        return view('tours', ['tours' => $tourGroup]);
     }
 
     /**
@@ -25,7 +43,6 @@ class TourController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -47,7 +64,6 @@ class TourController extends Controller
      */
     public function show(Tour $tour)
     {
-        //
     }
 
     /**

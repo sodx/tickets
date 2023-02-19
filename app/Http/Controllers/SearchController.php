@@ -17,9 +17,29 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($searchTerm = null)
     {
-        return view('searchDemo');
+        $city = GetActiveCity::run();
+        $events = Event::select()
+            ->where('name', 'LIKE', '%'. $searchTerm. '%')
+            ->where('start_date', '>=', date('Y-m-d'))
+            ->get()->sortBy('start_date');
+
+        $eventsInUserCity = $events->filter(function ($event) use ($city) {
+            return $event->city() === $city['user_location'];
+        });
+
+        $attractions = Attraction::select()
+            ->where('name', 'LIKE', '%'. $searchTerm. '%')
+            ->get();
+
+
+        return view('search', [
+            'eventsInUserCity' => $eventsInUserCity,
+            'all_events' => count($events),
+            'attractions' => $attractions,
+            'searchTerm' => $searchTerm
+        ]);
     }
 
     /**

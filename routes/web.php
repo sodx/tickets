@@ -2,6 +2,7 @@
 
 use App\Actions\GenerateEventSchema;
 use App\Actions\GetMenuItems;
+use App\Http\Controllers\AttractionController;
 use App\Http\Controllers\AttractionsSitemapController;
 use App\Http\Controllers\EventCitySitemapController;
 use App\Http\Controllers\EventSitemapController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ToursSitemapController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VenuesSitemapController;
+use App\Models\Page;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -149,7 +151,11 @@ Route::get('venue/{slug}', function ($slug) {
  * Single Atraction
  * =====================
  */
-Route::get('attraction/{slug}', function ($slug) {
+Route::get('attractions', function () {
+    $attractionController = new AttractionController();
+    return $attractionController->index();
+})->name('attractions');
+Route::get('attractions/{slug}', function ($slug) {
     $attraction = App\Models\Attraction::where('slug', '=', $slug)->firstOrFail();
     SEOMeta::setTitle($attraction->name . ' - Events | ' . setting('site.title'));
     SEOMeta::setDescription('All upcoming events with '. $attraction->name . '! check ' . setting('site.title'));
@@ -163,7 +169,11 @@ Route::get('attraction/{slug}', function ($slug) {
  * Single Tour with Events
  * =====================
  */
-Route::get('tour/{slug}', function ($slug) {
+Route::get('tours', function () {
+    $tours = new TourController();
+    return $tours->index();
+})->name('tours');
+Route::get('tours/{slug}', function ($slug) {
     $tour = App\Models\Tour::where('slug', '=', $slug)->firstOrFail();
     return view('tour', compact('tour'));
 })->name('tour');
@@ -175,25 +185,32 @@ Route::get('favorites', function () {
 })->name('favorites');
 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'manage'], function () {
     Voyager::routes();
+
+    Route::get('perform', function () {
+        $tt = new TicketMasterController();
+        return $tt->index();
+    });
 });
 
-Route::get('perform', function () {
-    $tt = new TicketMasterController();
-    return $tt->index();
-});
-
-Route::get('display-user', [UserController::class, 'index']);
 
 Route::get('post/{slug}', function ($slug) {
     $post = Post::where('slug', '=', $slug)->firstOrFail();
     return view('post', compact('post'));
-});
+})->name('post');
+
+Route::get('page/{slug}', function ($slug) {
+    $page = Page::where('slug', '=', $slug)->firstOrFail();
+    return view('post', ['post' => $page]);
+})->name('page');
 
 Route::controller(SearchController::class)->group(function () {
-    Route::get('demo-search', 'index');
     Route::get('autocomplete', 'autocomplete')->name('autocomplete');
+    Route::get('search/{term}', function ($term) {
+        $searchController = new SearchController();
+        return $searchController->index($term);
+    })->name('search');
 });
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');

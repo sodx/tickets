@@ -15,7 +15,15 @@ class AttractionController extends Controller
      */
     public function index()
     {
-        //
+        //get attractions which have more than 1 event, sort them by events click count and paginate them
+        $attractions = Attraction::whereHas('events', function ($query) {
+            $query->where('start_date', '>=', date('Y-m-d'));
+        })->withCount('events')->orderBy('events_count', 'desc')->paginate(30);
+
+        return view('attractions', [
+            'attractions' => $attractions,
+            'links' => $attractions->links('vendor.pagination.default'),
+        ]);
     }
 
     /**
