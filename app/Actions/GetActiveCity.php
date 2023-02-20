@@ -32,10 +32,6 @@ class GetActiveCity
             $this->place = 'All Cities';
         }
 
-        ray([
-            'user_location' => request()->cookie('user_location') ?? $this->place,
-            'user_location_type' => request()->cookie('user_location_type') ?? $this->type,
-        ]);
         return [
             'user_location' => request()->cookie('user_location')
                     ?? $this->location->cityName
@@ -47,7 +43,8 @@ class GetActiveCity
 
     private function getLocation()
     {
-        $ip = '48.188.144.248'; /* Static IP address */
+        $ip = request()->ip();
+//        $ip = '48.188.144.248'; /* Static IP address */
         $this->location = Location::get($ip);
     }
 
