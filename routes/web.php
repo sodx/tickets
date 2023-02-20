@@ -44,6 +44,11 @@ use App\Actions\GetActiveCity;
  * =====================
  */
 Route::get('/', function () {
+    $activeCity = new getActiveCity();
+    $activeCity = $activeCity->handle();
+    if ($activeCity['user_location_type'] === 'city') {
+        return redirect()->route('city', ['location' => $activeCity['user_location']]);
+    }
     $eventController = new EventController();
     return $eventController->index();
 })->name('home');
