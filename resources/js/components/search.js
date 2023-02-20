@@ -5,6 +5,18 @@ import "jquery-ui/ui/widgets/autocomplete";
 //import "jquery-ui/ui/widgets/menu";
 //import "jquery-autocomplete";
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+const searchBtn = document.querySelectorAll('.search-btn');
+if (searchBtn) {
+    searchBtn.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            document.querySelector('.search-form').classList.toggle('show');
+            document.querySelector('.search-wrapper').classList.toggle('show');
+            //set search wrapper active input field
+            document.querySelector('.search-wrapper .search-form').focus();
+        });
+    });
+}
 $(document).ready(function () {
     $("#search").autocomplete({
         delay: 500,
@@ -46,7 +58,7 @@ $(document).ready(function () {
             content = allEventsContent(item.all_events);
         }
 
-        if(content.heading !== '' && content.eventsHtml !== '') {
+        if (content.heading !== '' && content.eventsHtml !== '') {
             return $("<li>")
                 .append("<div class='heading'>" + content.heading + "</div>" + content.eventsHtml)
                 .appendTo(ul);

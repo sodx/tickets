@@ -21,10 +21,11 @@
         </div>
         <div class="navigation-right">
             <div class="search-wrapper">
-                <input class="form-control" placeholder="Search..." id="search" type="text">
+                <button class="search-btn mobile"><span class="material-symbols-outlined">search</span></button>
+                <input class="search-form form-control" placeholder="Search..." id="search" type="text">
             </div>
             <a class="nav-favorites" href="{{route('favorites')}}"><span class="material-symbols-outlined">favorite</span><span class="count">{{ count(json_decode(request()->cookie('favorites')) ?? []) }}</span></a>
-            <a href="#" class="city-picker-btn modal-btn" data-modal="city-picker" rel="nofollow"><span class="material-symbols-outlined">near_me</span>{{$activeCity['user_location']}}</a>
+            <a href="#" class="city-picker-btn modal-btn" data-modal="city-picker" rel="nofollow"><span class="material-symbols-outlined">near_me</span><span class="city-picker-name">{{$activeCity['user_location']}}</span></a>
         </div>
     </div>
 </header>

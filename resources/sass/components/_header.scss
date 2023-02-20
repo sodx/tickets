@@ -25,6 +25,9 @@
     font-size: 32px;
     width: 150px;
     height: 50px;
+    @include media-breakpoint-down(lg) {
+        width: auto;
+    }
     img {
         width: 100%;
         height: 100%;
@@ -120,10 +123,17 @@
     display: flex;
 }
 
+.city-picker-name {
+    font-size: 18px;
+    @include media-breakpoint-down(lg) {
+        display: none;
+    }
+}
+
 .city-picker-btn,
 .nav-favorites {
     color: $white;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -164,7 +174,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 100%;
+        margin-right: 1rem;
     }
 
     .navigation-mobile-toggler {
@@ -193,6 +203,7 @@
         left: 0;
         top: 100%;
         width: 100%;
+        z-index: 9;
 
         ul {
             padding: 0 20px;
