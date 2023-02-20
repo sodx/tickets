@@ -26,7 +26,7 @@
         "spatie/laravel-sitemap": "^6.2",
         "spatie/schema-org": "^3.13",
         "stechstudio/laravel-php-cs-fixer": "^3.1",
-        "stevebauman/location": "^6.5",
+        "stevebauman/location": "^6.6",
         "tcg/voyager": "^1.6"
     },
     "require-dev": {
