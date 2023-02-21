@@ -3,7 +3,9 @@
 namespace App\Actions;
 
 use App\Models\Event;
+use App\Models\ImportLog;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 /**
@@ -20,7 +22,7 @@ class ParseTicketMasterQueryOutput
     private int $eventsForSave = 20;
     private int $processedEvents = 0;
 
-    public function handle(array $output)
+    public function handle(array $output, $queryString = '')
     {
         $this->setEventsForSave(
             setting('ticketmaster.size')
@@ -29,12 +31,25 @@ class ParseTicketMasterQueryOutput
         );
         $this->iterateThroughOutput($output);
 
+        // if any errors set them into variable
+        $errors = Session::get('errors');
+
+        ImportLog::create([
+            'imported_errors' => $errors ?? '',
+            'imported_items' => $queryString,
+            'imported_successes' => $this->savedEvents,
+            'imported_updates' => $this->updatedEvents,
+            'imported_count' => $this->processedEvents,
+            'imported_at' => now(),
+        ]);
+
         return [
             'saved' => $this->savedEvents,
             'updated' => $this->updatedEvents,
             'processed' => $this->processedEvents,
         ];
     }
+
 
     /**
      * Iterate through output from TicketMaster API and save events into DB.

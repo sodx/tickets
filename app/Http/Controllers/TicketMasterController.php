@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Http;
 
 class TicketMasterController extends Controller
 {
+    /**
+     * @var string $queryString
+     */
+    private $queryString;
+
     public function index()
     {
         $outputItem = $this->getEvents();
-        $items = parseTicketMasterQueryOutput::run($outputItem);
+        $items = parseTicketMasterQueryOutput::run($outputItem, $this->queryString);
         return view('performs', [
             'saved' => $items['saved'],
             'updated' => $items['updated'],
@@ -41,6 +46,7 @@ class TicketMasterController extends Controller
      */
     public function getQueryString(): string
     {
-        return GenerateTicketMasterQuery::run();
+        $this->queryString = GenerateTicketMasterQuery::run();
+        return $this->queryString;
     }
 }
