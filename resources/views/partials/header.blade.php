@@ -2,6 +2,8 @@
 @php
     $activeCity = $activeCity->handle();
 @endphp
+@inject('slugify', 'App\Actions\Slugify')
+
 <header class="sticky-header loading">
     <div class="content-wrapper">
         <div class="navigation-left">
@@ -14,7 +16,7 @@
                     {!! Menu::Main() !!}
                 </div>
             </nav>
-            <a href="{{route('home', $activeCity['user_location'])}}" class="logo" rel="nofollow"><img src="/storage/{{setting('site.logo')}}" alt="Logo"></a>
+            <a href="{{route('home', $slugify->handle($activeCity['user_location']))}}" class="logo" rel="nofollow"><img src="/storage/{{setting('site.logo')}}" alt="Logo"></a>
             <nav class="navigation navigation-main">
                 {!! Menu::Main() !!}
             </nav>
@@ -46,7 +48,6 @@
                 </div>
                 <div class="city-picker__cities">
                     @inject('cities', 'App\Actions\GetCities')
-                    @inject('slugify', 'App\Actions\Slugify')
                     @php
                         $citiesArr = $cities->handle();
                     @endphp

@@ -34,8 +34,7 @@ class GetActiveCity
 
         return [
             'user_location' => request()->cookie('user_location')
-                    ?? $this->location->cityName
-                    ?? $this->location->regionName
+                    ?? $this->place
                     ?? 'All Cities',
             'user_location_type' => request()->cookie('user_location_type') ?? $this->type,
         ];
@@ -44,7 +43,7 @@ class GetActiveCity
     private function getLocation()
     {
         $ip = request()->ip();
-//        $ip = '48.188.144.248'; /* Static IP address */
+        //$ip = '48.188.144.248'; /* Static IP address */
         $this->location = Location::get($ip);
     }
 
@@ -55,6 +54,10 @@ class GetActiveCity
 
     private function isCurrentUserHasCity()
     {
+
+        if ($this->location === false) {
+            return false;
+        }
         foreach ($this->cities as $state => $cities) {
             if (in_array($this->location->cityName, $cities)) {
                 return true;
@@ -65,6 +68,6 @@ class GetActiveCity
 
     private function isCurrentUserHasState()
     {
-        return in_array($this->location->regionName, $this->cities);
+        return $this->location !== false && in_array($this->location->regionName, $this->cities);
     }
 }
