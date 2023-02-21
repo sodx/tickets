@@ -1,10 +1,11 @@
 @inject('slugify', 'App\Actions\Slugify')
-@if($event)
+@if($event !== null && $event->segment !== null)
     <a href="{{ route('event', [
-                            'slug' => $event->slug,
-                            'segment' => $event->segment->slug,
-                            'location' => $slugify->handle($event->venue->city)])
-                            }}" title="{{$event->name}}">
+            'slug' => $event->slug(),
+            'segment' => $event->segment->slug,
+            'location' => $slugify->handle($event->venue->city)
+            ])
+          }}" title="{{$event->name}}">
         <figure class="event-poster">
             <div class="event-poster__image-wrapper event-poster__image-wrapper--featured" id="parallax-scene">
                 <div class="event-poster__image" style="background-image:url({{ $event->poster }})"></div>

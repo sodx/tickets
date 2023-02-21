@@ -46,7 +46,8 @@ use App\Actions\GetActiveCity;
 Route::get('/', function () {
     $activeCity = new getActiveCity();
     $activeCity = $activeCity->handle();
-    if ($activeCity['user_location_type'] === 'city') {
+
+    if ($activeCity['user_location_type'] === 'city' && $activeCity['user_location'] !== 'All Cities') {
         return redirect()->route('city', ['location' => slugify::run($activeCity['user_location'])]);
     }
     $eventController = new EventController();

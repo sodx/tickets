@@ -20,14 +20,14 @@ class EventController extends Controller
     public function queryEvents($location = '', $type = '', $date = '', $dateTo = '', $sort = '', $genre = '', $segment = '')
     {
         if ($date === '') {
-            $events = Event::where('start_date', '>=', date('Y-m-d'))->get()->sortBy($sort);
+            $events = Event::where('start_date', '>=', date('Y-m-d'))->whereHas('segment')->get()->sortBy($sort);
         } elseif ($date !== '' && $dateTo === '') {
-            $events = Event::where('start_date', '>=', date('Y-m-d', strtotime($date)))->get()->sortBy($sort);
+            $events = Event::where('start_date', '>=', date('Y-m-d', strtotime($date)))->whereHas('segment')->get()->sortBy($sort);
         } elseif ($date !== '' && $dateTo !== '') {
             $events = Event::whereBetween('start_date', [
                 date('Y-m-d', strtotime($date)),
                 date('Y-m-d', strtotime($dateTo))
-            ])->get()->sortBy('start_date');
+            ])->whereHas('segment')->get()->sortBy('start_date');
         }
 
         // filter upcoming events and sort by date

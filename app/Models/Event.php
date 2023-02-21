@@ -173,6 +173,11 @@ class Event extends Model
         return $this->venue->city ?? null;
     }
 
+    public function slug()
+    {
+        return $this->slug;
+    }
+
     public function isFavorite()
     {
         $favorites = request()->cookie('favorites');

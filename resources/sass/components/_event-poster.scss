@@ -87,6 +87,10 @@
                 text-stroke: 0.5px $white;
                 text-shadow: none;
             }
+
+            @include media-breakpoint-down(lg) {
+                font-size: 4rem;
+            }
         }
     }
 
