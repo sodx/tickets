@@ -43,7 +43,7 @@ class GetActiveCity
     private function getLocation()
     {
         $ip = request()->ip();
-        //$ip = '48.188.144.248'; /* Static IP address */
+        //$ip = '198.200.132.56'; /* Static IP address */
         $this->location = Location::get($ip);
     }
 

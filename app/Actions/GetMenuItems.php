@@ -29,6 +29,9 @@ class GetMenuItems
     {
         $city = $this->city['user_location'];
         $genres = Segment::all();
+        if ($city === 'All Cities') {
+            return $genres;
+        }
         return $genres->filter(function ($genre) use ($city) {
             return $genre->eventsInCity($city)->count() > 0;
         });
@@ -38,6 +41,9 @@ class GetMenuItems
     {
         $city = $this->city['user_location'];
         $genres = Genre::all();
+        if ($city === 'All Cities') {
+            return $genres;
+        }
         return $genres->filter(function ($genre) use ($city) {
             return $genre->eventsInCity($city)->count() > 0;
         });
