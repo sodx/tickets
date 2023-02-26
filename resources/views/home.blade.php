@@ -15,13 +15,13 @@
         {{ Breadcrumbs::render() }}
         @if($topViewed && count($topViewed) > 1)
             <section class="page-section">
-                <h2>Most Popular Upcoming Events in {{$location}}</h2>
+                <h2>Most Popular Upcoming Events</h2>
                 @include('partials.events-container', ['events' => $topViewed])
             </section>
         @endif
         @if($events && count($events) > 1 && count($events) >= count($topViewed))
             <section class="page-section">
-                <h2>All Events in {{$events[0]->city()}}</h2>
+                <h2>All Events</h2>
                 @include('partials.events-container', $events)
                 @if(count($events) > 7)
                     <div class="btn-wrapper">

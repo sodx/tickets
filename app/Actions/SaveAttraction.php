@@ -8,7 +8,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class SaveAttraction extends SaveDataFromTM
 {
-    public function upsertData(array $data): Attraction
+    public function upsertData(array $data): Attraction | null
     {
         $attractionModel = new Attraction();
         if ($this->shouldUpdateItem($data, $attractionModel) && isset($data['name'])) {
