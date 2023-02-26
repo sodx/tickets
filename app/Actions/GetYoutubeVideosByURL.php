@@ -119,7 +119,10 @@ class GetYoutubeVideosByURL
     {
         $regex = '/(?:youtube.com\/channel\/|youtube.com\/user\/|youtube.com\/c\/|youtube.com\/)([a-zA-Z0-9_-]+)/';
         preg_match($regex, $youtubeUrl, $matches);
-        return $matches[1];
+        if(!empty($matches[1])) {
+            return $matches[1];
+        }
+        return null;
     }
 
 
