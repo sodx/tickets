@@ -26,6 +26,9 @@ class SaveEvent extends SaveDataFromTM
         $venue = $this->saveVenue($data['_embedded']['venues'][0]);
         $attractions = $this->saveAttractions($data['_embedded']['attractions']);
 
+        if (!isset($data['name'])) {
+            return null;
+        }
         $event = Event::updateOrCreate(
             ['ticketmaster_id' => $data['id']],
             [

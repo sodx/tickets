@@ -11,7 +11,7 @@ class SaveAttraction extends SaveDataFromTM
     public function upsertData(array $data): Attraction
     {
         $attractionModel = new Attraction();
-        if ($this->shouldUpdateItem($data, $attractionModel)) {
+        if ($this->shouldUpdateItem($data, $attractionModel) && $data['name'] !== null) {
             $attraction = Attraction::updateOrCreate(
                 ['ticketmaster_id' => $data['id']],
                 [
