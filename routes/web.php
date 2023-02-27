@@ -153,9 +153,14 @@ Route::get('/city/{location}/date/{date}/date_to/{date_to}', function ($location
  * =====================
  */
 Route::get('/city/{location}/segment/{segment}/event/{slug}', function ($location, $segment, $slug) {
-
-    $eventController = new EventController();
-    return $eventController->show($slug);
+    if (Cache::has('events_'.$slug)) {
+        return Cache::get('events_'.$slug);
+    } else {
+        $eventController = new EventController();
+        $cachedData = $eventController->show($slug)->render();
+        Cache::put('events_'.$slug, $cachedData);
+        return $cachedData;
+    }
 })->name('event');
 
 
