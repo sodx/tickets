@@ -9,8 +9,9 @@
     <div class="event-item" data-id="{{$event->event_id}}"></div>
     <figure class="event-poster">
         <div class="event-poster__image-wrapper" id="parallax-scene">
-            <div class="event-poster__image lazy-image">
-                <img src="{{ $event->thumbnail }}" data-src="{{ $event->poster }}" alt="{{ $event->name }}" loading="lazy">
+            <div class="event-poster__image">
+                <link rel="preload" as="image" href="{{$event->poster}}" />
+                <img src="{{ $event->poster }}" data-src="{{ $event->poster }}" alt="{{ $event->name }}" loading="lazy">
             </div>
         </div>
         <figcaption class="event-poster__meta">
