@@ -46,7 +46,8 @@ use App\Actions\GetActiveCity;
 Route::get('/', function () {
     $activeCity = new getActiveCity();
     $activeCity = $activeCity->handle();
-
+    SEOMeta::setTitle('All tickets for Music Concerts and Sport Events | ' . setting('site.title'));
+    SEOMeta::setDescription('Get information about upcoming events in your city! check ' . setting('site.title'));
     if ($activeCity['user_location_type'] === 'city' && $activeCity['user_location'] !== 'All Cities') {
         return redirect()->route('city', ['location' => slugify::run($activeCity['user_location'])]);
     }
@@ -58,6 +59,9 @@ Route::get('/city/{location}', function ($location) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+    SEOMeta::setTitle('Music Concerts and Sport Events in '. $location .' | Buy tickets on ' . setting('site.title'));
+    SEOMeta::setDescription('Get information about upcoming events in '. $location .'! check ' . setting('site.title'));
+
     if ($location === 'All Cities') {
         return $eventController->index();
     }
@@ -68,6 +72,9 @@ Route::get('/city/{location}/events', function ($location) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+    SEOMeta::setTitle('Music Concerts and Sport Events in '. $location .' | Buy tickets on ' . setting('site.title'));
+    SEOMeta::setDescription('Get information about upcoming events in '. $location .'! check ' . setting('site.title'));
+
     if ($location === 'All Cities') {
         return $eventController->indexEvents();
     }
@@ -81,6 +88,9 @@ Route::get('/city/{location}/events', function ($location) {
  * =====================
  */
 Route::get('/city/{location}/segment/{slug}', function ($location, $slug) {
+    SEOMeta::setTitle($slug . ' Events in '. $location .' | Buy tickets on ' . setting('site.title'));
+    SEOMeta::setDescription('Get all '. $slug .' upcoming events in '. $location .'! check ' . setting('site.title'));
+
     $term = App\Models\Segment::where('slug', '=', $slug)->firstOrFail();
     return view('term', compact('term', 'location'));
 })->name('segment');
@@ -89,6 +99,9 @@ Route::get('/city/{location}/genre/{slug}', function ($location, $slug) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+    SEOMeta::setTitle($slug . ' Events in '. $location .' | Buy tickets on ' . setting('site.title'));
+    SEOMeta::setDescription('Get all '. $slug .' upcoming events in '. $location .'! check ' . setting('site.title'));
+
     return $eventController->indexEvents($location, 'city', '', '', $slug);
 })->name('genre');
 
@@ -96,6 +109,9 @@ Route::get('/city/{location}/segment/{slug}', function ($location, $slug) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+    SEOMeta::setTitle($slug . ' Events in '. $location .' | Buy tickets on ' . setting('site.title'));
+    SEOMeta::setDescription('Get all '. $slug .' upcoming events in '. $location .'! check ' . setting('site.title'));
+
     return $eventController->indexEvents($location, 'city', '', '', '', $slug);
 })->name('segment');
 
@@ -103,6 +119,9 @@ Route::get('/city/{location}/segment/{slug}/genre/{genre}', function ($location,
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+    SEOMeta::setTitle($slug . ' Events in '. $location .' | Buy tickets on ' . setting('site.title'));
+    SEOMeta::setDescription('Get all '. $slug .' upcoming events in '. $location .'! check ' . setting('site.title'));
+
     return $eventController->indexEvents($location, 'city', '', '', $genre, $slug);
 })->name('segment_genre');
 
@@ -134,8 +153,14 @@ Route::get('/city/{location}/date/{date}/date_to/{date_to}', function ($location
  * =====================
  */
 Route::get('/city/{location}/segment/{segment}/event/{slug}', function ($location, $segment, $slug) {
-    $eventController = new EventController();
-    return $eventController->show($slug);
+    if (Cache::has('events_'.$slug)) {
+        return Cache::get('events_'.$slug);
+    } else {
+        $eventController = new EventController();
+        $cachedData = $eventController->show($slug);
+        Cache::put('events_'.$slug, $cachedData);
+        return $cachedData;
+    }
 })->name('event');
 
 
@@ -164,7 +189,7 @@ Route::get('attractions', function () {
 Route::get('attractions/{slug}', function ($slug) {
     $attraction = App\Models\Attraction::where('slug', '=', $slug)->firstOrFail();
     SEOMeta::setTitle($attraction->name . ' - Events | ' . setting('site.title'));
-    SEOMeta::setDescription('All upcoming events with '. $attraction->name . '! check ' . setting('site.title'));
+    SEOMeta::setDescription('Get upcoming events with '. $attraction->name . '! check ' . setting('site.title'));
 
     return view('attraction', compact('attraction'));
 })->name('attraction');
