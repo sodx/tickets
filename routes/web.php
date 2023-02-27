@@ -197,7 +197,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('perform', function () {
         $tt = new TicketMasterController();
         return $tt->index();
-    })->middleware('admin.user');
+    });
 });
 
 
