@@ -11,6 +11,8 @@
         <figure class="event-card__image-wrapper">
             @if($event->medium_image)
                 <img class="event-card__image" src="{{ $event->medium_image }}" alt="{{ $event->name }}" loading="lazy">
+            @elseif($event->thumbnail)
+                <img class="event-card__image" src="{{ $event->thumbnail }}" alt="{{ $event->name }}" loading="lazy">
             @else
                 <img class="event-card__image" src="{{ $event->poster }}" alt="{{ $event->name }}" loading="lazy">
             @endif

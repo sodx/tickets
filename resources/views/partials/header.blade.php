@@ -4,7 +4,7 @@
 @endphp
 @inject('slugify', 'App\Actions\Slugify')
 
-<header class="sticky-header loading">
+<header class="sticky-header">
     <div class="content-wrapper">
         <div class="navigation-left">
             <nav class="navigation navigation-mobile">
