@@ -11,7 +11,7 @@
         <div class="event-poster__image-wrapper" id="parallax-scene">
             <div class="event-poster__image">
                 <link rel="preload" as="image" href="{{$event->poster}}" />
-                <img src="{{ $event->poster }}" data-src="{{ $event->poster }}" alt="{{ $event->name }}" loading="lazy">
+                <img src="{{ $event->poster }}" data-src="{{ $event->poster }}" alt="{{ $event->name }}">
             </div>
         </div>
         <figcaption class="event-poster__meta">
