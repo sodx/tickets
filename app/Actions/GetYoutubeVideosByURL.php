@@ -71,7 +71,7 @@ class GetYoutubeVideosByURL
             'channelId' => $this->ID,
             'maxResults' => $maxResults,
             'order' => 'viewcount',
-            'q' => 'live|concert',
+            'q' => 'live|concert|official',
             'type' => 'video',
         ];
 
