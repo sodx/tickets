@@ -14,6 +14,7 @@ git pull origin main --rebase --autostash --quiet
 composer update --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Clear the old cache
+php artisan cache:clear
 php artisan clear-compiled
 
 # Recreate cache
