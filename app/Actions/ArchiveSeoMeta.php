@@ -67,7 +67,7 @@ class ArchiveSeoMeta
     {
         switch ($currentRouteName) {
             case 'segment':
-                $this->title = ucfirst($segment) . ' Buy Tickets ' .
+                $this->title = 'Buy ' . ucfirst($segment) . ' Tickets 🎫' .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
@@ -75,7 +75,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             case 'genre':
-                $this->title = ucfirst($genre) . ' Buy Tickets ' .
+                $this->title = 'Buy '. ucfirst($genre) . ' Tickets 🎫' .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
