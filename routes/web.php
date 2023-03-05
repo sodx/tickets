@@ -202,10 +202,14 @@ Route::get('attractions/{slug}', function ($slug) {
  */
 Route::get('tours', function () {
     $tours = new TourController();
+    SEOMeta::setTitle('Tours | ' . setting('site.title'));
+    SEOMeta::setDescription('All upcoming tours! check ' . setting('site.title'));
     return $tours->index();
 })->name('tours');
 Route::get('tours/{slug}', function ($slug) {
     $tour = App\Models\Tour::where('slug', '=', $slug)->firstOrFail();
+    SEOMeta::setTitle($tour->name . ' - Events | ' . setting('site.title'));
+    SEOMeta::setDescription('Get all ' . $tour->name . ' info on - ' . setting('site.title'));
     return view('tour', compact('tour'));
 })->name('tour');
 
@@ -233,6 +237,8 @@ Route::get('post/{slug}', function ($slug) {
 
 Route::get('page/{slug}', function ($slug) {
     $page = Page::where('slug', '=', $slug)->firstOrFail();
+    SEOMeta::setTitle($page->title . ' | ' . setting('site.title'));
+    SEOMeta::setDescription($page->meta_description);
     return view('post', ['post' => $page]);
 })->name('page');
 
@@ -240,6 +246,8 @@ Route::controller(SearchController::class)->group(function () {
     Route::get('autocomplete', 'autocomplete')->name('autocomplete');
     Route::get('search/{term}', function ($term) {
         $searchController = new SearchController();
+        SEOMeta::setTitle('Search results for ' . $term . ' | ' . setting('site.title'));
+        SEOMeta::setDescription('Search results for ' . $term . ' | ' . setting('site.title'));
         return $searchController->index($term);
     })->name('search');
 });

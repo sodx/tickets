@@ -36,11 +36,11 @@ class GenerateSeoMeta
         return [
             "single_event" => [
                 "music" => [
-                    "{name} in {city} Concert on {start_date} 🎫 Get Tickets!",
+                    "{name} in {city} Concert on {start_date} 🎫 Buy Tickets!",
                     "{name} in {city}: Get Tickets for {start_date} Concert at {venue->name}",
                     "Unmissable Concert Alert: {name} in {city} on {start_date} 🎫 Buy Tickets Now",
                     "{name} in {city} Concert on {start_date} 🎫 Secure Seat Today",
-                    "{name} in {city}, {state} on {start_date}: Exceptional Music 🎫 Buy Tickets",
+                    "{name} in {city}, {state} on {start_date} 🎫 Buy Tickets",
                     "{start_date} Concert in {city}, {state}: {name} 🎫 Buy Tickets Now",
                     "{city}, {state} Concertgoers: {name} Live on {start_date} 🎫 Get Tickets",
                     "{name} Live in {city}, {state} on {start_date} 🎫 Tickets Online",

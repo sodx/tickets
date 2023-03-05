@@ -15,6 +15,12 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
 });
 
 // Home > [City Name]
+Breadcrumbs::for('favorites', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Favorites', route('favorites'));
+});
+
+// Home > [City Name]
 Breadcrumbs::for('city', function (BreadcrumbTrail $trail, $location) {
     $trail->parent('home');
     $unslugify = new Unslugify();

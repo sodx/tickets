@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import $ from "jquery";
 import "jquery-ui/dist/jquery-ui.min";
 import "jquery-ui/ui/widgets/autocomplete";
+
 //import "jquery-ui/ui/widgets/menu";
 //import "jquery-autocomplete";
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

@@ -9,17 +9,19 @@
     $activeCity = $activeCity->handle();
 @endphp
 @section('content')
-    @include('partials.featured-event', ['event' => $featuredEvent])
+    @if(isset($featuredEvent))
+        @include('partials.featured-event', ['event' => $featuredEvent])
+    @endif
     <div class="content-container">
         <h1 class="page-heading">{{$h1}}</h1>
         {{ Breadcrumbs::render() }}
-        @if($topViewed && count($topViewed) > 1)
+        @if(isset($topViewed) && $topViewed && count($topViewed) > 1)
             <section class="page-section">
                 <h2>Most Popular Upcoming Events</h2>
                 @include('partials.events-container', ['events' => $topViewed])
             </section>
         @endif
-        @if($events && count($events) > 1 && count($events) >= count($topViewed))
+        @if((count($events) >= count($topViewed)))
             <section class="page-section">
                 <h2>All Events</h2>
                 @include('partials.events-container', $events)

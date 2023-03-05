@@ -131,9 +131,14 @@ class EventController extends Controller
         $favorites = request()->cookie('favorites');
         $favorites = json_decode($favorites, true);
         $events = $favorites ? Event::whereIn('event_id', $favorites)->get() : [];
+        SEOMeta::setTitle('Favorite Events'. ' | '. config('site.title'));
+        SEOMeta::setDescription('Your favorite events');
+
         return view('home', [
             'events' => $events,
-            'tours' => []
+            'tours' => [],
+            'topViewed' => [],
+            'h1' => 'Favorite Events'
         ]);
     }
 

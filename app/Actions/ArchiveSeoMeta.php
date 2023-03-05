@@ -67,7 +67,7 @@ class ArchiveSeoMeta
     {
         switch ($currentRouteName) {
             case 'segment':
-                $this->title = ucfirst($segment) . ' Events ' .
+                $this->title = ucfirst($segment) . ' Buy Tickets ' .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
@@ -75,7 +75,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             case 'genre':
-                $this->title = ucfirst($genre) . ' Events ' .
+                $this->title = ucfirst($genre) . ' Buy Tickets ' .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
@@ -83,7 +83,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             default:
-                $this->title = 'Events ' .
+                $this->title = 'Buy Tickets ' .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
@@ -98,7 +98,7 @@ class ArchiveSeoMeta
     {
         switch ($currentRouteName) {
             case 'segment':
-                $this->description = 'Find ' . $segment . ' Events ' .
+                $this->description = 'Get ' . $segment . ' Events ' .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
@@ -106,7 +106,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             case 'genre':
-                $this->description = 'Find ' . $genre . ' Events ' .
+                $this->description = 'Get ' . $genre . ' Events ' .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
@@ -114,7 +114,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             default:
-                $this->description = 'Find ' . $location . ' Events ' .
+                $this->description = 'Get ' . $location . ' Events ' .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .

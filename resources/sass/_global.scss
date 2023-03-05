@@ -125,6 +125,15 @@ h6 {
     }
 }
 
+h1 {
+    font-size: 3rem;
+    text-align: center;
+
+    @include media-breakpoint-down(lg) {
+        font-size: 2.5rem;
+    }
+}
+
 h2 {
     font-size: 2.5rem;
     border-bottom: 3px solid $black;
