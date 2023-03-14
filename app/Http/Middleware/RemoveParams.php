@@ -12,6 +12,9 @@ class RemoveParams
     {
         $requestParams = request()->query();
         $allowedParams = [];
+        if (Str::contains(request()->getRequestUri(), '/admin')) {
+            return $next($request);
+        }
         if (Str::contains(request()->getRequestUri(), ['/events', '/segment', '/genre'])) {
             $allowedParams = ['page', 'sort', 'order', 'search', 'per_page', 'date', 'date_to'];
         }
