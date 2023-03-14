@@ -9,7 +9,20 @@
         <link rel="preload" as="image" href="{{$event->poster}}" />
         <figure class="event-poster">
             <div class="event-poster__image-wrapper event-poster__image-wrapper--featured" id="parallax-scene">
-                <div class="event-poster__image" style="background-image:url({{ $event->poster }})"></div>
+                <div class="event-poster__image">
+                    <picture>
+                        <source
+                            media = "(min-width:1280px)"
+                            srcset="{{$event->poster}} 1280w">
+                        <source
+                            media = "(min-width:340px)"
+                            srcset = "{{$event->medium_image}} 340w" >
+                        <source
+                            media = "(min-width:300px)"
+                            srcset = "{{$event->thumbnail}} 300w" >
+                        <img src="{{asset('storage/medium_photos/'.$event->medium_image)}}" >
+                    </picture>
+                </div>
             </div>
             <figcaption class="event-poster__meta event-poster__meta--centered">
                 <div class="content-container">

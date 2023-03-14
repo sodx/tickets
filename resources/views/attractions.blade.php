@@ -12,7 +12,7 @@
     <div class="content-container">
         @if($attractions)
             <section class="page-section">
-                <h2>All Attractions</h2>
+                <h1>All Attractions</h1>
                 <section class="section">
                     @include('partials.attractions', ['attractions' => $attractions])
                 </section>

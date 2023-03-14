@@ -15,21 +15,6 @@
             </div>
         </figcaption>
     </figure>
-    <nav class="page-nav">
-        <ul>
-            <li>
-                <a href="#venue-info">Venue Info</a>
-            </li>
-            <li>
-                <a href="#map">Map</a>
-            </li>
-            @if(count($venue->upcomingEvents) > 0)
-                <li>
-                    <a href="#events">Events</a>
-                </li>
-            @endif
-        </ul>
-    </nav>
     <div class="content-wrapper">
         <div class="content-container">
             <section id="venue-info" class="content-section">

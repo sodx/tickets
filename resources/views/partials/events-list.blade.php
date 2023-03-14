@@ -1,7 +1,7 @@
 @inject('slugify', 'App\Actions\Slugify')
 @if($events)
     <div class="events-list-section">
-    <h3>{{$events[0]->name}}</h3>
+    <h2>{{$events[0]->name}}</h2>
     <div class="events-grid">
         <div class="events-grid__row events-grid__row--heading">
             <div class="events-grid__item events-grid__item--heading">

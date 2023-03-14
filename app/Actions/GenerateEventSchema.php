@@ -11,8 +11,15 @@ class GenerateEventSchema
 
     public function handle($event)
     {
+        if($event->segment === 'music') {
+            $eventSchema = $this->generateMusicEventSchema($event);
+        } elseif ($event->segment === 'sports') {
+            $eventSchema = $this->generateSportsEventSchema($event);
+        } else {
+            $eventSchema = $this->generateEventSchema($event);
+        }
         return [
-            'event' => $this->generateEventSchema($event),
+            'event' => $eventSchema,
             'faq' => $this->generateFAQForEventSchema($event)
         ];
     }
@@ -105,6 +112,111 @@ class GenerateEventSchema
             )
             ->toScript();
     }
+
+    public function generateMusicEventSchema($event): string
+    {
+        return Schema::musicEvent()
+            ->image(isset($event->thumbnail) ? $event->thumbnail : '')
+            ->name($event->name)
+            ->description($event->info)
+            ->startDate($event->start_date)
+            ->endDate($event->end_date ?? $event->start_date)
+            ->eventStatus('https://schema.org/EventScheduled')
+            ->eventAttendanceMode('https://schema.org/OfflineEventAttendanceMode')
+            ->location(
+                Schema::place()
+                    ->name($event->venue->name)
+                    ->address(
+                        Schema::postalAddress()
+                            ->streetAddress($event->venue->address)
+                            ->addressLocality($event->venue->city)
+                            ->addressRegion($event->venue->state)
+                            ->postalCode($event->venue->zip)
+                            ->addressCountry($event->venue->country)
+                    )
+                    ->geo(
+                        Schema::geoCoordinates()
+                            ->latitude($event->venue->latitude)
+                            ->longitude($event->venue->longtitude)
+                    )
+            )
+            ->offers(
+                Schema::offer()
+                    ->price($event->price_min)
+                    ->priceCurrency($event->price_currency)
+                    ->availability("https://schema.org/InStock")
+                    ->url($event->url)
+            )
+            ->organizer(
+                Schema::organization()
+                    ->name($event->venue->name)
+                    ->url(
+                        route('venue', ['slug' => $event->venue->slug])
+                    )
+            )
+            ->performer($this->getPerformersSchema($event))
+            ->url(
+                route('event', [
+                    'slug' => $event->slug,
+                    'segment' => $event->segment->slug,
+                    'location' => Slugify::run($event->venue->city)
+                ])
+            )
+            ->toScript();
+    }
+
+    public function generateSportsEventSchema($event): string
+    {
+        return Schema::sportsEvent()
+            ->image(isset($event->thumbnail) ? $event->thumbnail : '')
+            ->name($event->name)
+            ->description($event->info)
+            ->startDate($event->start_date)
+            ->endDate($event->end_date ?? $event->start_date)
+            ->eventStatus('https://schema.org/EventScheduled')
+            ->eventAttendanceMode('https://schema.org/OfflineEventAttendanceMode')
+            ->location(
+                Schema::place()
+                    ->name($event->venue->name)
+                    ->address(
+                        Schema::postalAddress()
+                            ->streetAddress($event->venue->address)
+                            ->addressLocality($event->venue->city)
+                            ->addressRegion($event->venue->state)
+                            ->postalCode($event->venue->zip)
+                            ->addressCountry($event->venue->country)
+                    )
+                    ->geo(
+                        Schema::geoCoordinates()
+                            ->latitude($event->venue->latitude)
+                            ->longitude($event->venue->longtitude)
+                    )
+            )
+            ->offers(
+                Schema::offer()
+                    ->price($event->price_min)
+                    ->priceCurrency($event->price_currency)
+                    ->availability("https://schema.org/InStock")
+                    ->url($event->url)
+            )
+            ->organizer(
+                Schema::organization()
+                    ->name($event->venue->name)
+                    ->url(
+                        route('venue', ['slug' => $event->venue->slug])
+                    )
+            )
+            ->performer($this->getPerformersSchema($event))
+            ->url(
+                route('event', [
+                    'slug' => $event->slug,
+                    'segment' => $event->segment->slug,
+                    'location' => Slugify::run($event->venue->city)
+                ])
+            )
+            ->toScript();
+    }
+
 
     public function getPerformersSchema($event)
     {

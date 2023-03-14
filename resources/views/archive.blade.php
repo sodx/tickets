@@ -49,14 +49,5 @@
                 {!! $links !!}
             @endif
         @endif
-        @if($tours)
-            <section class="page-section">
-                <h2>All Tours in {{$activeCity['user_location']}}</h2>
-                @include('partials.tours-container', $tours)
-                <div class="btn-wrapper">
-                    <a href="" class="btn">Load More Tours</a>
-                </div>
-            </section>
-        @endif
     </div>
 @endsection

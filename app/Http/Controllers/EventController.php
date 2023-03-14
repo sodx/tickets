@@ -20,21 +20,22 @@ class EventController extends Controller
     public function queryEvents($location = '', $type = '', $date = '', $dateTo = '', $sort = '', $genre = '', $segment = '')
     {
         if ($date === '') {
-            $events = Event::where('start_date', '>=', date('Y-m-d'))->whereHas('segment')->get()->sortBy($sort);
+//            $events = Event::all()->sortBy($sort);
+            $events = Event::where('start_date', '>=', date('Y-m-d'))->where('status', '=', 'onsale')->whereHas('segment')->get()->sortBy($sort);
         } elseif ($date !== '' && $dateTo === '') {
-            $events = Event::where('start_date', '>=', date('Y-m-d', strtotime($date)))->whereHas('segment')->get()->sortBy($sort);
+            $events = Event::where('start_date', '>=', date('Y-m-d', strtotime($date)))->where('status', '=', 'onsale')->whereHas('segment')->get()->sortBy($sort);
         } elseif ($date !== '' && $dateTo !== '') {
             $events = Event::whereBetween('start_date', [
                 date('Y-m-d', strtotime($date)),
                 date('Y-m-d', strtotime($dateTo))
-            ])->whereHas('segment')->get()->sortBy('start_date');
+            ])->where('status', '=', 'onsale')->whereHas('segment')->get()->sortBy('start_date');
         }
 
         // filter upcoming events and sort by date
         if ($location !== '' && $type !== '') {
             if ($type === 'city' && $location !== '' && $location !== 'All Cities') {
                 $events = $events->filter(function ($event) use ($location) {
-                    return $event->city() === $location;
+                    return strtolower(trim($event->city())) === strtolower(trim($location));
                 });
             } elseif ($type === 'state') {
                 $events = $events->filter(function ($event) use ($location) {
@@ -77,6 +78,9 @@ class EventController extends Controller
     {
         $eventsQuery = $this->queryEvents($location, $type, $date, $dateTo);
         $events = $eventsQuery['events'];
+        if (empty($events->toArray())) {
+            abort(404, 'Page not found');
+        }
         $tourGroup = $this->groupTourEvents($events);
         $topViewed = $this->getTopViewed($events);
         $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $dateTo);
@@ -88,7 +92,6 @@ class EventController extends Controller
             'featuredEvent' => $eventsQuery['featuredEvent'],
             'topViewed' => $topViewed,
             'events' => array_slice($tourGroup['single'], 0, 8),
-            'tours' => array_slice($tourGroup['tour'], 0, 8),
             'h1' => $seoMeta['h1'],
         ]);
     }
@@ -103,6 +106,9 @@ class EventController extends Controller
         $events = $eventsQuery['events'];
 
         $events = $events->paginate($perPage);
+        if (empty($events->items())) {
+            abort(404, 'Page not found');
+        }
         $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $dateTo, $genre, $segment);
 
         SEOMeta::setTitle($seoMeta['title']);
@@ -112,7 +118,6 @@ class EventController extends Controller
             'featuredEvent' => $eventsQuery['featuredEvent'],
             'topViewed' => [],
             'events' => $events,
-            'tours' => [],
             'links' => $events->links('vendor.pagination.default'),
             'h1' => $seoMeta['h1'],
         ]);
@@ -136,7 +141,6 @@ class EventController extends Controller
 
         return view('home', [
             'events' => $events,
-            'tours' => [],
             'topViewed' => [],
             'h1' => 'Favorite Events'
         ]);
@@ -149,7 +153,6 @@ class EventController extends Controller
         $events = $recentlyViewed ? Event::whereIn('event_id', $recentlyViewed)->get() : [];
         return view('home', [
             'events' => $events,
-            'tours' => []
         ]);
     }
 
@@ -194,19 +197,19 @@ class EventController extends Controller
     {
         $events = Event::where('event_id', '!=', $event->event_id)
             ->where('start_date', '>=', date('Y-m-d'))
-            ->whereHas('venue', function($query) use ($event) {
+            ->whereHas('venue', function ($query) use ($event) {
                 $query->where('city', '=', $event->venue->city);
             })
-            ->whereHas('segment', function($query) use ($event) {
+            ->whereHas('segment', function ($query) use ($event) {
                 $query->where('name', '=', $event->segment->name);
             })
             ->orderBy('clicks')
             ->take($quantity)
             ->get();
-        if($events->count() < $quantity) {
+        if ($events->count() < $quantity) {
             $eventsInState = Event::where('event_id', '!=', $event->event_id)
                 ->where('start_date', '>=', date('Y-m-d'))
-                ->whereHas('venue', function($query) use ($event) {
+                ->whereHas('venue', function ($query) use ($event) {
                     $query->where('state', '=', $event->venue->state);
                 })
                 ->orderBy('clicks')
@@ -245,9 +248,20 @@ class EventController extends Controller
      * @param  \App\Models\Attraction  $attraction
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($slug, $location, $segment)
     {
-        $event = Event::where('slug', '=', $slug)->first();
+        $event = Event::where('slug', '=', $slug)
+            ->whereHas('venue', function ($query) use ($location) {
+                $query->where('city', '=', $location);
+            })
+            ->whereHas('segment', function ($query) use ($segment) {
+                $query->where('name', '=', $segment);
+            })
+            ->first();
+        if (!$event) {
+            return redirect()->route('segment', ['location' => $location, 'slug' => $segment]);
+            //abort(404);
+        }
         SEOMeta::setTitle($event->meta_title);
         SEOMeta::setDescription($event->meta_description);
         SEOMeta::addMeta('article:published_time', $event->created_at->toW3CString(), 'property');

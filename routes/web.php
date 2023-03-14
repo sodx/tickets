@@ -44,41 +44,66 @@ use App\Actions\GetActiveCity;
  * =====================
  */
 Route::get('/', function () {
-    $activeCity = new getActiveCity();
-    $activeCity = $activeCity->handle();
-    SEOMeta::setTitle('All tickets for Music Concerts and Sport Events | ' . setting('site.title'));
-    SEOMeta::setDescription('Get information about upcoming events in your city! check ' . setting('site.title'));
-    if ($activeCity['user_location_type'] === 'city' && $activeCity['user_location'] !== 'All Cities') {
-        return redirect()->route('city', ['location' => slugify::run($activeCity['user_location'])]);
+    if (Cache::has('home')) {
+        return Cache::get('home');
+    } else {
+        // GET request params from current URL
+        $requestParams = request()->query();
+        // If there are any params, redirect to the URL without params
+        if (count($requestParams) > 0) {
+            return redirect()->route('home');
+        }
+
+        $activeCity = new getActiveCity();
+        $activeCity = $activeCity->handle();
+        SEOMeta::setTitle('All tickets for Music Concerts and Sport Events | ' . setting('site.title'));
+        SEOMeta::setDescription('Get information about upcoming events in your city! check ' . setting('site.title'));
+        if ($activeCity['user_location_type'] === 'city' && $activeCity['user_location'] !== 'All Cities') {
+            return redirect()->route('city', ['location' => slugify::run($activeCity['user_location'])]);
+        }
+        $eventController = new EventController();
+        $cachedData = $eventController->index()->render();
+        Cache::put('home', $cachedData);
+        return $cachedData;
     }
-    $eventController = new EventController();
-    return $eventController->index();
 })->name('home');
 
-Route::get('/city/{location}', function ($location) {
-    $unslugify = new Unslugify();
-    $location = $unslugify->handle($location);
-    $eventController = new EventController();
-    SEOMeta::setTitle('Music Concerts and Sport Events in '. $location .' | Buy tickets on ' . setting('site.title'));
-    SEOMeta::setDescription('Get information about upcoming events in '. $location .'! check ' . setting('site.title'));
 
-    if ($location === 'All Cities') {
-        return $eventController->index();
+Route::get('/city/{location}', function ($location) {
+    if (Cache::has('city_'.$location)) {
+        return Cache::get('city_'.$location);
+    } else {
+        $unslugify = new Unslugify();
+        $location = $unslugify->handle($location);
+        $eventController = new EventController();
+        SEOMeta::setTitle('Music Concerts and Sport Events in ' . $location . ' | Buy tickets on ' . setting('site.title'));
+        SEOMeta::setDescription('Get information about upcoming events in ' . $location . '! check ' . setting('site.title'));
+        if ($location === 'All Cities') {
+            return redirect()->route('home');
+        }
+        $cachedData = $eventController->index($location, 'city')->render();
+        Cache::put('city_'.$location, $cachedData);
+        return $cachedData;
     }
-    return $eventController->index($location, 'city');
 })->name('city');
 
 Route::get('/city/{location}/events', function ($location) {
-    $unslugify = new Unslugify();
-    $location = $unslugify->handle($location);
-    $eventController = new EventController();
-    SEOMeta::setTitle('Music Concerts and Sport Events in '. $location .' | Buy tickets on ' . setting('site.title'));
-    SEOMeta::setDescription('Get information about upcoming events in '. $location .'! check ' . setting('site.title'));
+    if (Cache::has('city_'.$location.'_events')) {
+        return Cache::get('city_'.$location.'_events');
+    } else {
+        $unslugify = new Unslugify();
+        $location = $unslugify->handle($location);
+        $eventController = new EventController();
+        SEOMeta::setTitle('Music Concerts and Sport Events in ' . $location . ' | Buy tickets on ' . setting('site.title'));
+        SEOMeta::setDescription('Get information about upcoming events in ' . $location . '! check ' . setting('site.title'));
 
-    if ($location === 'All Cities') {
-        return $eventController->indexEvents();
+        if ($location === 'All Cities') {
+            return $eventController->indexEvents();
+        }
+        $cachedData = $eventController->indexEvents($location, 'city')->render();
+        Cache::put('city_'.$location.'_events', $cachedData);
+        return $cachedData;
     }
-    return $eventController->indexEvents($location, 'city');
 })->name('events');
 
 
@@ -157,8 +182,12 @@ Route::get('/city/{location}/segment/{segment}/event/{slug}', function ($locatio
         return Cache::get('events_'.$slug);
     } else {
         $eventController = new EventController();
-        $cachedData = $eventController->show($slug)->render();
-        Cache::put('events_'.$slug, $cachedData);
+
+        $cachedData = $eventController->show($slug, $location, $segment);
+        if($cachedData instanceof \Illuminate\View\View) {
+            $cachedData = $cachedData->render();
+            Cache::put('events_'.$slug, $cachedData);
+        }
         return $cachedData;
     }
 })->name('event');
@@ -206,6 +235,7 @@ Route::get('tours', function () {
     SEOMeta::setDescription('All upcoming tours! check ' . setting('site.title'));
     return $tours->index();
 })->name('tours');
+
 Route::get('tours/{slug}', function ($slug) {
     $tour = App\Models\Tour::where('slug', '=', $slug)->firstOrFail();
     SEOMeta::setTitle($tour->name . ' - Events | ' . setting('site.title'));
@@ -227,6 +257,11 @@ Route::group(['prefix' => 'admin'], function () {
         $tt = new TicketMasterController();
         return $tt->index();
     });
+});
+
+Route::get('check-status', function () {
+    $tt = new TicketMasterController();
+    return $tt->checkEventsStatus();
 });
 
 

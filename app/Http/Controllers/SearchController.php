@@ -76,9 +76,6 @@ class SearchController extends Controller
             ],
             'attractions' => [
                 'attractions' => $this->processAttractions($attractions)
-            ],
-            'tours' => [
-                'tours' => $this->processTour($tour)
             ]
         ];
 

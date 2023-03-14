@@ -59,7 +59,9 @@
                             }
                     @endphp
                     @foreach ($element as $page => $url)
-                        @if ($page == $paginator->currentPage())
+                        @if($page == 1)
+                            <li><a href="{{ url(request()->fullUrlWithoutQuery(['sort', 'per_page', 'date', 'date_to', 'page'])) }}">{{ $page }}</a></li>
+                        @elseif ($page == $paginator->currentPage())
                             <li class="active" aria-current="page"><span>{{ $page }}</span></li>
                         @elseif($page == 'el1' || $page == 'el2')
                             <li><a href="#">...</a></li>

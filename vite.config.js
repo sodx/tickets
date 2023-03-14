@@ -23,10 +23,6 @@ export default defineConfig({
             quite: true,
             files: ['resources/sass/**/*.scss']
         }),
-        inject({
-            $: 'jquery',
-            jQuery: 'jquery',
-        }),
         ViteMinifyPlugin({}),
     ],
     resolve: {

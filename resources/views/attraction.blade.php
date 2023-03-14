@@ -65,13 +65,6 @@
             </div>
         </figcaption>
     </figure>
-    <nav class="page-nav">
-        <ul>
-            <li>
-                <a href="#event-info">Event Info</a>
-            </li>
-        </ul>
-    </nav>
     <div class="content-wrapper">
         <div class="content-container">
             <div class="attraction-info">
@@ -83,9 +76,7 @@
             </div>
         </div>
     </div>
-
     <div class="content-wrapper">
-
         <div class="content-container">
             @if(count($attraction->upcomingEvents) > 0)
                 <section id="events" class="content-section">

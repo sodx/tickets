@@ -42,7 +42,7 @@ class MacrosServiceProvider extends ServiceProvider
             $menuBuilder = new GetMenuItems();
 
             return Menu::new()
-                ->route('city', 'Home', [
+                ->route('events', 'Events', [
                     'location' => Slugify::run($activeCity['user_location']),
                 ])
                 ->submenuIf(

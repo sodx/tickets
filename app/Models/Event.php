@@ -88,7 +88,6 @@ class Event extends Model
         'end_date' => 'date',
         'start_time' => 'datetime:H:i',
         'end_time' => 'datetime:H:i',
-        'status' => 'boolean',
     ];
 
     public $sortable = [

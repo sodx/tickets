@@ -7,11 +7,52 @@
 @section('title', $event->title)
 @section('content')
     <div class="event-item" data-id="{{$event->event_id}}"></div>
-    <figure class="event-poster">
+    <figure class="event-poster event-poster--{{$event->status}}">
+        @if($event->status === 'inactive')
+            <div class="notification">
+                This event has started or has already happened, so ticket sales have stopped.
+            </div>
+        @elseif($event->status === 'soldout')
+            <div class="notification">
+                This event has sold out.
+            </div>
+        @elseif($event->status === 'canceled')
+            <div class="notification">
+                This event has been canceled.
+            </div>
+        @elseif($event->status === 'postponed')
+            <div class="notification">
+                This event has been postponed.
+            </div>
+        @elseif($event->status === 'rescheduled')
+            <div class="notification">
+                This event has been rescheduled.
+            </div>
+        @elseif($event->status === 'ended')
+            <div class="notification">
+                This event has ended.
+            </div>
+        @elseif($event->status === 'offsale')
+            <div class="notification">
+                This event is no longer on sale.
+            </div>
+        @endif
+
         <div class="event-poster__image-wrapper" id="parallax-scene">
             <div class="event-poster__image">
-                <link rel="preload" as="image" href="{{$event->poster}}" />
-                <img src="{{ $event->poster }}" data-src="{{ $event->poster }}" alt="{{ $event->name }}">
+                <link rel="preload" href="{{$event->poster}}" as="image">
+                <picture>
+                    <source
+                        media = "(min-width:1280px)"
+                        srcset="{{$event->poster}} 1280w">
+                    <source
+                        media = "(min-width:340px)"
+                        srcset = "{{$event->medium_image}} 340w" >
+                    <source
+                        media = "(min-width:300px)"
+                        srcset = "{{$event->thumbnail}} 300w" >
+                    <img src="{{asset('storage/medium_photos/'.$event->medium_image)}}" >
+                </picture>
             </div>
         </div>
         <figcaption class="event-poster__meta">
@@ -41,25 +82,6 @@
             </div>
         </figcaption>
     </figure>
-    <nav class="page-nav">
-        <ul>
-            @if($event->info || $event->pleaseNote)
-                <li>
-                    <a href="#event-info">Event Info</a>
-                </li>
-            @endif
-            @if($event->attractions)
-                <li>
-                    <a href="#attractions">Attractions</a>
-                </li>
-            @endif
-            @if($event->venue)
-                <li>
-                    <a href="#venue">Venue</a>
-                </li>
-            @endif
-        </ul>
-    </nav>
     <div class="content-wrapper">
         <div class="content-container">
             @if($event->info || $event->pleaseNote)
@@ -129,9 +151,11 @@
                             class="event-sidebar__item">From <b>{{ $event->price_min }} {{ $event->price_currency }}</b></span>
                     </li>
                 @endif
-                <li class="event-sidebar__tickets">
-                    <a class="event-sidebar__link btn" href="{{ $event->url }}" target="_blank">Buy Tickets</a>
-                </li>
+                @if($event->status === 'onsale')
+                    <li class="event-sidebar__tickets">
+                        <a class="event-sidebar__link btn" href="{{ $event->url }}" target="_blank">Buy Tickets</a>
+                    </li>
+                @endif
             </ul>
         </aside>
     </div>

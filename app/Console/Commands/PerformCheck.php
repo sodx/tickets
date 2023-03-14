@@ -6,14 +6,14 @@ use App\Http\Controllers\TicketMasterController;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-class PerformParse extends Command
+class PerformCheck extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'perform:check';
+    protected $signature = 'perform:parse';
 
     /**
      * The console command description.
@@ -28,6 +28,6 @@ class PerformParse extends Command
     public function handle(): void
     {
         $ticketMasterController = new TicketMasterController();
-        $ticketMasterController->checkEventsStatus();
+        $ticketMasterController->index();
     }
 }

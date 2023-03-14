@@ -35,16 +35,5 @@
                 {!! $links !!}
             @endif
         @endif
-        @if($tours)
-            <section class="page-section">
-                <h2>All Tours in {{$location}}</h2>
-                @include('partials.tours-container', $tours)
-                @if(count($tours) > 3)
-                    <div class="btn-wrapper">
-                        <a href="" class="btn">Load More Tours</a>
-                    </div>
-                @endif
-            </section>
-        @endif
     </div>
 @endsection

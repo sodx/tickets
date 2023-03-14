@@ -34,6 +34,9 @@ class ParseTicketMasterQueryOutput
         // if any errors set them into variable
         $errors = Session::get('errors');
 
+        \Artisan::call('route:clear');
+        \Artisan::call('cache:clear');
+
         ImportLog::create([
             'imported_errors' => $errors ?? '',
             'imported_items' => $queryString,

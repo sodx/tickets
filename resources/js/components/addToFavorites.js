@@ -1,6 +1,9 @@
 import Cookies from "js-cookie";
 
 const addToFavorite = document.querySelectorAll('.add_to_favorites');
+const navFavoritesCount = document.querySelector('.nav-favorites .count');
+let favoritesCountValue = parseInt(navFavoritesCount.innerText);
+
 addToFavorite.forEach(function (btn) {
     btn.addEventListener('click', function (event) {
         event.preventDefault();
@@ -12,14 +15,18 @@ addToFavorite.forEach(function (btn) {
             favoritesCookies = JSON.parse(favoritesCookies);
             if (favoritesCookies.indexOf(id) > -1) {
                 favoritesCookies.splice(favoritesCookies.indexOf(id), 1);
+                favoritesCountValue--;
             } else {
                 favoritesCookies.push(id);
+                favoritesCountValue++;
             }
         } else {
             favoritesCookies = [id];
+            favoritesCountValue++;
         }
 
         Cookies.set('favorites', JSON.stringify(favoritesCookies), { expires: 365 });
         event.target.classList.toggle("active");
+        navFavoritesCount.innerText = favoritesCountValue;
     });
 });
