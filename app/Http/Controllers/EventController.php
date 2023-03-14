@@ -253,10 +253,10 @@ class EventController extends Controller
     {
         $event = Event::where('slug', '=', $slug)
             ->whereHas('venue', function ($query) use ($location) {
-                $query->where('city', '=', Slugify::run($location));
+                $query->where('city', '=', strtolower(trim($location)));
             })
             ->whereHas('segment', function ($query) use ($segment) {
-                $query->where('name', '=', Slugify::run($segment));
+                $query->where('name', '=', strtolower(trim($segment)));
             })
             ->first();
         if (!$event) {
