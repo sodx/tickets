@@ -23,5 +23,6 @@
     }
 </script>
 @include('partials.schema')
+@vite(['resources/js/app.js'])
 </body>
 </html>
