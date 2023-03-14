@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\ArchiveSeoMeta;
 use App\Actions\GenerateEventSchema;
 use App\Actions\Slugify;
+use App\Actions\Unslugify;
 use App\Http\Requests\StoreAttractionRequest;
 use App\Http\Requests\UpdateAttractionRequest;
 use App\Models\Attraction;
@@ -253,10 +254,10 @@ class EventController extends Controller
     {
         $event = Event::where('slug', '=', $slug)
             ->whereHas('venue', function ($query) use ($location) {
-                $query->where('city', '=', strtolower(trim($location)));
+                $query->where('city', '=', Unslugify::run($location));
             })
             ->whereHas('segment', function ($query) use ($segment) {
-                $query->where('name', '=', strtolower(trim($segment)));
+                $query->where('name', '=', Unslugify::run($segment));
             })
             ->first();
         if (!$event) {
