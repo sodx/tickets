@@ -78,6 +78,9 @@ class TicketMasterController extends Controller
                 return $event->save();
             }
             $parsedEvent = $this->getEventInfo($event->ticketmaster_id);
+            if (!isset($parsedEvent['dates']['status']['code'])) {
+                return $event->save();
+            }
             $parsedStatus = $parsedEvent['dates']['status']['code'];
             if ($parsedStatus !== $event->status) {
                 $event->status = $parsedStatus;
