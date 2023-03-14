@@ -46,27 +46,27 @@ class MacrosServiceProvider extends ServiceProvider
                     'location' => Slugify::run($activeCity['user_location']),
                 ])
                 ->submenuIf(
-                    array_key_exists(0, $menuItems),
+                    array_key_exists(0, $menuItems) && !empty($menuItems[0]),
                     $menuBuilder->getSubMenuHeader($menuItems, 0, $activeCity),
                     $menuBuilder->getSubMenu($menuItems, 0, $activeCity)
                 )
                 ->submenuIf(
-                    array_key_exists(1, $menuItems),
+                    array_key_exists(1, $menuItems) && !empty($menuItems[1]),
                     $menuBuilder->getSubMenuHeader($menuItems, 1, $activeCity),
                     $menuBuilder->getSubMenu($menuItems, 1, $activeCity)
                 )
                 ->submenuIf(
-                    isset($menuItems[2]),
+                    isset($menuItems[2]) && !empty($menuItems[2]),
                     $menuBuilder->getSubMenuHeader($menuItems, 2, $activeCity),
                     $menuBuilder->getSubMenu($menuItems, 2, $activeCity)
                 )
                 ->submenuIf(
-                    isset($menuItems[3]),
+                    isset($menuItems[3]) && !empty($menuItems[3]),
                     $menuBuilder->getSubMenuHeader($menuItems, 3, $activeCity),
                     $menuBuilder->getSubMenu($menuItems, 3, $activeCity)
                 )
                 ->submenuIf(
-                    isset($menuItems[4]),
+                    isset($menuItems[4]) && !empty($menuItems[4]),
                     $menuBuilder->getSubMenuHeader($menuItems, 4, $activeCity),
                     $menuBuilder->getSubMenu($menuItems, 4, $activeCity)
                 )
