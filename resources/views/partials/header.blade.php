@@ -16,7 +16,11 @@
                     {!! Menu::Main() !!}
                 </div>
             </nav>
-            <a href="{{route('home')}}" class="logo" rel="nofollow"><img src="/storage/{{setting('site.logo')}}" alt="Logo"></a>
+            @if($request()->route()->getName() !== 'home')
+                <a href="{{route('home')}}" class="logo" rel="nofollow"><img src="/storage/{{setting('site.logo')}}" alt="Logo"></a>
+            @else
+                <span class="logo"><img src="/storage/{{setting('site.logo')}}" alt="Logo"></span>
+            @endif
             <nav class="navigation navigation-main">
                 {!! Menu::Main() !!}
             </nav>
