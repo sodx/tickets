@@ -37,7 +37,6 @@
                 This event is no longer on sale.
             </div>
         @endif
-
         <div class="event-poster__image-wrapper" id="parallax-scene">
             <div class="event-poster__image">
                 <link rel="preload" href="{{$event->poster}}" as="image">
@@ -58,9 +57,7 @@
         <figcaption class="event-poster__meta">
             <div class="content-container">
                 <div class="event-poster__title-block">
-                    <h1 class="event-poster__title">
-                        {{ $event->name }}
-                    </h1>
+                    <h1 class="event-poster__title">{{ $event->name }}</h1>
                     <div class="event-poster__favorites">
                         <button class="add_to_favorites {{ $event->isFavorite() ? 'active' : ''  }}" data-id="{{ $event->event_id }}"><span class="material-symbols-outlined">favorite</span></button>
                     </div>
