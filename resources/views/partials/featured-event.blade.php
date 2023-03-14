@@ -6,7 +6,6 @@
             'location' => $slugify->handle($event->venue->city)
             ])
           }}" title="{{$event->name}}">
-        <link rel="preload" as="image" href="{{$event->poster}}" />
         <figure class="event-poster">
             <div class="event-poster__image-wrapper event-poster__image-wrapper--featured" id="parallax-scene">
                 <div class="event-poster__image">
