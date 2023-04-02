@@ -1,4 +1,4 @@
-@if($relatedEvents)
+@if($relatedEvents && $relatedEvents->count() > 0)
     <div class="content-container">
         <h2>Featured Events</h2>
         <div class="events-container">

@@ -47,6 +47,10 @@ class Venue extends Model
         'latitude',
         'slug',
         'image',
+        'seo_title',
+        'seo_description',
+        'seo_keywords',
+        'seo_content'
     ];
 
 
@@ -82,7 +86,7 @@ class Venue extends Model
     {
         ob_start();
         ?>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2506.2296986012298!2d<?php echo $this->longtitude; ?>!3d<?php echo $this->latitude; ?>!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2spl!4v1670191905869!5m2!1sru!2spl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2506.2296986012298!2d<?php echo $this->longtitude; ?>!3d<?php echo $this->latitude; ?>!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2spl!4v1670191905869!5m2!1sru!2spl" width="600" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <?php
 
         return ob_get_clean();

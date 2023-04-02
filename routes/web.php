@@ -2,6 +2,8 @@
 
 use App\Actions\GenerateEventSchema;
 use App\Actions\GetMenuItems;
+use App\Actions\SeoGen\SeoGen;
+use App\Actions\Serpstat\SerpstatClient;
 use App\Http\Controllers\AttractionController;
 use App\Http\Controllers\AttractionsSitemapController;
 use App\Http\Controllers\EventCitySitemapController;
@@ -134,6 +136,7 @@ Route::get('/city/{location}/segment/{slug}', function ($location, $slug) {
     $unslugify = new Unslugify();
     $location = $unslugify->handle($location);
     $eventController = new EventController();
+
     SEOMeta::setTitle($slug . ' Events in '. $location .' | Buy tickets on ' . setting('site.title'));
     SEOMeta::setDescription('Get all '. $slug .' upcoming events in '. $location .'! check ' . setting('site.title'));
 
@@ -256,12 +259,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('perform', function () {
         $tt = new TicketMasterController();
         return $tt->index();
-    });
-});
-
-Route::get('check-status', function () {
-    $tt = new TicketMasterController();
-    return $tt->checkEventsStatus();
+    })->middleware('admin.user');
 });
 
 
@@ -294,4 +292,3 @@ Route::get('/sitemap/events-cities.xml', [EventCitySitemapController::class, 'in
 Route::get('/sitemap/events-cities/{city}.xml', [EventCitySitemapController::class, 'show'])->name('sitemap.eventsCity.show');
 Route::get('/sitemap/venues.xml', [VenuesSitemapController::class, 'index'])->name('sitemap.venues.index');
 Route::get('/sitemap/attractions.xml', [AttractionsSitemapController::class, 'index'])->name('sitemap.attractions.index');
-Route::get('/sitemap/tours.xml', [ToursSitemapController::class, 'index'])->name('sitemap.tours.index');

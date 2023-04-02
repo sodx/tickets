@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\SeoGen\SeoGen;
 use App\Models\Venue;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -11,6 +12,8 @@ class SaveVenue extends SaveDataFromTM
     {
         $venueModel = new Venue();
         if ($this->shouldUpdateItem($data, $venueModel)) {
+            $generatedMeta = SeoGen::run('venue', $data['name'], $data['city']['name'], '', '');
+            ray($generatedMeta);
             $venue = Venue::updateOrCreate(
                 ['ticketmaster_id' => $data['id']],
                 [
@@ -29,6 +32,10 @@ class SaveVenue extends SaveDataFromTM
                     'latitude' => $data['location']['latitude'] ?? '',
                     'image' => $data['images'][0]['url'] ?? '',
                     'slug' => SlugService::createSlug(Venue::class, 'slug', $data['name']),
+                    'seo_title' => $generatedMeta['data']['title'] ?? '',
+                    'seo_keywords' => $generatedMeta['keywords'] ?? '',
+                    'seo_description' => $generatedMeta['data']['meta_description'] ?? '',
+                    'seo_content' => $generatedMeta['data']['content'] ?? '',
                 ]
             );
         } else {

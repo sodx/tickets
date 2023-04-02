@@ -49,6 +49,10 @@ class Attraction extends Model
         'medium_image',
         'video_ids',
         'slug',
+        'seo_title',
+        'seo_description',
+        'seo_keywords',
+        'seo_content'
     ];
 
 

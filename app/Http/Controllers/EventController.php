@@ -95,6 +95,7 @@ class EventController extends Controller
             'topViewed' => $topViewed,
             'events' => array_slice($tourGroup['single'], 0, 8),
             'h1' => $seoMeta['h1'],
+            'seoText' => $seoMeta['seoText'] ?? '',
         ]);
     }
 
@@ -115,13 +116,13 @@ class EventController extends Controller
 
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
-
         return view('archive', [
             'featuredEvent' => $eventsQuery['featuredEvent'],
             'topViewed' => [],
             'events' => $events,
             'links' => $events->links('vendor.pagination.default'),
             'h1' => $seoMeta['h1'],
+            'seoText' => $seoMeta['seoText'] ?? '',
         ]);
     }
 

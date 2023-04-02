@@ -1,5 +1,7 @@
 <div class="content-block">
-    <h2 class="content-block__title">{{ $title }}</h2>
+    @if( isset( $title ) && $title !== '')
+        <h2 class="content-block__title">{{ $title }}</h2>
+    @endif
     <div class="content-block__body">
         @if( isset( $content ) )
             {!! $content !!}

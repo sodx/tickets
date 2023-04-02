@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('tours');
-        Schema::create('tours', function (Blueprint $table) {
+        Schema::create('city_segments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('seo_title', 520)->nullable();
+            $table->string('city_name');
+            $table->string('segment_name');
+            $table->string('seo_title', 255)->nullable();
             $table->text('seo_description', 65535)->nullable();
             $table->text('seo_keywords', 65535)->nullable();
             $table->text('seo_content', 65535)->nullable();
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tours');
+        Schema::dropIfExists('city_segments');
     }
 };

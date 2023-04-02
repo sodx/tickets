@@ -19,7 +19,7 @@ class ParseTicketMasterQueryOutput
 
     private int $savedEvents = 0;
     private int $updatedEvents = 0;
-    private int $eventsForSave = 20;
+    private int $eventsForSave = 2;
     private int $processedEvents = 0;
 
     public function handle(array $output, $queryString = '')
@@ -27,7 +27,7 @@ class ParseTicketMasterQueryOutput
         $this->setEventsForSave(
             setting('ticketmaster.size')
             ?? env('TICKETMASTER_QUERY_SIZE')
-            ?? 20
+            ?? 2
         );
         $this->iterateThroughOutput($output);
 
@@ -143,7 +143,7 @@ class ParseTicketMasterQueryOutput
         if (!$this->isEventExists($event['id'])) {
             $this->saveEvent($event);
             $this->setSavedEvents((int) $this->savedEvents + 1);
-        } elseif ($this->isEventExists($event['id']) && $this->isEventUpdatedDuringLastWeek($event['id'])) {
+        } elseif ($this->isEventExists($event['id']) && ! $this->isEventUpdatedDuringLastWeek($event['id'])) {
             $this->saveEvent($event);
             $this->setUpdatedEvents($this->updatedEvents + 1);
         }

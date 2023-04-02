@@ -3,6 +3,9 @@
 namespace App\Actions;
 
 use App\Actions\GenerateSeoMeta;
+use App\Actions\SeoGen\SeoGen;
+use App\Models\City;
+use App\Models\CitySegment;
 use App\Models\Event;
 use App\Models\Genre;
 use App\Models\Segment;
@@ -65,12 +68,22 @@ class SaveEvent extends SaveDataFromTM
         }
         if (isset($data['classifications'][0]['genre'])) {
             $event->genre()->associate($this->saveGenre($data['classifications'][0]['genre']));
+            $data['classifications'][0]['genre']['city'] = $venue->city;
+            $this->saveCitySegment($data['classifications'][0]['genre']);
         }
         if (isset($data['classifications'][0]['segment'])) {
             $event->segment()->associate($this->saveSegment($data['classifications'][0]['segment']));
+            $data['classifications'][0]['segment']['city'] = $venue->city;
+            $this->saveCitySegment($data['classifications'][0]['segment']);
         }
-        $event->tour()->associate($this->saveTour($data));
 
+        $this->saveCity(['city' => $venue->city]);
+        $event->tour()->associate($this->saveTour($data));
+        $generatedMeta = SeoGen::run('event', $data['name'], $venue->city, $venue->name, $data['dates']['start']['localDate']);
+        $event->meta_title = $generatedMeta['data']['title'] ?? '';
+        $event->meta_description = $generatedMeta['data']['meta_description'] ?? '';
+        $event->meta_keywords = $generatedMeta['keywords'] ?? '';
+        $event->info = $generatedMeta['data']['content'] ?? '';
         $event->save();
         return $event;
     }
@@ -97,6 +110,16 @@ class SaveEvent extends SaveDataFromTM
     public function saveSegment(array $segment): Segment
     {
         return SaveSegment::run($segment);
+    }
+
+    public function saveCitySegment(array $segment): CitySegment
+    {
+        return SaveCitySegment::run($segment);
+    }
+
+    public function saveCity(array $city): City
+    {
+        return SaveCity::run($city);
     }
 
     public function saveTour(array $event): Tour | null

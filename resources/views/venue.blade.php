@@ -17,18 +17,20 @@
     </figure>
     <div class="content-wrapper">
         <div class="content-container">
-            <section id="venue-info" class="content-section">
-                @include('partials.content-block', [
-                    'title' => 'Venue Info',
-                    'content' => $venue->state . ' ' . $venue->city . ' ' . $venue->address
-                ])
-            </section>
-            <section id="map" class="content-section">
-                @include('partials.content-block', [
-                    'title' => 'Map',
-                    'content' => $venue->googleMap()
-                ])
-            </section>
+            <div class="attraction-info">
+                <section id="map" class="content-section">
+                    @include('partials.content-block', [
+                        'title' => 'Map',
+                        'content' => $venue->googleMap()
+                    ])
+                </section>
+                <section id="venue-info" class="content-section">
+                    @include('partials.content-block', [
+                        'title' => 'Venue Info',
+                        'content' => '<b>Address:</b> ' . $venue->state . ' ' . $venue->city . ' ' . $venue->address . '<br>' . $venue->seo_content
+                    ])
+                </section>
+            </div>
             @if(count($venue->upcomingEvents) > 0)
                 <section id="events" class="content-section">
                     <h2>Upcoming Events In {{ $venue->name }}</h2>

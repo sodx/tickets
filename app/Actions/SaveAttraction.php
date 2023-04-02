@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\SeoGen\SeoGen;
 use App\Models\Attraction;
 use App\Models\Event;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -12,6 +13,7 @@ class SaveAttraction extends SaveDataFromTM
     {
         $attractionModel = new Attraction();
         if ($this->shouldUpdateItem($data, $attractionModel) && isset($data['name'])) {
+            $generatedMeta = SeoGen::run('attendee', $data['name'], '', '', '');
             $attraction = Attraction::updateOrCreate(
                 ['ticketmaster_id' => $data['id']],
                 [
@@ -34,6 +36,10 @@ class SaveAttraction extends SaveDataFromTM
                     'slug' => isset($data['name'])
                         ? SlugService::createSlug(Attraction::class, 'slug', $data['name'])
                         : '',
+                    'seo_title' => $generatedMeta['data']['title'] ?? '',
+                    'seo_keywords' => $generatedMeta['keywords'] ?? '',
+                    'seo_description' => $generatedMeta['data']['meta_description'] ?? '',
+                    'seo_content' => $generatedMeta['data']['content'] ?? '',
                 ]
             );
         } else {

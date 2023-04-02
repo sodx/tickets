@@ -65,25 +65,36 @@
             </div>
         </figcaption>
     </figure>
+
     <div class="content-wrapper">
         <div class="content-container">
-            <div class="attraction-info">
+            @if(count($attraction->upcomingEvents) > 0)
+                <section id="events" class="content-section content-section--nomb">
+                    @include('partials.events-list', ['events' => $attraction->upcomingEvents, 'nomb' => true])
+                </section>
+            @endif
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="content-container">
+            @php
+                $additionsClass = $attraction->haveVideos() === false ? "attraction-info--fullwidth" : "";
+            @endphp
+            <div class="attraction-info {{ $attraction->haveVideos() === false ? "attraction-info--fullwidth" : ""  }}">
                 @if($attraction->haveVideos() !== false)
                     <div class="video-block">
                         @include('partials.attractions-videos', ['attractions' => [$attraction]])
                     </div>
                 @endif
+                @if($attraction->seo_content)
+                    @include('partials.content-block', [
+                        'title' => '',
+                        'content' => $attraction->seo_content
+                    ])
+                @endif
             </div>
         </div>
     </div>
-    <div class="content-wrapper">
-        <div class="content-container">
-            @if(count($attraction->upcomingEvents) > 0)
-                <section id="events" class="content-section">
-                    @include('partials.events-list', ['events' => $attraction->upcomingEvents])
-                </section>
-            @endif
-        </div>
-    </div>
+
 @endsection
 

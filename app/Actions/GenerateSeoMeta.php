@@ -24,6 +24,7 @@ class GenerateSeoMeta
     {
         $this->event = $event;
         $this->category = $this->getEventSegment($event);
+        //$this->keywords = $this->generateKeywords($event);
         $this->title = $this->generateTitle($event);
         $this->description = $this->generateDescription();
         $this->info = $this->generateInfo();

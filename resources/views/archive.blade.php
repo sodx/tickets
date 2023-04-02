@@ -49,5 +49,8 @@
                 {!! $links !!}
             @endif
         @endif
+        @if(isset($seoText))
+            <p>{{ $seoText }}</p>
+        @endif
     </div>
 @endsection

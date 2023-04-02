@@ -171,8 +171,12 @@ main {
 
 .attraction-info {
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+
+    &--fullwidth {
+        grid-template-columns: 1fr;
+    }
 }
 
 .page-heading {
@@ -204,6 +208,10 @@ main {
     h3 {
         font-size: 2rem;
         border-bottom: 3px solid $black;
+    }
+
+    &--nomb {
+        margin-bottom: 0;
     }
 }
 

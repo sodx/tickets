@@ -1,6 +1,6 @@
 @inject('slugify', 'App\Actions\Slugify')
 @if($events)
-    <div class="events-list-section">
+    <div class="events-list-section {{ isset($nomb) && $nomb === true ? 'events-list-section--nomb' : '' }}">
     <h2>{{$events[0]->name}}</h2>
     <div class="events-grid">
         <div class="events-grid__row events-grid__row--heading">

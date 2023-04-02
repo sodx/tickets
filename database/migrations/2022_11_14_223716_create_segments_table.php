@@ -13,10 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('segments');
         Schema::create('segments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('seo_title', 255)->nullable();
+            $table->text('seo_description', 65535)->nullable();
+            $table->text('seo_keywords', 65535)->nullable();
+            $table->text('seo_content', 65535)->nullable();
             $table->timestamps();
         });
     }

@@ -99,7 +99,6 @@
             @endif
                 @if($event->venue)
                     <section id="venue" class="content-section">
-                        <h2>Venue</h2>
                         @include('partials.venue-card', ['venue' => $event->venue])
                         @if($event->seatmap)
                             @include('partials.content-block', [
