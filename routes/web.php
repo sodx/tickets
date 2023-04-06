@@ -46,7 +46,7 @@ use App\Actions\GetActiveCity;
  * =====================
  */
 Route::get('/', function () {
-    if (Cache::has('home2')) {
+    if (Cache::has('home')) {
         return Cache::get('home');
     } else {
         // GET request params from current URL
