@@ -88,6 +88,9 @@ class ArchiveSeoMeta
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '');
                 break;
+            case 'home':
+                $this->h1 = 'Tickets for Events and Concerts';
+                break;
             default:
                 $this->h1 = 'Events ' .
                     ($location !== '' ? 'in ' . $location : '') .
@@ -142,6 +145,9 @@ class ArchiveSeoMeta
                 }
                 $this->seoText = '';
                 break;
+            case 'home':
+                $this->seoText = '';
+                break;
             default:
                 $this->seoText = '';
                 break;
@@ -163,7 +169,7 @@ class ArchiveSeoMeta
                 } else {
                     $segmentModel = $this->getSegmentModel($segment);
                     if ($segmentModel) {
-                        $this->title = $segmentModel->seo_title (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
+                        $this->title = $segmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
                         return;
                     }
                 }
@@ -177,18 +183,18 @@ class ArchiveSeoMeta
             case 'genre':
                 if($location !== 'All Cities') {
                     $citySegmentModel = $this->getCitySegmentModel($location, $genre);
-                    if ($citySegmentModel) {
+                    if ($citySegmentModel && $citySegmentModel->seo_title) {
                         $this->title = $citySegmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
                         return;
                     }
                 } else {
                     $genreModel = $this->getGenreModel($genre);
-                    if ($genreModel) {
+                    if ($genreModel && $genreModel->seo_title) {
                         $this->title = $genreModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                         return;
                     }
                 }
-                $this->title = 'Buy '. ucfirst($genre) . ' Tickets 🎫' .
+                $this->title = ucfirst($genre) . ' Events and Concerts 🎫 Buy Tickets ' .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
@@ -201,20 +207,25 @@ class ArchiveSeoMeta
                     $this->title = $cityModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                     return;
                 }
-                $this->title = 'Buy Tickets in ' . $location .
+                $this->title = 'Buy Tickets for Concerts and Events In ' . $location .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
+            case 'home':
+                $this->title = 'All Concerts and Sport Events Tickets '.
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                break;
             default:
-                $this->title = 'Buy Tickets ' .
+                $this->title = 'Concerts and Events ' .
                     ($location !== '' ? 'in ' . $location : '') .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
+                    ' Get Tickets ' .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
         }
@@ -274,11 +285,15 @@ class ArchiveSeoMeta
                     $this->description = $cityModel->seo_description;
                     return;
                 }
-                $this->description = 'Get ' . $location . ' Events ' .
+                $this->description = 'Get Your Tickets to ' . $location . ' Upcoming Events ' .
                     ($genre !== '' ? ' - ' . $genre : '') .
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                break;
+            case 'home':
+                $this->description = 'Get the best cheap tickets for concerts and events in all US'.
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
                 break;
             default:

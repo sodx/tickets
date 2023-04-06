@@ -46,21 +46,21 @@ use App\Actions\GetActiveCity;
  * =====================
  */
 Route::get('/', function () {
-    if (Cache::has('home')) {
+    if (Cache::has('home2')) {
         return Cache::get('home');
     } else {
         // GET request params from current URL
         $requestParams = request()->query();
         // If there are any params, redirect to the URL without params
+        SEOMeta::setTitle('All tickets for Music Concerts and Sport Events | ' . setting('site.title'));
+        SEOMeta::setDescription('Get information about upcoming events in your city! check ' . setting('site.title'));
         if (count($requestParams) > 0) {
             return redirect()->route('home');
         }
 
         $activeCity = new getActiveCity();
         $activeCity = $activeCity->handle();
-        SEOMeta::setTitle('All tickets for Music Concerts and Sport Events | ' . setting('site.title'));
-        SEOMeta::setDescription('Get information about upcoming events in your city! check ' . setting('site.title'));
-        if ($activeCity['user_location_type'] === 'city' && $activeCity['user_location'] !== 'All Cities') {
+         if ($activeCity['user_location_type'] === 'city' && $activeCity['user_location'] !== 'All Cities') {
             return redirect()->route('city', ['location' => slugify::run($activeCity['user_location'])]);
         }
         $eventController = new EventController();
