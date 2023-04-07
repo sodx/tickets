@@ -1,2 +1,11 @@
 User-agent: *
-Disallow: /
+Sitemap: https://liveconcerts.us/sitemap.xml
+Disallow: /admin/
+Disallow: /admin
+Disallow: /search
+Disallow: /search/
+Disallow: /search/*
+Disallow: /tours
+Disallow: /tours/
+Disallow: /tours/*
+

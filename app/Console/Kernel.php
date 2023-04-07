@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('perform:check')->daily()->runInBackground();
-        $schedule->command('perform:parse')->daily()->runInBackground();
+        $schedule->command('perform:check')->everyTwoHours()->runInBackground();
+        $schedule->command('perform:parse')->everyTwoHours()->runInBackground();
     }
 
 

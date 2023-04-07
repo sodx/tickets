@@ -13,7 +13,6 @@ class SaveVenue extends SaveDataFromTM
         $venueModel = new Venue();
         if ($this->shouldUpdateItem($data, $venueModel)) {
             $generatedMeta = SeoGen::run('venue', $data['name'], $data['city']['name'], '', '');
-            ray($generatedMeta);
             $venue = Venue::updateOrCreate(
                 ['ticketmaster_id' => $data['id']],
                 [
