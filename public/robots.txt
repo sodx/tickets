@@ -8,4 +8,7 @@ Disallow: /search/*
 Disallow: /tours
 Disallow: /tours/
 Disallow: /tours/*
+Disallow: /favorites
+Disallow: /favorites/
+Disallow: /favorites/*
 

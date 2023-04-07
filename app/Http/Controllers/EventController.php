@@ -89,6 +89,7 @@ class EventController extends Controller
 
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
+
         return view('home', [
             'location' => $location === '' ? 'All Cities' : $location,
             'featuredEvent' => $eventsQuery['featuredEvent'],
@@ -116,6 +117,18 @@ class EventController extends Controller
 
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
+        $eventsArr = $events->toArray();
+        $currentPage = $eventsArr['current_page'];
+        if($currentPage > 1) {
+            // add canonical link
+            SEOMeta::setPrev(url()->current() . '?page=' . ($currentPage - 1) . '&per_page=' . $perPage);
+            SEOMeta::setNext(url()->current() . '?page=' . ($currentPage + 1) . '&per_page=' . $perPage);
+            SEOMeta::setCanonical(url()->current());
+            SEOMeta::addMeta('robots', 'noindex, follow');
+        } elseif ($date !== '' || $dateTo !== '') {
+            SEOMeta::setCanonical(url()->current());
+            SEOMeta::addMeta('robots', 'noindex, follow');
+        }
         return view('archive', [
             'featuredEvent' => $eventsQuery['featuredEvent'],
             'topViewed' => [],
