@@ -163,13 +163,13 @@ class ArchiveSeoMeta
                 if($location !== 'All Cities') {
                     $citySegmentModel = $this->getCitySegmentModel($location, $segment);
                     if ($citySegmentModel) {
-                        $this->title = $citySegmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
+                        $this->title = $citySegmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');;
                         return;
                     }
                 } else {
                     $segmentModel = $this->getSegmentModel($segment);
                     if ($segmentModel) {
-                        $this->title = $segmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
+                        $this->title = $segmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');;
                         return;
                     }
                 }
@@ -178,19 +178,19 @@ class ArchiveSeoMeta
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'genre':
                 if($location !== 'All Cities') {
                     $citySegmentModel = $this->getCitySegmentModel($location, $genre);
                     if ($citySegmentModel && $citySegmentModel->seo_title) {
-                        $this->title = $citySegmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
+                        $this->title = $citySegmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');;
                         return;
                     }
                 } else {
                     $genreModel = $this->getGenreModel($genre);
                     if ($genreModel && $genreModel->seo_title) {
-                        $this->title = $genreModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                        $this->title = $genreModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                         return;
                     }
                 }
@@ -199,12 +199,12 @@ class ArchiveSeoMeta
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'events':
                 $cityModel = $this->getCityModel($location);
                 if ($cityModel) {
-                    $this->title = $cityModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    $this->title = $cityModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                     return;
                 }
 
@@ -213,11 +213,11 @@ class ArchiveSeoMeta
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'home':
                 $this->title = 'All Concerts and Sport Events Tickets '.
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             default:
                 $this->title = 'Concerts and Events ' .
@@ -227,11 +227,11 @@ class ArchiveSeoMeta
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
                     ' Get Tickets ' .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
         }
         if($this->title === '') {
-            $this->title = $segment . ' Events and Concerts, Buy Tickets ' . (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');;
+            $this->title = $segment . ' Events and Concerts, Buy Tickets ' . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');;
         }
     }
 
@@ -257,7 +257,7 @@ class ArchiveSeoMeta
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'genre':
                 if($location !== 'All Cities') {
@@ -278,7 +278,7 @@ class ArchiveSeoMeta
                     ($location !== '' ? 'in ' . $location : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'events':
                 $cityModel = $this->getCityModel($location);
@@ -291,11 +291,11 @@ class ArchiveSeoMeta
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'home':
                 $this->description = 'Get the best cheap tickets for concerts and events in all US'.
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             default:
                 $this->description = 'Get cheap tickets for the best upcoming ' . $location . ' Events ' .
@@ -303,7 +303,7 @@ class ArchiveSeoMeta
                     ($segment !== '' ? ' - ' . $segment : '') .
                     ($date !== '' ? 'Starts From ' . $date : '') .
                     ($dateTo !== '' ? 'Ends On ' . $dateTo : '') .
-                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Liveconcerts');
+                    (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
         }
     }

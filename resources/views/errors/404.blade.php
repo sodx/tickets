@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @php
-    $title = 'Page Not Found | Liveconcerts';
+    $title = 'Page Not Found | Music Snobbery';
 @endphp
 @section('title', $title)
 @section('sidebar')

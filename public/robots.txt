@@ -1,4 +1,4 @@
-Sitemap: https://liveconcerts.us/sitemap.xml
+Sitemap: https://musicsnobbery.com/sitemap.xml
 User-agent: *
 Disallow: /admin/
 Disallow: /admin

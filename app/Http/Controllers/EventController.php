@@ -295,7 +295,7 @@ class EventController extends Controller
         OpenGraph::setDescription($event->info);
         OpenGraph::setTitle($event->title);
         OpenGraph::setUrl(Request::url());
-        OpenGraph::setSiteName('Live Concerts');
+        OpenGraph::setSiteName('Music Snobbery');
         OpenGraph::addProperty('type', 'article');
         OpenGraph::addProperty('locale', 'en-us');
         OpenGraph::addImage($event->medium_image);
