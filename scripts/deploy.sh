@@ -17,6 +17,7 @@ composer update --no-dev --no-interaction --prefer-dist --optimize-autoloader
 # Clear the old cache
 php artisan cache:clear
 php artisan clear-compiled
+php artisan artisan storage:link
 
 # Recreate cache
 php artisan optimize
