@@ -8,7 +8,7 @@
         @endif
         @if( isset( $image ) )
             @if(isset($imageLink))
-                <a href="{{ $imageLink }}" target="_blank">
+                <a href="{{ $imageLink }}" target="_blank" rel="nofollow">
             @endif
             <img src="{{ $image }}" alt="{{$title}}"/>
             @if(isset($imageLink))
