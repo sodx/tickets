@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAttractionRequest;
 use App\Http\Requests\UpdateAttractionRequest;
 use App\Models\Attraction;
+use Artesaos\SEOTools\Facades\SEOMeta;
 
 class AttractionController extends Controller
 {
@@ -18,7 +19,20 @@ class AttractionController extends Controller
         //get attractions which have more than 1 event, sort them by events click count and paginate them
         $attractions = Attraction::whereHas('events', function ($query) {
             $query->where('start_date', '>=', date('Y-m-d'));
-        })->withCount('events')->orderBy('events_count', 'desc')->paginate(30);
+        })->withCount('events')->orderBy('events_count', 'desc')->get()->paginate(20);
+
+        SEOMeta::setTitle('All Artists and Attractions ' . ' | ' . setting('site.title'));
+        SEOMeta::setDescription('List of All Artists and Attractions touring right now' . ' | ' . setting('site.description'));
+
+        $attractionsArr = $attractions->toArray();
+        $currentPage = $attractionsArr['current_page'];
+        if($currentPage > 1) {
+            // add canonical link
+            SEOMeta::setPrev(url()->current() . '?page=' . ($currentPage - 1) . '&per_page=' . 20);
+            SEOMeta::setNext(url()->current() . '?page=' . ($currentPage + 1) . '&per_page=' . 20);
+            SEOMeta::setCanonical(url()->current());
+            SEOMeta::addMeta('robots', 'noindex, follow');
+        }
 
         return view('attractions', [
             'attractions' => $attractions,

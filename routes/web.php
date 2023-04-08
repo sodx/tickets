@@ -220,7 +220,7 @@ Route::get('attractions', function () {
 })->name('attractions');
 Route::get('attractions/{slug}', function ($slug) {
     $attraction = App\Models\Attraction::where('slug', '=', $slug)->firstOrFail();
-    SEOMeta::setTitle($attraction->name . ' - Events | ' . setting('site.title'));
+    SEOMeta::setTitle($attraction->name . ' - Events Get Tickets | ' . setting('site.title'));
     SEOMeta::setDescription('Get upcoming events with '. $attraction->name . '! check ' . setting('site.title'));
 
     return view('attraction', compact('attraction'));

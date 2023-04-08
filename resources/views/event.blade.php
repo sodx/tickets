@@ -50,14 +50,14 @@
                     <source
                         media = "(min-width:300px)"
                         srcset = "{{$event->thumbnail}} 300w" >
-                    <img src="{{asset('storage/medium_photos/'.$event->medium_image)}}" >
+                    <img src="{{asset('storage/medium_photos/'.$event->medium_image)}}" alt="{{$event->name}}">
                 </picture>
             </div>
         </div>
         <figcaption class="event-poster__meta">
             <div class="content-container">
                 <div class="event-poster__title-block">
-                    <h1 class="event-poster__title">{{ $event->name }}</h1>
+                    <h1 class="event-poster__title">{{ $event->name }} In {{$event->venue->city}}</h1>
                     <div class="event-poster__favorites">
                         <button class="add_to_favorites {{ $event->isFavorite() ? 'active' : ''  }}" data-id="{{ $event->event_id }}"><span class="material-symbols-outlined">favorite</span></button>
                     </div>
@@ -81,14 +81,26 @@
     </figure>
     <div class="content-wrapper">
         <div class="content-container">
+            @php($videos = false)
+            @foreach($event->attractions as $attraction)
+                @if($attraction->haveVideos() !== false)
+                    @php($videos = $attraction->haveVideos())
+                @endif
+            @endforeach
+
             @if($event->info || $event->pleaseNote)
                 <section id="event-info" class="content-section">
-                    @if($event->info)
+                    <div class="attraction-info {{ $videos === false ? "attraction-info--fullwidth" : ""  }}">
+                        @if($videos === true)
+                            @include('partials.attractions-videos', ['attractions' => $event->attractions])
+                        @endif
+                        @if($event->info)
                         @include('partials.content-block', [
-                            'title' => 'Event Info',
-                            'content' => $event->info
-                        ])
-                    @endif
+                                'title' => 'Event Info',
+                                'content' => $event->info
+                            ])
+                        @endif
+                    </div>
                     @if($event->pleaseNote && $event->info !== $event->pleaseNote)
                         @include('partials.content-block', [
                             'title' => 'Please Note',
@@ -109,9 +121,7 @@
                         @endif
                     </section>
                 @endif
-                @if($event->attractions)
-                    @include('partials.attractions-videos', ['attractions' => $event->attractions])
-                @endif
+
             @if($event->attractions)
                 <section id="attractions" class="content-section">
                     <h2>Attractions</h2>
@@ -149,7 +159,7 @@
                 @endif
                 @if($event->status === 'onsale')
                     <li class="event-sidebar__tickets">
-                        <a class="event-sidebar__link btn" href="{{ $event->url }}" target="_blank">Buy Tickets</a>
+                        <a class="event-sidebar__link btn" rel="nofollow" href="{{ $event->url }}" target="_blank">Buy Tickets</a>
                     </li>
                 @endif
             </ul>

@@ -10,6 +10,7 @@ use App\Http\Requests\StoreAttractionRequest;
 use App\Http\Requests\UpdateAttractionRequest;
 use App\Models\Attraction;
 use App\Models\Event;
+use App\Models\Venue;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -80,15 +81,23 @@ class EventController extends Controller
     {
         $eventsQuery = $this->queryEvents($location, $type, $date, $dateTo);
         $events = $eventsQuery['events'];
+        $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $dateTo);
+        SEOMeta::setTitle($seoMeta['title']);
+        SEOMeta::setDescription($seoMeta['description']);
+
         if (empty($events->toArray())) {
+            if (Venue::where('city', '=', $location)->count() > 0) {
+                return view('no-events-city', [
+                    'h1' => $location,
+                    'subheading' => 'There is no upcoming events in ' . $location,
+                    'text' => 'Please check back later or try another city.'
+                ]);
+            }
             abort(404, 'Page not found');
         }
         $tourGroup = $this->groupTourEvents($events);
         $topViewed = $this->getTopViewed($events);
-        $seoMeta = ArchiveSeoMeta::run($location, $type, $date, $dateTo);
 
-        SEOMeta::setTitle($seoMeta['title']);
-        SEOMeta::setDescription($seoMeta['description']);
 
         return view('home', [
             'location' => $location === '' ? 'All Cities' : $location,
