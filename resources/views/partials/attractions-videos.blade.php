@@ -7,7 +7,7 @@
                         @foreach($attraction->getYoutubeIds() as $videoID)
                             @if($videoID)
                                 <li class="splide__slide" data-splide-youtube="https://www.youtube.com/watch?v={{$videoID}}">
-                                    <img class="attractions-videos-slider__img" src="https://img.youtube.com/vi/{{$videoID}}/hqdefault.jpg">
+                                    <img alt="{{$attraction->name}} Video" class="attractions-videos-slider__img" src="https://img.youtube.com/vi/{{$videoID}}/hqdefault.jpg">
                                 </li>
                             @endif
                         @endforeach
