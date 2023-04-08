@@ -50,7 +50,7 @@
                     <source
                         media = "(min-width:300px)"
                         srcset = "{{$event->thumbnail}} 300w" >
-                    <img src="{{asset('storage/medium_photos/'.$event->medium_image)}}" alt="{{$event->name}}">
+                    <img src="{{$event->medium_image}}" alt="{{$event->name}}">
                 </picture>
             </div>
         </div>
