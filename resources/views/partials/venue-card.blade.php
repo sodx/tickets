@@ -6,7 +6,9 @@
         </figure>
         @endif
         <figcaption class="venue-card__content">
+            @if(!$venue->image)
             <h3 class="venue-card__title">{{ $venue->name }}</h3>
+            @endif
             <ul class="venue-card__meta">
                 <li>
                     <span class="material-symbols-outlined">map</span>
