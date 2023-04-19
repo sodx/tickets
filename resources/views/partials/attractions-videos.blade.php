@@ -1,4 +1,10 @@
-@if($attractions[0]->haveVideos())
+@php($videos = false)
+@foreach($attractions as $attraction)
+    @if($attraction->haveVideos() !== false)
+        @php($videos = $attraction->haveVideos())
+    @endif
+@endforeach
+@if($videos === true)
     <div class="splide attractions-videos-slider">
         <div class="splide__track">
             <ul class="splide__list">

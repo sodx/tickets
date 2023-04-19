@@ -26,8 +26,8 @@
         width: 100%;
         padding: 3rem;
         font-size: 2rem;
-        background: $black;
-        color: $white;
+        background: $contrast-text-color;
+        color: $text-color;
         font-family: $headings-font-family;
     }
 
@@ -93,7 +93,7 @@
         padding: 1rem;
         height: 100%;
         background-image: linear-gradient(to top, rgb(21 21 21), rgb(21 21 21 / 0.65), rgb(255 255 255 / 0));
-        color: $white;
+        color: $text-color;
         z-index: 2;
         display: flex;
         flex-direction: column;
@@ -111,7 +111,7 @@
         font-family: $headings-font-family;
         font-size: 6rem;
         font-weight: 700;
-        color: $white;
+        color: $event-poster-color;
         margin-bottom: 0;
         display: inline;
         vertical-align: middle;
@@ -135,10 +135,10 @@
             border-bottom: 1px solid $white;
 
             /* Real outline for modern browsers */
-            @supports ((text-stroke: 1px $white) or (-webkit-text-stroke: 1px $white)) {
+            @supports ((text-stroke: 1px $event-poster-color) or (-webkit-text-stroke: 1px $event-poster-color)) {
                 color: transparent;
-                -webkit-text-stroke: 0.5px $white;
-                text-stroke: 0.5px $white;
+                -webkit-text-stroke: 0.5px $event-poster-color;
+                text-stroke: 0.5px $event-poster-color;
                 text-shadow: none;
             }
 
@@ -152,6 +152,7 @@
         display: block;
         margin: 1rem;
         font-size: 1rem;
+        color: $event-poster-color;
     }
 
     &__favorites {

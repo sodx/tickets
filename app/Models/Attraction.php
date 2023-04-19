@@ -90,6 +90,7 @@ class Attraction extends Model
 
     public function haveVideos()
     {
+        ray($this->video_ids);
         return $this->video_ids !== '';
     }
 

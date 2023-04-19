@@ -1,5 +1,5 @@
 footer {
-    background: $gray-100;
+    background: $footer-bg;
     padding-top: 2rem;
     padding-bottom: 1rem;
 
@@ -42,7 +42,7 @@ footer {
             padding: 0;
 
             a {
-                color: $black;
+                color: $contrast-text-color;
             }
         }
     }

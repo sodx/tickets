@@ -1,0 +1,42 @@
+// Body
+$body-bg: #0d1116;
+$body-color: #ececec;
+
+// Typography
+$font-family-sans-serif: "Quicksand", sans-serif;
+$font-family-monospace: "Roboto Mono", monospace;
+$headings-font-family: "Bebas Neue", cursive;
+$display-font-family: "Bebas Neue", cursive;
+//$primary: $red;
+$red: #d9414f;
+//$primary: #1d1d2d;
+$primary: #26263b;
+$border-color: #767697;
+$primary-lighten: #50b657;
+$white: #ededed;
+$dark: #101011;
+$text-color: $dark;
+$event-poster-color: $white;
+$event-card-hover-bg: linear-gradient(to top, rgb(227, 227, 227), rgba(231, 231, 231, 0.65));
+$card-border-color: $primary;
+$card-bg: $primary;
+$contrast-text-color: #ececec;
+$link-color: $contrast-text-color;
+$link-shade-percentage: 40%;
+$link-hover-color: shift-color($link-color, $link-shade-percentage);
+$headings-margin-bottom: 1rem;
+$font-size-base: 1rem;
+$body-font-size: 14px;
+$line-height-base: 1.6;
+$header-height: 60px;
+$card-item-bg: $primary;
+$card-border-color: $border-color;
+$sidebar-color: $contrast-text-color;
+$footer-bg: $primary;
+$text-muted-color: $gray-300;
+$card-date-color: $contrast-text-color;
+$events-grid-bg: $primary;
+$venue-card-bg: $primary;
+$venue-title: $contrast-text-color;
+$border-width: 1px;
+$btn-ghost-color: $contrast-text-color;

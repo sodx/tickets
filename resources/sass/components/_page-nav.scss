@@ -1,7 +1,7 @@
 .page-nav {
     @extend .shadow-item;
 
-    background: $white;
+    background: $text-color;
     width: 100%;
     display: block;
     top: $header-height;
@@ -23,7 +23,7 @@
     a {
         text-decoration: none;
         font-size: 1rem;
-        color: $black;
+        color: $contrast-text-color;
         font-weight: 600;
 
         &:hover,

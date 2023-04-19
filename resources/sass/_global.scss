@@ -12,8 +12,8 @@ body {
 }
 
 ::selection {
-    background: $red;
-    color: $white;
+    background: $primary-lighten;
+    color: $text-color;
 }
 
 a {
@@ -24,6 +24,10 @@ a {
     &:hover {
         color: $link-hover-color;
     }
+}
+
+.text-muted {
+    color: $text-muted-color !important;
 }
 
 .content-container {
@@ -70,11 +74,11 @@ a {
 }
 
 .shadow-item {
-    box-shadow: 0 0 0.5rem rgba($black, 0.1);
+    box-shadow: 0 0 0.5rem rgba($contrast-text-color, 0.1);
 }
 
 .card-item {
-    background: $white;
+    background: $card-item-bg;
     padding: 1rem;
     border-radius: 0.5rem;
     overflow: hidden;
@@ -93,17 +97,17 @@ a {
     transition: all 0.3s ease-in-out;
     background: transparent;
     text-transform: uppercase;
-    border: 3px solid $black;
-    color: $black;
+    border: $border-width solid $contrast-text-color;
+    color: $contrast-text-color;
 
     &:hover {
-        background: $red;
-        color: $white;
+        background: $primary;
+        color: $contrast-text-color;
     }
 
     &-ghost {
         background: transparent;
-        color: $primary;
+        color: $btn-ghost-color;
 
         &:hover {
             background: transparent;
@@ -120,8 +124,8 @@ h4,
 h5,
 h6 {
     span {
-        background: $red;
-        color: $white;
+        background: $primary;
+        color: $text-color;
     }
 }
 
@@ -136,7 +140,7 @@ h1 {
 
 h2 {
     font-size: 2.2rem;
-    border-bottom: 3px solid $black;
+    border-bottom: $border-width solid $contrast-text-color;
 
     @include media-breakpoint-down(lg) {
         font-size: 2rem;
@@ -158,11 +162,11 @@ main {
     gap: 10px;
 
     a {
-        color: $white;
+        color: $link-color;
     }
 
     svg {
-        fill: white;
+        fill: $link-color;
         margin-right: 5px;
         width: 30px;
         height: 30px;
@@ -188,7 +192,7 @@ main {
     text-align: center;
     margin-bottom: 4rem;
     margin-top: 1rem;
-    color: $black;
+    color: $contrast-text-color;
 
     @include media-breakpoint-down(lg) {
         font-size: 3rem;
@@ -211,7 +215,7 @@ main {
 
     h3 {
         font-size: 2rem;
-        border-bottom: 3px solid $black;
+        border-bottom: $border-width solid $contrast-text-color;
     }
 
     &--nomb {
@@ -240,14 +244,14 @@ main {
 
             &.active {
                 & > * {
-                    background: $red;
-                    color: $white;
+                    background: $primary;
+                    color: $text-color;
                 }
             }
 
             & > * {
-                color: $black;
-                border: 2px solid $black !important;
+                color: $contrast-text-color;
+                border: 2px solid $contrast-text-color !important;
                 column-gap: 10px;
                 margin-right: 3px;
                 background-color: transparent;
@@ -295,7 +299,7 @@ main {
 
 input,
 select {
-    border: 2px solid $black;
+    border: 2px solid $contrast-text-color;
 }
 
 .splide__video__play {
@@ -317,7 +321,7 @@ select {
     text-align: center;
     margin-bottom: 2rem;
     margin-top: 1rem;
-    color: $black;
+    color: $contrast-text-color;
     font-size: 6rem;
 }
 

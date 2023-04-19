@@ -10,9 +10,12 @@
 
 .breadcrumb-item {
     white-space: nowrap;
+    color: $link-color;
+
     &::after {
         content: ">";
         margin-left: 10px;
+        color: $link-color;
     }
 
     &:last-child {

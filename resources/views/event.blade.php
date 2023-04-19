@@ -87,18 +87,21 @@
                     @php($videos = $attraction->haveVideos())
                 @endif
             @endforeach
+            @php(ray($videos))
 
             @if($event->info || $event->pleaseNote)
                 <section id="event-info" class="content-section">
                     <div class="attraction-info {{ $videos === false ? "attraction-info--fullwidth" : ""  }}">
-                        @if($videos === true)
-                            @include('partials.attractions-videos', ['attractions' => $event->attractions])
-                        @endif
                         @if($event->info)
                         @include('partials.content-block', [
                                 'title' => 'Event Info',
                                 'content' => $event->info
                             ])
+                        @endif
+                        @if($videos === true)
+                            <div class="content-block">
+                            @include('partials.attractions-videos', ['attractions' => $event->attractions])
+                            </div>
                         @endif
                     </div>
                     @if($event->pleaseNote && $event->info !== $event->pleaseNote)
@@ -112,13 +115,6 @@
                 @if($event->venue)
                     <section id="venue" class="content-section">
                         @include('partials.venue-card', ['venue' => $event->venue])
-                        @if($event->seatmap)
-                            @include('partials.content-block', [
-                                'title' => 'Seatmap',
-                                'image' => $event->seatmap,
-                                'imageLink' => $event->url
-                            ])
-                        @endif
                     </section>
                 @endif
 

@@ -1,5 +1,5 @@
 .venue-poster {
-    height: 350px;
+    height: 250px;
     position: relative;
     margin-bottom: 0;
 
@@ -24,7 +24,7 @@
         padding: 1rem;
         height: 100%;
         background-image: linear-gradient(to top, rgb(21 21 21), rgb(21 21 21 / 0.65), rgb(255 255 255 / 0));
-        color: $white;
+        color: $text-color;
         z-index: 2;
         display: flex;
         flex-direction: column;
@@ -35,7 +35,7 @@
     &__title {
         font-size: 6rem;
         font-weight: 700;
-        color: $white;
+        color: $venue-title;
         margin-bottom: 0;
         padding: 0 0.5rem;
 

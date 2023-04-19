@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('partials.head')
-<body>
+<body id="themedark">
 @include('partials.header')
 <main class="page">
     @yield('content')

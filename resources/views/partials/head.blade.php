@@ -11,7 +11,11 @@
         </title>
     @endif
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/sass/app.scss'])
+    @if(env('THEME') === 'default')
+        @vite(['resources/sass/app.scss'])
+    @else
+        @vite(['resources/sass/app-dark.scss'])
+    @endif
     <style>
         .loading {
             opacity: 0;

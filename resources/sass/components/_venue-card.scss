@@ -1,10 +1,11 @@
 .venue-card {
     @extend .card-item;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
     padding: 20px;
-    background-color: $white;
+    background-color: $venue-card-bg;
     border-radius: 10px;
     box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
     transition: all 0.3s ease-in-out;
@@ -31,7 +32,11 @@
     &__title {
         font-size: 1.5rem;
         font-weight: 700;
-        color: $black;
+        color: $contrast-text-color;
+    }
+
+    &__seatmap {
+        height: 200px;
     }
 
     &__meta {
@@ -55,25 +60,25 @@
         &__address {
             font-size: 1rem;
             font-weight: 400;
-            color: $black;
+            color: $contrast-text-color;
         }
 
         &__phone {
             font-size: 1rem;
             font-weight: 400;
-            color: $black;
+            color: $contrast-text-color;
         }
 
         &__email {
             font-size: 1rem;
             font-weight: 400;
-            color: $black;
+            color: $contrast-text-color;
         }
 
         &__website {
             font-size: 1rem;
             font-weight: 400;
-            color: $black;
+            color: $contrast-text-color;
         }
     }
 }

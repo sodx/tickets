@@ -7,7 +7,7 @@
     &__title {
         font-size: 2rem;
         font-weight: 700;
-        color: $black;
+        color: $contrast-text-color;
         margin-bottom: 0;
         padding: 0 0.5rem;
         display: inline-block;
@@ -25,7 +25,7 @@
         position: absolute;
         bottom: 1rem;
         left: 1rem;
-        color: $body-bg;
+        color: $card-date-color;
         z-index: 2;
         line-height: 1;
     }
@@ -41,7 +41,7 @@
 
         button {
             display: none;
-            color: #fff;
+            color: $text-color;
             font-size: 32px;
 
             &:hover {
@@ -61,7 +61,7 @@
 
     &__body {
         padding: 1rem;
-        background-color: $white;
+        //background-color: $;
         position: relative;
         z-index: 1;
         flex: 1;
@@ -118,7 +118,7 @@
 
             &::after {
                 height: 100%;
-                background-image: linear-gradient(to top, rgb(21 21 21), rgb(21 21 21 / 0.65));
+                background-image: $event-card-hover-bg;
             }
         }
 
@@ -130,12 +130,12 @@
         .event-card__body {
             z-index: 3;
             background: transparent;
-            border: 1px solid $white;
+            border: 1px solid $text-color;
             margin: 1rem;
         }
 
         .event-card__title {
-            color: $white;
+            color: $text-color;
             z-index: 4;
             position: absolute;
             left: 50%;
@@ -150,7 +150,7 @@
                 position: absolute;
                 width: 40%;
                 height: 1px;
-                background: #fff;
+                background: $text-color;
                 bottom: -10px;
                 left: 50%;
                 transform: translate(-50%, 0);
@@ -161,7 +161,7 @@
                 position: absolute;
                 width: 40%;
                 height: 1px;
-                background: #fff;
+                background: $text-color;
                 top: -10px;
                 left: 50%;
                 transform: translate(-50%, 0);
@@ -183,6 +183,7 @@
             border-bottom: 1px solid #fff;
             font-size: 1.2rem;
             font-family: $display-font-family;
+            color: $text-color;
 
             .material-symbols-outlined {
                 display: none;
@@ -209,7 +210,7 @@
 
                 &.event-card__location {
                     display: block;
-                    color: $white !important;
+                    color: $text-color !important;
                     font-size: 1rem;
                     width: 180px;
                 }
@@ -261,7 +262,7 @@
         flex-direction: row;
 
         .text-muted {
-            color: $white !important;
+            color: $text-muted-color !important;
         }
     }
 
@@ -282,7 +283,7 @@
         width: 100%;
         font-size: 2rem;
         text-align: center;
-        color: white; /* Unfortunately you can't use transparent here … */
+        color: $text-color; /* Unfortunately you can't use transparent here … */
     }
 
     &:hover {

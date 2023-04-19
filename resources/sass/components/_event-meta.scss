@@ -6,14 +6,14 @@
         display: block;
         position: relative;
         text-decoration: none;
-        color: $white;
+        color: $text-color;
         font-size: 0.8rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1rem;
         text-align: center;
         padding: 0.5rem;
-        background: $primary;
+        background: $primary-lighten;
         transition: all 0.3s ease-in-out;
         border-radius: 0.5rem;
         overflow: hidden;
@@ -22,7 +22,7 @@
 
         &:hover {
             background-color: $link-hover-color;
-            color: $white;
+            color: $text-color;
         }
     }
 }
