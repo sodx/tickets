@@ -21,7 +21,9 @@
             </ul>
         </figcaption>
     </a>
+    @if($event->seatmap)
     <a href="{{$event->url}}">
         <img class="venue-card__seatmap" src="{{$event->seatmap}}" alt="{{$venue->name}} Seatmap">
     </a>
+    @endif
 </div>
