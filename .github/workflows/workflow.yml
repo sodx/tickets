@@ -28,6 +28,15 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: "cd /var/www/liveconcerts && ./scripts/deploy.sh"
+      - uses: actions/checkout@v2
+      - name: Deploy to server 2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_WSIEVENTS }}
+          username: ${{ secrets.USERNAME_WSIEVENTS }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_WSIEVENTS }}
+          script: "cd /var/www/laravel && ./scripts/deploy.sh"
 # jobs:
 #   deploy:
 #     runs-on: ubuntu-latest
