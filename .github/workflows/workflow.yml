@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Deploy to server
+      - name: Deploy to Musicsnobbery
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -28,7 +28,11 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: "cd /var/www/liveconcerts && ./scripts/deploy.sh"
-      - name: Deploy to server 2
+  deploy_to_wsievents:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to WsiEvents
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_WSIEVENTS }}
