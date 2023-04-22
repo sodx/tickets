@@ -10,11 +10,10 @@
             @yield('title')
         </title>
     @endif
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @if(env('THEME') === 'default')
-        @vite(['resources/sass/app.scss'])
-    @else
+    @if(env('THEME') === 'dark')
         @vite(['resources/sass/app-dark.scss'])
+    @else
+        @vite(['resources/sass/app.scss'])
     @endif
     <style>
         .loading {
