@@ -75,11 +75,11 @@ class GenerateTicketMasterQuery
 
     public function getDefaultOnSaleStartDateTime(): string
     {
-        return date('Y-m-d\TH:i:s\Z', strtotime('-7 days'));
+        return date('Y-m-d\TH:i:s\Z', strtotime('-30 days'));
     }
 
     public function getDefaultOnSaleEndDateTime(): string
     {
-        return date('Y-m-d\TH:i:s\Z', strtotime('+7 days'));
+        return date('Y-m-d\TH:i:s\Z', strtotime('+90 days'));
     }
 }
