@@ -41,22 +41,22 @@
         font-size: 18px;
         text-decoration: none;
         font-family: $display-font-family;
-        color: #000;
+        color: $city-picker-color;
     }
 
     &__state-link:hover {
-        background-color: #eee;
+        background-color: $city-picker-bgcolor;
     }
 
     &__city-link {
         display: block;
         margin-bottom: 0.5rem;
         text-decoration: none;
-        color: #000;
+        color: $city-picker-color;
         padding-left: 10px;
     }
 
     &__city-link:hover {
-        background-color: #eee;
+        background-color: $city-picker-bgcolor;
     }
 }
