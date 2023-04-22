@@ -13,6 +13,7 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('pages');
         // Create table for storing roles
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
