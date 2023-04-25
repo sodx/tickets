@@ -29,7 +29,7 @@ class EventCitySitemapController extends Controller
 
         return response()->view('sitemap.eventsCity.show', [
             'city' => $city,
-            'segments' => $segments,
+            'segments' => $segments ?? [],
         ])->header('Content-Type', 'text/xml');
     }
 }
