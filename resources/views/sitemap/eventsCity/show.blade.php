@@ -7,13 +7,15 @@
                 }}</loc>
         <lastmod>{{ $segments[0]->updated_at->tz('UTC')->toAtomString() }}</lastmod>
     </url>
-    @foreach ($segments as $segment)
-        <url>
-            <loc>{{ route('segment', [
-                'location' => $city,
-                'slug' => $segment->slug])
-                }}</loc>
-            <lastmod>{{ $segment->updated_at->tz('UTC')->toAtomString() }}</lastmod>
-        </url>
-    @endforeach
+    @if(!empty($segments) && $segments[0]->slug !== null)
+        @foreach ($segments as $segment)
+            <url>
+                <loc>{{ route('segment', [
+                    'location' => $city,
+                    'slug' => $segment->slug])
+                    }}</loc>
+                <lastmod>{{ $segment->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+            </url>
+        @endforeach
+    @endif
 </urlset>
