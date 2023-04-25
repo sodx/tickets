@@ -1,6 +1,6 @@
 @inject('slugify', 'App\Actions\Slugify')
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    @if($scity !== '')
+    @if($city !== '')
         <url>
             <loc>{{ route('city', [
                     'location' => $city,
