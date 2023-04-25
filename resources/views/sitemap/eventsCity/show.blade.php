@@ -5,7 +5,9 @@
                 'location' => $city,
                 ])
                 }}</loc>
-        <lastmod>{{ $segments[0]->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+        @if(!empty($segments) && $segments[0]->slug !== null)
+            <lastmod>{{ $segments[0]->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+        @else
     </url>
     @if(!empty($segments) && $segments[0]->slug !== null)
         @foreach ($segments as $segment)
