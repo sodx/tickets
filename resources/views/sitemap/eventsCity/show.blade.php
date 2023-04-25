@@ -6,7 +6,7 @@
                     'location' => $city,
                     ])
                     }}</loc>
-            @if(!empty($segments))
+            @if(!empty($segments) && isset($segments[0]))
                 <lastmod>{{ $segments[0]->updated_at->tz('UTC')->toAtomString() }}</lastmod>
             @endif
         </url>
