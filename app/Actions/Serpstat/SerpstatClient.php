@@ -14,6 +14,7 @@ class SerpstatClient
     private $city;
     private $keyword;
     private $query = [];
+    private $SE = 'g_us';
     private $additionalKeywords = [];
 
     const API_HOST = 'https://api.serpstat.com/v4/?token=';
@@ -45,6 +46,12 @@ class SerpstatClient
         $this->client = $this->apiClient();
         $this->query = $this->prepareQuery();
 
+        $preferredCountry = setting('ticketmaster.preferredCountry') ?? 'US';
+
+        if ($preferredCountry === 'CA') {
+            $this->SE = 'g_ca';
+        }
+
         $response = $this->runQuery();
         if (is_array($response)) {
             return [];
@@ -75,7 +82,7 @@ class SerpstatClient
             'id' => $this->generateUUID(),
             "method" => self::METHOD,
             'params' => [
-                'se' => self::SE,
+                'se' => $this->SE,
                 'size' => self::LIMIT,
                 'keyword' => $this->keyword,
                 'filters' => $this->prepareFilters(),
