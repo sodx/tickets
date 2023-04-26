@@ -128,6 +128,7 @@ class EventController extends Controller
         SEOMeta::setDescription($seoMeta['description']);
         $eventsArr = $events->toArray();
         $currentPage = $eventsArr['current_page'];
+
         if($currentPage > 1) {
             // add canonical link
             SEOMeta::setPrev(url()->current() . '?page=' . ($currentPage - 1) . '&per_page=' . $perPage);

@@ -24,6 +24,16 @@ class ArchiveSeoMeta
     {
         $currentRouteName = $this->getCurrentRouteName();
 
+        if($location === 'All Cities' || $location === '') {
+            $country = setting('ticketmaster.countryCode');
+            if ($country === 'US') {
+                $location = 'United States';
+            }
+            if ($country === 'CA') {
+                $location = 'Canada';
+            }
+        }
+        
         $this->generateTitle($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
         $this->generateDescription($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
         $this->generateH1($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
