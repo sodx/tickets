@@ -215,6 +215,9 @@ class GenerateSeoMeta
     //function to get current event segment
     private function getEventSegment($event)
     {
+        if(!isset($event['classifications'][0]['segment']['name'])) {
+            return 'other';
+        }
         $segment = $event['classifications'][0]['segment']['name'];
         if ($segment === 'Sports' || $segment === 'Music') {
             return strtolower($segment);
