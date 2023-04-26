@@ -13,7 +13,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba($contrast-text-color, 0.3);
+            background: rgba($attraction-card-bg, 0.3);
             z-index: 1;
         }
     }
@@ -40,18 +40,18 @@
     &__name {
         font-size: 2.2rem;
         font-family: $display-font-family;
-        color: $text-color;
+        color: $attraction-card-color;
         line-height: 1;
-        text-shadow: 2px 2px $contrast-text-color;
+        text-shadow: 2px 2px $attraction-card-bg;
         text-align: center;
     }
 
     &__count {
         font-size: 1rem;
-        color: $text-color;
+        color: $attraction-card-color;
         line-height: 1;
         text-align: center;
-        background: rgba($contrast-text-color, 0.5);
+        background: rgba($attraction-card-bg, 0.5);
         padding: 0.5rem;
     }
 
@@ -64,7 +64,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba($contrast-text-color, 0.5);
+                background: rgba($attraction-card-bg, 0.5);
                 z-index: 1;
             }
         }

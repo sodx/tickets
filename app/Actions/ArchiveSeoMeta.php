@@ -24,16 +24,6 @@ class ArchiveSeoMeta
     {
         $currentRouteName = $this->getCurrentRouteName();
 
-        if($location === 'All Cities' || $location === '') {
-            $country = setting('ticketmaster.countryCode');
-            if ($country === 'US') {
-                $location = 'United States';
-            }
-            if ($country === 'CA') {
-                $location = 'Canada';
-            }
-        }
-        
         $this->generateTitle($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
         $this->generateDescription($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
         $this->generateH1($currentRouteName, $location, $type, $date, $dateTo, $genre, $segment);
@@ -168,6 +158,16 @@ class ArchiveSeoMeta
 
     private function generateTitle($currentRouteName, $location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
+        if($location === 'All Cities' || $location === '') {
+            $countryName = '';
+            $country = setting('ticketmaster.countryCode');
+            if ($country === 'US') {
+                $countryName = 'United States';
+            }
+            if ($country === 'CA') {
+                $countryName = 'Canada';
+            }
+        }
         switch ($currentRouteName) {
             case 'segment':
                 if($location !== 'All Cities') {
@@ -177,6 +177,7 @@ class ArchiveSeoMeta
                         return;
                     }
                 } else {
+                    $location = $countryName;
                     $segmentModel = $this->getSegmentModel($segment);
                     if ($segmentModel) {
                         $this->title = $segmentModel->seo_title . (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');;
@@ -247,6 +248,16 @@ class ArchiveSeoMeta
 
     private function generateDescription($currentRouteName, $location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
+        if($location === 'All Cities' || $location === '') {
+            $countryName = '';
+            $country = setting('ticketmaster.countryCode');
+            if ($country === 'US') {
+                $countryName = 'United States';
+            }
+            if ($country === 'CA') {
+                $countryName = 'Canada';
+            }
+        }
         switch ($currentRouteName) {
             case 'segment':
                 if($location !== 'All Cities') {
@@ -256,6 +267,7 @@ class ArchiveSeoMeta
                         return;
                     }
                 } else {
+                    $location = $countryName;
                     $segmentModel = $this->getSegmentModel($segment);
                     if ($segmentModel) {
                         $this->description = $segmentModel->seo_description;
@@ -304,7 +316,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'home':
-                $this->description = 'Get the best cheap tickets for concerts and events in all US'.
+                $this->description = 'Get the best cheap tickets for concerts and events in '. $location .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             default:

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\ArchiveSeoMeta;
 use App\Actions\GenerateEventSchema;
+use App\Actions\GenerateSeoMeta;
 use App\Actions\Slugify;
 use App\Actions\Unslugify;
 use App\Http\Requests\StoreAttractionRequest;
@@ -288,8 +289,9 @@ class EventController extends Controller
             return redirect()->route('segment', ['location' => $location, 'slug' => $segment]);
             //abort(404);
         }
-        SEOMeta::setTitle($event->meta_title);
-        SEOMeta::setDescription($event->meta_description);
+        $seoMeta = GenerateSeoMeta::run($event);
+        SEOMeta::setTitle($event->meta_title !== '' ? $event->meta_title : $seoMeta['title']);
+        SEOMeta::setDescription($event->meta_description !== '' ? $event->meta_description : $seoMeta['description']);
         SEOMeta::addMeta('article:published_time', $event->created_at->toW3CString(), 'property');
         SEOMeta::addMeta('article:section', $event->category, 'property');
 
