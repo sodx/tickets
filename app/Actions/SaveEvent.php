@@ -80,10 +80,10 @@ class SaveEvent extends SaveDataFromTM
         $this->saveCity(['city' => $venue->city]);
         $event->tour()->associate($this->saveTour($data));
         $generatedMeta = SeoGen::run('event', $data['name'], $venue->city, $venue->name, $data['dates']['start']['localDate']);
-        $event->meta_title = $generatedMeta['data']['title'] ?? '';
+        $event->meta_title = $generatedMeta['data']['title'] ?? $this->generateTitle($data);
         $event->meta_description = $generatedMeta['data']['meta_description'] ?? '';
-        $event->meta_keywords = $generatedMeta['keywords'] ?? '';
-        $event->info = $generatedMeta['data']['content'] ?? '';
+        $event->meta_keywords = $generatedMeta['keywords'] ?? $this->generateDescription($data);
+        $event->info = $generatedMeta['data']['content'] ?? $info;
         $event->save();
         return $event;
     }

@@ -289,9 +289,8 @@ class EventController extends Controller
             return redirect()->route('segment', ['location' => $location, 'slug' => $segment]);
             //abort(404);
         }
-        $seoMeta = GenerateSeoMeta::run($event);
-        SEOMeta::setTitle($event->meta_title !== '' ? $event->meta_title : $seoMeta['title']);
-        SEOMeta::setDescription($event->meta_description !== '' ? $event->meta_description : $seoMeta['description']);
+        SEOMeta::setTitle($event->meta_title );
+        SEOMeta::setDescription($event->meta_description);
         SEOMeta::addMeta('article:published_time', $event->created_at->toW3CString(), 'property');
         SEOMeta::addMeta('article:section', $event->category, 'property');
 
