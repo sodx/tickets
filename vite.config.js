@@ -8,11 +8,6 @@ import inject from '@rollup/plugin-inject';
 
 
 export default defineConfig({
-    server: {
-        hmr: {
-            host: 'localhost'
-        }
-    },
     plugins: [
         laravel({
             input: ["resources/sass/app.scss", "resources/sass/app-dark.scss", "resources/js/app.js"], // add scss file
