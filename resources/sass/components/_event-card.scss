@@ -260,9 +260,10 @@
         position: absolute;
         border-top: 0;
         flex-direction: row;
+        color: $event-card-sm-title-color;
 
         .text-muted {
-            color: $text-muted-color !important;
+            color: $event-card-sm-title-color !important;
         }
     }
 
@@ -273,6 +274,7 @@
         border-bottom: 0;
         font-size: 1rem;
         font-family: $display-font-family;
+        color: $event-card-sm-title-color;
 
         .material-symbols-outlined {
             display: inline-block;
@@ -283,7 +285,7 @@
         width: 100%;
         font-size: 2rem;
         text-align: center;
-        color: $event-card-title-color; /* Unfortunately you can't use transparent here … */
+        color: $event-card-sm-title-color; /* Unfortunately you can't use transparent here … */
     }
 
     &:hover {
@@ -322,6 +324,7 @@
         .event-card__favorites {
             top: 1rem;
             right: 1rem;
+            color: $event-card-sm-title-color;
         }
 
         .event-card__body {
@@ -331,6 +334,7 @@
             .event-card__title {
                 position: static;
                 transform: translate(0, 0);
+                color: $event-card-sm-title-color;
 
                 &::before {
                     display: none;
