@@ -40,6 +40,10 @@
         display: flex;
         font-size: 16px;
 
+        a {
+            color: $text-color;
+        }
+
         &--heading {
             font-weight: 900;
             font-size: 16px;

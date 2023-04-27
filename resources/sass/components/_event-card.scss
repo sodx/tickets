@@ -325,6 +325,10 @@
             top: 1rem;
             right: 1rem;
             color: $event-card-sm-title-color;
+
+            button {
+                color: $event-card-sm-title-color;
+            }
         }
 
         .event-card__body {
