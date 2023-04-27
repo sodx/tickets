@@ -41,7 +41,7 @@
 
         button {
             display: none;
-            color: $event-card-title-color;
+            color: $event-card-title-color-hover;
             font-size: 32px;
 
             &:hover {
@@ -172,6 +172,7 @@
             display: block;
 
             & button {
+
                 display: block;
             }
         }
