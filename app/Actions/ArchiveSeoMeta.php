@@ -66,6 +66,15 @@ class ArchiveSeoMeta
 
     private function generateH1($currentRouteName, $location = '', $type = '', $date = '', $dateTo = '', $genre = '', $segment = '')
     {
+        if($location === 'All Cities' || $location === '') {
+            $country = setting('ticketmaster.countryCode');
+            if ($country === 'US') {
+                $location = 'United States';
+            }
+            if ($country === 'CA') {
+                $location = 'Canada';
+            }
+        }
         switch ($currentRouteName) {
             case 'segment':
                 $this->h1 = ucfirst($segment) . ' Events ' .
