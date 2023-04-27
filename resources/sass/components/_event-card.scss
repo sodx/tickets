@@ -61,6 +61,7 @@
 
     &__body {
         padding: 1rem;
+
         //background-color: $;
         position: relative;
         z-index: 1;
@@ -172,7 +173,6 @@
             display: block;
 
             & button {
-
                 display: block;
             }
         }
@@ -329,6 +329,12 @@
 
             button {
                 color: $event-card-sm-title-color;
+            }
+        }
+
+        .event-card__footer {
+            .text-muted {
+                color: $event-card-sm-title-color !important;
             }
         }
 
