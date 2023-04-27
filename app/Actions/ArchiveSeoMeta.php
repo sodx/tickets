@@ -68,7 +68,7 @@ class ArchiveSeoMeta
     {
         if($location === 'All Cities' || $location === '') {
             $country = setting('ticketmaster.countryCode');
-            if ($country === 'US') {
+            if ($country === 'US' || $country === '') {
                 $location = 'United States';
             }
             if ($country === 'CA') {
