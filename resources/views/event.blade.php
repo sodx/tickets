@@ -155,7 +155,7 @@
                 @endif
                 @if($event->status === 'onsale')
                     <li class="event-sidebar__tickets">
-                        <a class="event-sidebar__link btn" rel="nofollow" href="{{ $event->url }}" target="_blank">Buy Tickets</a>
+                        <a class="event-sidebar__link btn" rel="nofollow" href="{{ $event->affUrl() }}" target="_blank">Buy Tickets</a>
                     </li>
                 @endif
             </ul>

@@ -201,4 +201,13 @@ class Event extends Model
             ]
         ];
     }
+
+    public function affUrl(): string
+    {
+        $url = $this->url;
+        if(!str::contains($url, 'ticketmaster.evyy.net')) {
+            $url = 'https://ticketmaster.evyy.net/c/4053634/264167/4272?u=' . urlencode($url);
+        }
+        return $url;
+    }
 }
