@@ -7,9 +7,9 @@ use App\Actions\Serpstat\SerpstatClient;
 
 class CityDataGenerator extends DataGenerator
 {
-    public function handle($attendee = '', $city = '', $venue = '', $date = '')
+    public function handle($attendee = '', $city = '', $venue = '', $date = '', $segment = '')
     {
-        return $this->generate($attendee, $city, $venue, $date, '', 'city');
+        return $this->generate($attendee, $city, $venue, $date, $segment, 'city');
     }
 
     protected function getKeywordsFromSerpstat($keyword, $city = '', $additionalKeywords = [], $segment = '', $venue = '')

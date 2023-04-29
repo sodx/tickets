@@ -57,6 +57,7 @@ class GenerateTicketMasterQuery
             'stateCode' => setting('ticketmaster.stateCode'),
             'classificationName' => setting('ticketmaster.classificationName') ?? 'music',
             'segmentName' => setting('ticketmaster.segmentName') ?? 'music',
+            //'segmentName' => 'arts & theatre',
             'genreName' => setting('ticketmaster.genreName'),
             'preferredCountry' => setting('ticketmaster.preferredCountry') ?? 'US',
         ];

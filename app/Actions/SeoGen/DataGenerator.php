@@ -34,7 +34,7 @@ abstract class DataGenerator
         }
         $cleanedKeywords = $this->prepareKeywordsForGeneration($cleanedKeywords);
 
-        $text = $chatGPT->generateText($cleanedKeywords, $city, $venue, $date, $type);
+        $text = $chatGPT->generateText($cleanedKeywords, $city, $venue, $date, $type, $segment);
         $text = json_decode($text, true);
         return [
             'keywords' => $cleanedKeywords,

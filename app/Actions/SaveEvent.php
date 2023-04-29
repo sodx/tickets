@@ -27,7 +27,7 @@ class SaveEvent extends SaveDataFromTM
         $info = isset($data['info']) ? $info . ' ' . $data['info'] : $info;
 
         $venue = $this->saveVenue($data['_embedded']['venues'][0]);
-        $attractions = $this->saveAttractions($data['_embedded']['attractions']);
+        $attractions = $this->saveAttractions($data['_embedded']['attractions'], $data['classifications'][0]['segment']['name'] ?? '');
 
         if (!isset($data['name'])) {
             return null;
@@ -79,7 +79,7 @@ class SaveEvent extends SaveDataFromTM
 
         $this->saveCity(['city' => $venue->city]);
         $event->tour()->associate($this->saveTour($data));
-        $generatedMeta = SeoGen::run('event', $data['name'], $venue->city, $venue->name, $data['dates']['start']['localDate']);
+        $generatedMeta = SeoGen::run('event', $data['name'], $venue->city, $venue->name, $data['dates']['start']['localDate'], $data['classifications'][0]['segment']['name'] ?? '', $data['classifications'][0]['genre']['name'] ?? '');
         $event->meta_title = $generatedMeta['data']['title'] ?? $this->generateTitle($data);
         $event->meta_description = $generatedMeta['data']['meta_description'] ?? '';
         $event->meta_keywords = $generatedMeta['keywords'] ?? $this->generateDescription($data);
@@ -140,9 +140,10 @@ class SaveEvent extends SaveDataFromTM
     /**
      * @param array $attractions
      */
-    public function saveAttractions(array $attractions)
+    public function saveAttractions(array $attractions, $segment = '')
     {
-        return collect(array_map(function ($attraction) {
+        return collect(array_map(function ($attraction) use ($segment) {
+            $attraction['segment'] = $segment;
             return SaveAttraction::run($attraction);
         }, $attractions));
     }

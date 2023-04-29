@@ -15,16 +15,16 @@ class SeoGen
     {
         switch ($type) {
             case 'event':
-                $data = EventDataGenerator::run($attendee, $city, $venue, $date);
+                $data = EventDataGenerator::run($attendee, $city, $venue, $date, $segment);
                 break;
             case 'attendee':
-                $data = AttendeeDataGenerator::run($attendee, $city, $venue, $date);
+                $data = AttendeeDataGenerator::run($attendee, $city, $venue, $date, $segment);
                 break;
             case 'venue':
-                $data = VenueDataGenerator::run($attendee, $city, $venue, $date);
+                $data = VenueDataGenerator::run($attendee, $city, $venue, $date, $segment);
                 break;
             case 'city':
-                $data = CityDataGenerator::run('', $city, '', '');
+                $data = CityDataGenerator::run('', $city, '', '', $segment);
                 break;
             case 'segment':
                 $data = SegmentDataGenerator::run($attendee, $city, $venue, $date, $segment);

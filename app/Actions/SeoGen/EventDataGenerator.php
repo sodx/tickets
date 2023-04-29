@@ -6,9 +6,9 @@ use App\Actions\ChatGPT\ChatGPTClient;
 
 class EventDataGenerator extends DataGenerator
 {
-    public function handle($attendee = '', $city = '', $venue = '', $date = '')
+    public function handle($attendee = '', $city = '', $venue = '', $date = '', $segment = '')
     {
-        return $this->generate($attendee, $city, $venue, $date);
+        return $this->generate($attendee, $city, $venue, $date, $segment, 'event');
     }
 
     protected function defaultKeywords($attendee, $city, $venue, $segment = ''): array

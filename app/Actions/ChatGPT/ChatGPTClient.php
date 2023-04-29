@@ -77,7 +77,7 @@ class ChatGPTClient
         return array_map('trim', $output);
     }
 
-    public function generateText($keywords, $city = '', $venue = '', $date = '', $type = 'event')
+    public function generateText($keywords, $city = '', $venue = '', $date = '', $type = 'event', $segment = '')
     {
         $complete = $this->client->chat([
             'model' => 'gpt-3.5-turbo',
@@ -97,7 +97,7 @@ class ChatGPTClient
                 ],
                 [
                     "role" => "user",
-                    "content" => $this->contentForEventTextGeneration($keywords, $city, $venue, $date, $type = 'event')
+                    "content" => $this->contentForEventTextGeneration($keywords, $city, $venue, $date, $type, $segment)
                 ],
             ],
             'temperature' => 1.0,
@@ -207,22 +207,26 @@ class ChatGPTClient
                 If you can not find any keywords - strictly output 'null'.
                 There shouldn't be any additional information in the output.";
     }
-    public function contentForEventTextGeneration($keywords, $city = '', $venue = '', $date = '', $type = 'event')
+    public function contentForEventTextGeneration($keywords, $city = '', $venue = '', $date = '', $type = 'event', $segment = '')
     {
         if($type === 'event'){
-            $content = "Generate an article which promotes tickets for concert or event. Using this keywords: ". $keywords .".";
+            $content = "Generate an article which promotes ". $segment ." event. Using this keywords: ". $keywords .".";
         } elseif($type === 'venue') {
-            $content = "Generate an article which promotes specific venue. Using this keywords: ". $keywords .".";
+            $content = "Generate an article which promotes specific venue in ". $city .". Using this keywords: ". $keywords .".";
         } elseif($type === 'attendee') {
-            $content = "Generate an article which promotes specific attendee. Using this keywords: ". $keywords .".";
+            $content = "Generate an article which promotes specific " . $segment . " attraction. Using this keywords: ". $keywords .".";
+        } elseif($type === 'segment') {
+            $content = "Generate an article which promotes our website" . $segment . " events in ". $city .". Using this keywords: ". $keywords .".";
+        } elseif($type === 'city') {
+            $content = "Generate an article which promotes our website events in ". $city .". Using this keywords: ". $keywords .".";
         } else {
-            $content = "Generate an article which promotes concerts. Using this keywords: ". $keywords .".";
+            $content = "Generate an article which promotes event. Using this keywords: ". $keywords .".";
         }
         $content .= " Use only provided information. If you do not have information for some fields - do not generate any text about it.";
-        $content .= " For example if you do not have information about attendees - do not generate any text about concert attendees.";
-        $city !== '' ? $content .= " Concert city strictly would be ". $city . "." : '';
-        $venue !== '' ? $content .= " Concert venue would be ". $venue . "." : '';
-        $date !== '' ? $content .= " Concert date would be ". $date . "." : '';
+        $content .= " For example if you do not have information about attendees - do not generate any text about event attendees.";
+        $city !== '' ? $content .= " Event city strictly would be ". $city . "." : '';
+        $venue !== '' ? $content .= " Event venue would be ". $venue . "." : '';
+        $date !== '' ? $content .= " Event date would be ". $date . "." : '';
         $content .= " Article should contain at least 150 words.";
         $content .= " Also generate a SEO friendly title for the article. Title should contain the keyword";
         $content .= " Title should be less than 60 characters.";

@@ -13,7 +13,7 @@ class SaveAttraction extends SaveDataFromTM
     {
         $attractionModel = new Attraction();
         if ($this->shouldUpdateItem($data, $attractionModel) && isset($data['name'])) {
-            $generatedMeta = SeoGen::run('attendee', $data['name'], '', '', '');
+            $generatedMeta = SeoGen::run('attendee', $data['name'], '', '', '', $data['segment']);
             $attraction = Attraction::updateOrCreate(
                 ['ticketmaster_id' => $data['id']],
                 [
