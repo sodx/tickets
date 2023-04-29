@@ -236,7 +236,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'home':
-                $this->title = 'All Concerts and Sport Events Tickets '.
+                $this->title = 'Buy Concerts and Sport Events Tickets '.
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             default:
@@ -260,13 +260,17 @@ class ArchiveSeoMeta
         if($location === 'All Cities' || $location === '') {
             $countryName = '';
             $country = setting('ticketmaster.countryCode');
-            if ($country === 'US') {
+            if ($country === 'US' || $country === null) {
                 $countryName = 'United States';
             }
             if ($country === 'CA') {
                 $countryName = 'Canada';
             }
+            if ($country === 'UK') {
+                $countryName = 'United Kingdom';
+            }
         }
+
         switch ($currentRouteName) {
             case 'segment':
                 if($location !== 'All Cities') {
@@ -325,7 +329,7 @@ class ArchiveSeoMeta
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             case 'home':
-                $this->description = 'Get the best cheap tickets for concerts and events in '. $location .
+                $this->description = 'Get the info about best cheap tickets for music concerts and sports events in '. $countryName .
                     (setting('site.title') ? ' | ' . setting('site.title') : ' | Music Snobbery');
                 break;
             default:

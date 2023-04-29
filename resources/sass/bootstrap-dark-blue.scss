@@ -1,0 +1,26 @@
+/* stylelint-disable */
+// scss-docs-start import-stack
+// Configuration
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "variables-dark-blue";
+@import "~bootstrap/scss/_maps.scss";
+@import "~bootstrap/scss/_mixins.scss";
+@import "~bootstrap/scss/_utilities.scss";
+
+// Layout & components
+@import "~bootstrap/scss/_root.scss";
+@import "~bootstrap/scss/_reboot.scss";
+@import "~bootstrap/scss/_type.scss";
+@import "~bootstrap/scss/_images.scss";
+@import "~bootstrap/scss/_containers.scss";
+@import "~bootstrap/scss/_grid.scss";
+@import "~bootstrap/scss/_card.scss";
+
+// Helpers
+@import "~bootstrap/scss/_helpers.scss";
+
+// Utilities
+@import "~bootstrap/scss/utilities/_api.scss";
+
+// scss-docs-end import-stack

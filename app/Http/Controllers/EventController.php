@@ -86,6 +86,14 @@ class EventController extends Controller
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
 
+        OpenGraph::setDescription($seoMeta['title']);
+        OpenGraph::setTitle($seoMeta['description']);
+        OpenGraph::setUrl(Request::url());
+        OpenGraph::setSiteName(setting('site.title'));
+        OpenGraph::addProperty('type', 'article');
+        OpenGraph::addProperty('locale', 'en-us');
+        OpenGraph::addImage(setting('site.logo'));
+
         if (empty($events->toArray())) {
             if (Venue::where('city', '=', $location)->count() > 0) {
                 return view('no-events-city', [
@@ -98,7 +106,7 @@ class EventController extends Controller
         }
         $tourGroup = $this->groupTourEvents($events);
         $topViewed = $this->getTopViewed($events);
-        
+
         return view('home', [
             'location' => $location === '' ? 'All Cities' : $location,
             'featuredEvent' => $eventsQuery['featuredEvent'],
@@ -126,6 +134,14 @@ class EventController extends Controller
 
         SEOMeta::setTitle($seoMeta['title']);
         SEOMeta::setDescription($seoMeta['description']);
+
+        OpenGraph::setDescription($seoMeta['title']);
+        OpenGraph::setTitle($seoMeta['description']);
+        OpenGraph::setUrl(Request::url());
+        OpenGraph::setSiteName(setting('site.title'));
+        OpenGraph::addProperty('type', 'article');
+        OpenGraph::addProperty('locale', 'en-us');
+        OpenGraph::addImage(setting('site.logo'));
         $eventsArr = $events->toArray();
         $currentPage = $eventsArr['current_page'];
 
@@ -296,7 +312,7 @@ class EventController extends Controller
         OpenGraph::setDescription($event->info);
         OpenGraph::setTitle($event->title);
         OpenGraph::setUrl(Request::url());
-        OpenGraph::setSiteName('Music Snobbery');
+        OpenGraph::setSiteName(setting('site.title'));
         OpenGraph::addProperty('type', 'article');
         OpenGraph::addProperty('locale', 'en-us');
         OpenGraph::addImage($event->medium_image);

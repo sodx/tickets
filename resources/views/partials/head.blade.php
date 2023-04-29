@@ -14,6 +14,8 @@
     @endif
     @if(env('THEME') === 'dark')
         @vite(['resources/sass/app-dark.scss'])
+    @elseif(env('THEME') === 'dark-blue')
+        @vite(['resources/sass/app-dark-blue.scss'])
     @else
         @vite(['resources/sass/app.scss'])
     @endif
