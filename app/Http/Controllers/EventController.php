@@ -98,8 +98,7 @@ class EventController extends Controller
         }
         $tourGroup = $this->groupTourEvents($events);
         $topViewed = $this->getTopViewed($events);
-
-
+        
         return view('home', [
             'location' => $location === '' ? 'All Cities' : $location,
             'featuredEvent' => $eventsQuery['featuredEvent'],

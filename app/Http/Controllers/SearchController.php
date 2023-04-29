@@ -35,6 +35,7 @@ class SearchController extends Controller
 
 
         return view('search', [
+            'events' => $events,
             'eventsInUserCity' => $eventsInUserCity,
             'all_events' => count($events),
             'attractions' => $attractions,

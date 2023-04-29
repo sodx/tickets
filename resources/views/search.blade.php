@@ -11,14 +11,20 @@
 @section('content')
     <div class="content-container">
         @if(
-    ($eventsInUserCity &&  count($eventsInUserCity) > 0) ||
+    ($eventsInUserCity &&  count($eventsInUserCity) > 0) || $events && count($events) > 0 ||
     ($attractions && count($attractions) > 0))
             <section class="page-section">
                 <h1>Search Results for {{$searchTerm}}</h1>
                 @if($eventsInUserCity && count($eventsInUserCity) > 0)
                     <section class="section section--mb">
-                        <h2>Events</h2>
+                        <h2>Events In Your City</h2>
                         @include('partials.events-container', ['events' => $eventsInUserCity])
+                    </section>
+                    <br>
+                @endif
+                @if($events && count($events) > 0)
+                    <section class="section">
+                        @include('partials.events-list', ['events' => $events])
                     </section>
                     <br>
                 @endif
