@@ -10,7 +10,7 @@ import inject from '@rollup/plugin-inject';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/sass/app.scss", "resources/sass/app-dark.scss", "resources/js/app.js"], // add scss file
+            input: ["resources/sass/app.scss", "resources/sass/app-dark.scss", "resources/sass/app-dark-blue.scss", "resources/js/app.js"], // add scss file
             refresh: true,
         }),
         StylelintPlugin({
