@@ -16,7 +16,7 @@ env:
   # Authenticate to the the server via ssh 
   # and run our deployment script 
 jobs:
-  deploy:
+  deploy_to_musicsnobbery:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -40,6 +40,19 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY_WSIEVENTS }}
           script: "cd /var/www/laravel && ./scripts/deploy.sh"
+  deploy_to_ticketcasa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Ticketcasa
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_TICKETCASA }}
+          username: ${{ secrets.USERNAME_TICKETCASA }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_TICKETCASA }}
+          script: "cd /var/www/laravel && ./scripts/deploy.sh"
+          
 # jobs:
 #   deploy:
 #     runs-on: ubuntu-latest
