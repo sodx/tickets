@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Http\Controllers\TicketMasterController;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Cache;
 
 class PerformCheck extends Command
 {
@@ -29,5 +30,6 @@ class PerformCheck extends Command
     {
         $ticketMasterController = new TicketMasterController();
         $ticketMasterController->index();
+        Cache::clear();
     }
 }

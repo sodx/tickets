@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\TicketMasterController;
 use App\Models\User;
+use Cache;
 use Illuminate\Console\Command;
 
 class PerformParse extends Command
@@ -29,5 +30,6 @@ class PerformParse extends Command
     {
         $ticketMasterController = new TicketMasterController();
         $ticketMasterController->checkEventsStatus();
+        Cache::clear();
     }
 }
