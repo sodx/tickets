@@ -35,7 +35,13 @@ abstract class DataGenerator
         $cleanedKeywords = $this->prepareKeywordsForGeneration($cleanedKeywords);
 
         $text = $chatGPT->generateText($cleanedKeywords, $city, $venue, $date, $type, $segment);
-        $text = json_decode($text, true);
+        //if type of text is string.
+        if (is_string($text)) {
+            $text = json_decode($text, true);
+        } else {
+            $text = [];
+        }
+
         return [
             'keywords' => $cleanedKeywords,
             'data' => $text

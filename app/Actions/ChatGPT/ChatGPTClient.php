@@ -107,8 +107,9 @@ class ChatGPTClient
         ]);
         $output = json_decode($complete);
         if (!isset($output->choices[0]->message->content)) {
-            return [];
+            return '';
         }
+
         return $output->choices[0]->message->content;
     }
 

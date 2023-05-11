@@ -30,6 +30,6 @@ class PerformParse extends Command
     {
         $ticketMasterController = new TicketMasterController();
         $ticketMasterController->checkEventsStatus();
-        Cache::clear();
+        \Artisan::call('cache:clear');
     }
 }

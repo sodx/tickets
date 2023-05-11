@@ -30,6 +30,6 @@ class PerformCheck extends Command
     {
         $ticketMasterController = new TicketMasterController();
         $ticketMasterController->index();
-        Cache::clear();
+        \Artisan::call('cache:clear');
     }
 }
